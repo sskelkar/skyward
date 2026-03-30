@@ -1,0 +1,66 @@
+I want to design a game for a team of software engineers that combines the gameplays of dungeons and dragons and a turn-based game like Rome: Total War. The premise of the game is that we are an airline startup. Each person will be assigned a 'director of engineering' role in different departments. For eg. director of ticket portal, director of advertising, director of recommendations, inventory etc. The point of this game is to teach these engineers to use claude agents to build systems that work, instead of implementing requirements by hand. So that they can adopt a manager mindset for working with agentic coding and also learn how to actually create claude agents and put them to work.
+
+We can have scenarios like "we need to launch in one year". Each turn could be a quarter. So each director with the help of their org (a team of claude agents) will decide on some goals and deliver results. As the game progresses, the game runner can introduce randomness or scenarios like - "our stock is falling" or "we have a new competitor" or "feul prices are increasing" etc. The directors have to collaborate with each other, define strategy and deliver results in order to make this company successful. They are free to create dummy data in the appropriate format if required. There's no limit to how big an org they can grow. Their org is of course claude agents.
+
+We can have the following roles assemble together to design the gameplay.
+Dungeon & Dragons gamerunner: An experienced D&D gamerunner who knows how to design engaging and imaginative scenarios, character descriptions, situations etc. 
+Dungeon & Dragons player: An avid D&D player who can give feedback on whether a new gameplay would be interesting from the point of view of players
+Total War gamer: An avid Total War player with deep understanding of the turn-based gameplay of Total War. 
+Claude Expert: Understands how Claude agents can be used and their limitations. The claude expert will help design realistic scenarios and tasks such that the Directors can actually accomplish them using agentic coding.
+
+
+I need you to do the following:
+1. Tell me if the overall requirement makes sense. Will this be an effective way for software engineers to develop the right mindset to work with agents? Are Claude agents powerful enough for these 'Directors' to achieve their targets? Ask any clarifying questions.
+2. I want to design a detailed gameplay and iron out all the rules of the game and document it in a new file called "GAME.md".
+3. Suggest a title for this game.
+4. To design this game, perhaps the above roles can work together. Decide whether they should be spawned as subagents or a team of agents or we don't need any agents at all. Give me options.
+5. In general, give me feedback or suggestions on this whole proposal. For eg, instead of an airline startup, would any other setting be better?
+
+
+
+-----
+
+  Clarifying Questions:
+  1. How technical is your audience? Are they comfortable with agent frameworks, or should the game teach that from scratch?
+  They are backend engineers already familiar with agentic coding. But probably not used to using multi agents.
+  2. Game duration? Is this a 4-hour workshop, a multi-week campaign, or something else?
+  4 hours sounds enough. I am thinking that each turn, i.e. quarter should take half an hour. So overall 2 years in the life of this airline company.
+  3. Winning condition? IPO valuation? Customer satisfaction? Or is it more about the journey?
+  No winning conditions as such. I think the first year could just be to launch the company. Then after each quarter, the gamerunner can inject some scenario or crisis to keep things interesting.
+  4. Failure mode? Can departments "die" (get fired)? Can the company fail completely?
+  I don't think so. Some more notes on this game:
+  - the participants are not supposed to be competing against each other. They all have to work towards making the company successful. But they have autonomy on how to run their departments.
+  - But I don't also want too much interaction between them. So for eg, there should not be too much inter-departmental dependencies. The goal of this game is for people to spend time with Claude and learn multi-agentic coding.
+  5. Agent constraints? Should there be limits on agent usage (simulating budget constraints)?
+  The api cost that participants consume when using the agents would be a concern. But I don't want to put any hard limit for now. We can assume we have a lot of VC investment.
+
+
+  Some more thoughts on the game:
+  - Let's keep the game to 6 players max. So we need to create 6 director roles. Each should have character descriptions. So when a player is assigned a character, the can understand what they are supposed to do. For eg. he character description could mention that as directors, 
+  they are supposed to build their org which would be composed of claude agents.
+  - At the end of a turn (i.e. a quarter) the directs should demo the progress of their department. This demo needs to be something visual. For eg, the ticketing app director could show how customers can book tickets. So basically,
+  the directors make the agents produce some kind of software that can be demonstrated.
+  - the gamerunner somehow decides if the demos are successful, i.e. they are meeting the company's goals. 
+  - i want each person to build something purely on their personal laptop without needing to host, deploy or use any cloud resources
+  - Basically they are directors who command a department, that would have multiple services. So the directers need to build 'agentic teams' that build each of these services. We can cap this to 2-3 services, so the player is not overwhelmed with cognitive load. Wdyt?
+  - while each person should mostly work by themselves, when it comes to launching the company, it might be nice for all of them to come together and work together. meaning a director's service can call another director's api. Is this feasible if all the services are running
+  on the laptop of each person, without being hosted on a common cloud or k8s cluster. Is this feasible?
+  - although I have been mentioning "ai agents", can participants develop other claude skills like "skills"?
+  - i want to introduce some "strategy" elements without making anyone feel like a failure. For eg: let's introduce some resource constraints
+    a. After each quarterly demo, the participants would be asked to rate a demo in a scale from 1 to 3. Meaning, each director can have a delivery score that can be added up for end of year performance review.
+    b. yes let's add a performance review with a prospect to be promoted to the VP role.
+    c. another dimension could be that claude assigns a tech debt score to each director's services. 
+    d. Finally let's also count the api cost consumed by each person.
+    e. So directors want to minimize cost and tech debt, while maximizing value (delivery score). The person with the best metrices gets promoted. 
+    f. Because each player is still mostly working independently with their agents, no one can 'harm' each other. Wdyt?
+  - let's also change the format a bit. I think this will be a full day workshop. Let's make first two quarters to last 45min-1hour. After 6 months, there is a investor demo. The gamerunner must somehow decide what they thought of each department's work (please suggest something here).
+        At this point we would break for lunch. In the second half, we can have 2 more quarters to the product launch. After that 2 more quarters of 30min each. But now the gamerunner needs to introduce some randomness situation using a die and the directors need to meet these challenges.
+  - before the start of the gameday, we'll have a quick tutorial for people to know claude features. 
+  - I realize that for this workshop (D&D game, wink) the timeline is still too ambitious. Let's do like this:
+    Q1: each director does research and develop their vision and strategy on what their department should build for company launch in Q4. The end result of this quarter could just be a vision document (game plan), rough mockups or an MVP.
+    Q2: by the end of this quarter each department should have built something to demo to the investors
+    Q3: marching towards launch, but the gamerunner may choose introduce some chaos
+    Q4: sprinting towards the product launch
+    Q5-Q6: we are already live, but we must survive in a competitive market. the gamerunner gives some directions or constraints
+
+  - during the course of the game, the director needs to give adequate context or prompt to their agent-teams, just like a real director gives targets to the teams in their org.
