@@ -1,10 +1,10 @@
-# Terminal Velocity
+# Skyward
 
 **A full-day workshop game that teaches backend engineers to orchestrate multiple Claude AI agents by building an airline startup.**
 
-## What is Terminal Velocity?
+## What is Skyward?
 
-Terminal Velocity is a collaborative learning workshop where participants become **Directors of Engineering** at a fictional airline startup called SkywardAI. Instead of writing code themselves, directors learn to **manage teams of Claude AI agents** to build working microservices.
+Skyward is a collaborative learning workshop where participants become **Directors of Engineering** at a fictional airline startup called SkywardAI. Instead of writing code themselves, directors learn to **manage teams of Claude AI agents** to build working microservices.
 
 Think of it as:
 - 🎲 **Dungeons & Dragons** meets **Rome: Total War** meets **multi-agent AI orchestration**
@@ -64,7 +64,7 @@ Each director builds **2-3 microservices** using **multiple Claude agent teams**
 ## Repository Structure
 
 ```
-terminal-velocity/
+skyward/
 ├── README.md                    # This file
 ├── GAME.md                      # Player-facing game overview
 ├── GAMERUNNER.md                # Facilitator guide (scoring, scenarios, dice mechanics)

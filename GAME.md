@@ -1,4 +1,4 @@
-# TERMINAL VELOCITY
+# SKYWARD
 ## A Multi-Agent Coding Workshop Game
 
 **Format:** Collaborative learning workshop
