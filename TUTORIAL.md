@@ -13,14 +13,15 @@
 
 1. [Why Multiple Agents?](#why-multiple-agents)
 2. [Core Concepts](#core-concepts)
-3. [The Four Fundamental Patterns](#the-four-fundamental-patterns)
-4. [Prompt Engineering for Agents](#prompt-engineering-for-agents)
-5. [Context Management](#context-management)
-6. [Practical Examples](#practical-examples)
-7. [Common Pitfalls & Solutions](#common-pitfalls--solutions)
-8. [Advanced Techniques](#advanced-techniques)
-9. [Decision Framework](#decision-framework)
-10. [Quick Reference](#quick-reference)
+3. [Claude Code Mechanics: How to Actually Spawn Agents](#claude-code-mechanics-how-to-actually-spawn-agents)
+4. [The Four Fundamental Patterns](#the-four-fundamental-patterns)
+5. [Prompt Engineering for Agents](#prompt-engineering-for-agents)
+6. [Context Management](#context-management)
+7. [Practical Examples](#practical-examples)
+8. [Common Pitfalls & Solutions](#common-pitfalls--solutions)
+9. [Advanced Techniques](#advanced-techniques)
+10. [Decision Framework](#decision-framework)
+11. [Quick Reference](#quick-reference)
 
 ---
 
@@ -99,6 +100,431 @@ You are the **orchestrator**:
 - You make final integration decisions
 
 Think of yourself as a conductor, not a passive observer.
+
+---
+
+## CLAUDE CODE MECHANICS: HOW TO ACTUALLY SPAWN AGENTS
+
+Now that you understand **why** multiple agents are useful and **what** they are, let's cover **how** to actually spawn and coordinate them in Claude Code.
+
+### Three Ways to Work with Multiple Agents
+
+Claude Code supports three approaches to multi-agent workflows:
+
+#### Option 1: Multiple Conversations (Manual Tabs)
+
+**How it works:** Open multiple Claude Code tabs/windows, each with a different conversation.
+
+**Example:**
+```
+Tab 1: "Build a Flask API for flight search on port 5001"
+Tab 2: "Build a React UI for flight search on port 3000"
+Tab 3: "Integrate the API from tab 1 with the UI from tab 2"
+```
+
+**Pros:**
+- ✅ Simple, no special tools needed
+- ✅ Full control over each conversation
+- ✅ Easy to reference each agent's full history
+
+**Cons:**
+- ❌ Manual context switching (switching tabs)
+- ❌ Manual copy-paste between agents
+- ❌ Hard to manage more than 3 agents
+- ❌ No programmatic coordination
+
+**When to use:**
+- You're new to multi-agent workflows
+- Only 2-3 agents needed
+- You want full visibility into each conversation
+- You're experimenting/learning
+
+---
+
+#### Option 2: Sub-Agents via Agent Tool (Recommended)
+
+**How it works:** Within a single Claude Code conversation, use the `Agent` tool to spawn sub-agents programmatically.
+
+**Key concept:** You remain the **orchestrator** in the main conversation. You spawn sub-agents, review their output, and coordinate handoffs.
+
+**Example - Spawning a parallel agent:**
+
+```
+Main conversation:
+You: "I need to build a flight booking app with backend and frontend"
+
+Claude (orchestrator): "I'll spawn two agents in parallel:
+  - Agent 1: Build Flask API
+  - Agent 2: Build React UI"
+
+[Claude calls Agent tool twice]
+
+Agent tool call 1:
+{
+  "description": "Build Flask API",
+  "prompt": "You are a backend developer. Build a Flask API for flight
+             search with endpoint GET /flights?origin={}&dest={}&date={}.
+             Use SQLite. Run on port 5001. Include 10 mock flights."
+}
+
+Agent tool call 2:
+{
+  "description": "Build React UI",
+  "prompt": "You are a frontend developer. Build a React app for flight
+             search. Call API at http://localhost:5001/flights.
+             Run on port 3000."
+}
+
+[Both agents run simultaneously]
+
+Agent 1 completes → returns Flask code
+Agent 2 completes → returns React code
+
+Claude (orchestrator): "Both agents completed. Here's what they built:
+  Agent 1: Flask API [summary]
+  Agent 2: React UI [summary]
+
+  Now testing integration..."
+```
+
+**How to invoke the Agent tool:**
+
+The Agent tool accepts these key parameters:
+
+1. **`description`** (required): Short 3-5 word summary (e.g., "Build Flask API")
+2. **`prompt`** (required): Full task description for the agent
+3. **`subagent_type`** (optional): Specialized agent type
+   - `"general-purpose"` (default) - Most tasks
+   - `"Explore"` - Codebase exploration, file searches
+   - `"Plan"` - Implementation planning
+4. **`run_in_background`** (optional): Set to `true` for long-running tasks
+5. **`isolation`** (optional): Set to `"worktree"` for isolated git environment
+
+**Example - Sequential agents with handoff:**
+
+```
+Agent 1 (Backend):
+{
+  "description": "Build booking API",
+  "prompt": "Build a Flask API for bookings on port 5002 with POST /bookings
+             endpoint. Schema: {flight_id, passenger_name, email}. Use SQLite."
+}
+
+[Wait for Agent 1 to complete]
+
+Agent 2 (Frontend integration):
+{
+  "description": "Integrate booking UI",
+  "prompt": "The backend has a booking API at http://localhost:5002/bookings.
+             Here's the endpoint contract: POST /bookings, expects
+             {flight_id, passenger_name, email}, returns {booking_id, status}.
+
+             Extend the existing React flight search to add booking capability."
+}
+```
+
+**Pros:**
+- ✅ Programmatic coordination within one conversation
+- ✅ Orchestrator can spawn agents in parallel or sequence
+- ✅ Easy to review and integrate sub-agent outputs
+- ✅ Can spawn agents with `run_in_background: true` for long tasks
+- ✅ All work visible in single conversation
+
+**Cons:**
+- ❌ Sub-agent conversations not directly visible (you see results only)
+- ❌ Limited control over sub-agent mid-execution
+
+**When to use:**
+- Most multi-agent scenarios (recommended default)
+- 2-5 agents needed
+- You want programmatic coordination
+- You want everything in one conversation
+
+**Best practices:**
+- Write clear, specific prompts for each agent
+- Use descriptive `description` fields (helps track progress)
+- Review each agent's output before spawning the next (sequential)
+- For parallel work, spawn all agents in one message
+- Use `run_in_background: true` for tasks > 2 minutes
+
+---
+
+#### Option 3: Agent Teams (Advanced)
+
+**How it works:** Create a persistent team of agents that collaborate across multiple user messages.
+
+**Key concept:** Instead of spawning one-off agents, you create a **team** of specialist agents that persist and communicate with each other.
+
+**Example:**
+
+```
+You: "Create a team with Backend, Frontend, and QA specialists"
+
+[Team created with 3 persistent agents]
+
+You: "Team: Build a flight booking system"
+
+Backend Agent: [Builds API]
+Frontend Agent: [Builds UI, can ask Backend about endpoints]
+QA Agent: [Reviews both, suggests improvements]
+
+[Agents collaborate, message each other]
+
+You: "Team: Add payment processing"
+
+[Same agents continue, building on their previous work]
+Backend Agent: [Adds payment endpoint to existing API]
+Frontend Agent: [Adds payment form to existing UI]
+QA Agent: [Tests new flow]
+```
+
+**Pros:**
+- ✅ Agents retain context across multiple turns
+- ✅ Agents can communicate with each other
+- ✅ Persistent specialists (like real org structure)
+- ✅ Great for multi-quarter projects
+
+**Cons:**
+- ❌ More complex to set up and manage
+- ❌ Requires learning Agent Teams API
+- ❌ Can be overkill for simple tasks
+
+**When to use:**
+- Multi-quarter projects (in this game, Q2-Q6)
+- Want persistent agent memory
+- Simulating real organizational structure
+- Agents need to communicate with each other
+
+**Note:** For this workshop, **Agent Teams are optional** and **advanced**. Most directors will use Sub-Agents (Option 2) successfully.
+
+---
+
+### Decision Tree: Which Approach to Use?
+
+```
+Are you new to multi-agent workflows?
+├─ Yes → Start with Multiple Tabs (Option 1)
+└─ No → Continue...
+
+Do you need agents to persist across multiple tasks/quarters?
+├─ Yes → Use Agent Teams (Option 3)
+└─ No → Continue...
+
+Do you have 2-5 agents working on a single task?
+├─ Yes → Use Sub-Agents via Agent Tool (Option 2) ← RECOMMENDED
+└─ No (just 1-2 simple agents) → Use Multiple Tabs (Option 1)
+```
+
+### Practical Agent Tool Examples
+
+#### Example 1: Parallel Execution
+
+**Scenario:** Build backend and frontend simultaneously.
+
+```
+Main orchestrator spawns two agents in parallel:
+
+Agent 1:
+{
+  "description": "Build search API",
+  "prompt": "You are a backend developer. Build a Flask API for flight search.
+
+             Endpoint: GET /flights?origin={code}&dest={code}&date={date}
+             Response: [{id, origin, dest, departure, arrival, price, seats}]
+
+             Requirements:
+             - SQLite database with flights table
+             - 10 mock flights (SFO, LAX, NYC, ORD, SEA)
+             - CORS enabled for localhost:3000
+             - Run on port 5001
+
+             Deliverable: Complete app.py that runs with 'python app.py'"
+}
+
+Agent 2:
+{
+  "description": "Build search UI",
+  "prompt": "You are a frontend developer. Build a flight search interface.
+
+             Features:
+             - Search form (origin, destination, date inputs)
+             - Results table showing flights
+             - Clean, professional styling
+             - Call API at http://localhost:5001/flights
+
+             Requirements:
+             - Vanilla HTML/CSS/JS (no build step)
+             - Loading states while fetching
+             - Error handling
+             - Run on port 3000
+
+             Deliverable: Complete index.html that opens in browser"
+}
+
+[Both agents run simultaneously - massive time savings!]
+```
+
+#### Example 2: Sequential Pipeline
+
+**Scenario:** Agent 2 needs Agent 1's output.
+
+```
+Main orchestrator spawns agents sequentially:
+
+Step 1 - Spawn Agent 1:
+{
+  "description": "Design database schema",
+  "prompt": "Design a database schema for a flight booking system.
+
+             Tables needed:
+             - flights (id, origin, dest, departure, arrival, price, seats)
+             - bookings (id, flight_id, passenger_name, email, status, created)
+             - payments (id, booking_id, amount, payment_method, status)
+
+             Output: SQL CREATE TABLE statements with appropriate types,
+             constraints, and indexes."
+}
+
+[Wait for Agent 1 to complete]
+
+Step 2 - Review Agent 1's schema, then spawn Agent 2:
+{
+  "description": "Implement booking API",
+  "prompt": "Build a Flask API for flight bookings using this database schema:
+
+             [Paste Agent 1's schema here]
+
+             Endpoints:
+             - POST /bookings (create booking)
+             - GET /bookings/{id} (get booking details)
+             - DELETE /bookings/{id} (cancel booking)
+
+             Use the exact schema from above. Include validation and error handling."
+}
+```
+
+#### Example 3: Background Agents for Long Tasks
+
+**Scenario:** Agent needs > 2 minutes, don't want to block.
+
+```
+Spawn long-running agent in background:
+
+{
+  "description": "Generate test data",
+  "prompt": "Generate a realistic SQLite database with:
+             - 1000 flights across 50 US airports
+             - Random departure times over next 30 days
+             - Realistic prices ($50-$800)
+             - Varying seat availability
+
+             Output: flights.db file",
+  "run_in_background": true
+}
+
+[Agent runs in background, orchestrator continues with other work]
+
+[Later, when background agent completes, orchestrator is notified]
+```
+
+#### Example 4: Specialized Explore Agent
+
+**Scenario:** Need to understand existing codebase structure.
+
+```
+Use specialized Explore agent for codebase research:
+
+{
+  "description": "Find authentication code",
+  "prompt": "Find and analyze all authentication-related code in this codebase.
+
+             Look for:
+             - Login/logout endpoints
+             - Session management
+             - Authentication middleware
+             - Token generation/validation
+
+             Provide: File locations, key functions, and how auth flow works",
+  "subagent_type": "Explore"
+}
+
+[Explore agent is optimized for code searching and analysis]
+```
+
+### Common Mistakes with Agent Tool
+
+❌ **Vague prompts**
+```
+{
+  "description": "Build backend",
+  "prompt": "Build the backend"
+}
+```
+→ Agent doesn't know tech stack, ports, endpoints, etc.
+
+✅ **Specific prompts**
+```
+{
+  "description": "Build Flask booking API",
+  "prompt": "Build a Flask API on port 5002 with POST /bookings endpoint.
+             Body: {flight_id, passenger_name, email}.
+             Returns: {booking_id, status, confirmation_code}.
+             Use SQLite for storage."
+}
+```
+
+---
+
+❌ **Too many parallel agents**
+```
+[Spawns 7 agents simultaneously]
+```
+→ Hard to review outputs, integration nightmare
+
+✅ **2-3 parallel agents max**
+```
+[Spawns 2-3 agents with clear boundaries]
+```
+
+---
+
+❌ **Not reviewing agent output before next step**
+```
+Agent 1 builds API → immediately spawn Agent 2 without checking Agent 1's work
+```
+→ Bugs compound through pipeline
+
+✅ **Review between steps**
+```
+Agent 1 builds API → Review: Does it work? Fix bugs → Then spawn Agent 2
+```
+
+---
+
+❌ **Forgetting to pass context**
+```
+Agent 2: "Integrate with the API"
+```
+→ Agent 2 doesn't know what API, where it is, what endpoints exist
+
+✅ **Explicit context handoff**
+```
+Agent 2: "The API is running on localhost:5001 with endpoint GET /flights
+          that returns [{id, origin, dest, price}]. Build a UI that calls
+          this endpoint..."
+```
+
+### Agent Tool Summary
+
+**Key takeaway:** The Agent tool lets you programmatically spawn sub-agents within your main conversation. You remain the orchestrator, deciding when to spawn agents, what prompts to give them, and how to integrate their outputs.
+
+**For this workshop:**
+- **Start with 2-3 sub-agents** via Agent tool (Option 2)
+- **Write clear, specific prompts** (see Prompt Engineering section)
+- **Review each agent's output** before proceeding
+- **Pass explicit context** when agents need to work together
+
+**Next:** Now that you know HOW to spawn agents, let's explore the PATTERNS for coordinating them effectively.
 
 ---
 
@@ -1386,6 +1812,237 @@ Keep all functionality and design, optimize performance:
 
 ---
 
+### Technique 7: Creating Reusable Skills (Optional - Advanced)
+
+**Concept:** Package common agent workflows into reusable slash commands (skills)
+
+**When to use:** Repeated workflows across quarters or projects
+
+**What are skills?**
+
+Skills are custom slash commands you create for Claude Code. They're like macros or shortcuts for common multi-agent workflows.
+
+**Example:** Instead of writing the same "create new service" prompt every quarter, create a `/new-service` skill.
+
+**Syntax:**
+```
+User: /new-service booking
+[Skill expands into a full agent workflow]
+```
+
+#### Should You Create Skills for This Workshop?
+
+**Short answer: Optional and advanced.** Most directors succeed using agents directly.
+
+**When skills are useful:**
+- You have a workflow you'll repeat 3+ times
+- Multi-quarter projects where patterns emerge
+- You want to save time on repeated setups
+- You're comfortable with YAML/JSON skill definitions
+
+**When to skip skills:**
+- First time playing this game
+- One-off tasks
+- Still learning multi-agent patterns
+- Time pressure (creating skills takes time)
+
+#### Example Skills Directors Might Create
+
+**Skill 1: `/new-service` - Create a new microservice**
+
+```yaml
+name: new-service
+description: Create a new microservice with boilerplate
+prompt: |
+  You are creating a new microservice called {{service_name}}.
+
+  Spawn an agent to build:
+  - Flask app with basic structure
+  - SQLite database setup
+  - CORS enabled
+  - Running on port {{port}}
+  - Health check endpoint GET /health
+
+  Agent prompt:
+  "Build a Flask microservice called {{service_name}} running on port {{port}}.
+   Include basic structure, database setup, CORS, and health check endpoint."
+```
+
+**Usage:**
+```
+Director: /new-service booking 5002
+[Skill spawns agent to create booking service on port 5002]
+```
+
+---
+
+**Skill 2: `/qa-check` - Quality assurance review**
+
+```yaml
+name: qa-check
+description: Run QA review on code
+prompt: |
+  Spawn a QA agent to review the current codebase.
+
+  Agent prompt:
+  "You are a QA specialist. Review all code in the current directory.
+
+   Check for:
+   - 3 potential bugs or edge cases
+   - 3 code quality issues
+   - 3 UX improvements
+
+   Format: Specific, actionable suggestions with severity (critical/major/minor)"
+```
+
+**Usage:**
+```
+Director: /qa-check
+[Skill spawns QA review agent]
+```
+
+---
+
+**Skill 3: `/integrate-services` - Service integration**
+
+```yaml
+name: integrate-services
+description: Integrate two microservices
+prompt: |
+  Spawn an integration agent to connect services.
+
+  Agent prompt:
+  "You are integrating {{service_a}} with {{service_b}}.
+
+   Tasks:
+   1. Ensure {{service_b}} can call {{service_a}}'s endpoints
+   2. Fix any CORS issues
+   3. Add error handling for failed requests
+   4. Test end-to-end flow
+
+   Service A is on port {{port_a}}, Service B is on port {{port_b}}."
+```
+
+**Usage:**
+```
+Director: /integrate-services search booking 5001 5002
+[Skill spawns integration agent]
+```
+
+---
+
+**Skill 4: `/api-contract` - Define API contract**
+
+```yaml
+name: api-contract
+description: Design API contract before building
+prompt: |
+  Spawn a planning agent to design an API contract.
+
+  Agent prompt:
+  "Design an API contract for {{service_name}}.
+
+   Define:
+   - Endpoints (method, path, purpose)
+   - Request formats (body, query params)
+   - Response formats (success, errors)
+   - Status codes
+   - Data models
+
+   Output: API contract document in markdown",
+  "subagent_type": "Plan"
+```
+
+**Usage:**
+```
+Director: /api-contract booking-service
+[Skill spawns planning agent to design contract]
+```
+
+#### How Skills Relate to Multi-Agent Workflows
+
+Skills **automate agent spawning**. Instead of manually writing agent prompts, skills provide templates.
+
+**Without skill:**
+```
+Main conversation:
+Director: "I need a QA review"
+Claude: [Spawns agent with QA prompt]
+```
+
+**With skill:**
+```
+Main conversation:
+Director: /qa-check
+[Skill automatically spawns agent with predefined QA prompt]
+```
+
+**Key difference:** Skills save time on repeated patterns, but you still get agents doing the work.
+
+#### Creating a Simple Skill
+
+Skills are defined in YAML or JSON and stored in your Claude Code configuration.
+
+**Basic structure:**
+```yaml
+name: skill-name
+description: What this skill does
+prompt: |
+  The prompt that will be executed when skill is invoked.
+  Can include {{parameters}} for customization.
+```
+
+**Example - Simple skill:**
+```yaml
+name: hello-world
+description: Test skill
+prompt: |
+  Say "Hello, {{name}}! This is a skill."
+```
+
+**Usage:**
+```
+User: /hello-world Alice
+Claude: "Hello, Alice! This is a skill."
+```
+
+**Example - Skill that spawns agent:**
+```yaml
+name: build-api
+description: Build a REST API
+prompt: |
+  Spawn an agent to build a {{framework}} API for {{domain}}.
+
+  Agent prompt:
+  "You are a backend developer. Build a {{framework}} REST API for {{domain}}.
+   Include basic CRUD endpoints, database setup, and error handling.
+   Run on port {{port}}."
+```
+
+**Usage:**
+```
+User: /build-api Flask flights 5001
+[Skill spawns agent to build Flask flights API on port 5001]
+```
+
+#### Learning More About Skills
+
+Skills are documented at: https://code.claude.com/docs/en/skills
+
+**For this workshop:**
+- Skills are **optional**
+- Focus on mastering multi-agent patterns first
+- Consider skills for Q3+ if you find repeated patterns
+- Don't create skills in Q1 (not enough time)
+
+**If you do create skills:**
+- Keep them simple
+- Test them before relying on them
+- Document what each skill does
+- Share useful skills with other directors
+
+---
+
 ## DECISION FRAMEWORK
 
 ### When to Use Multiple Agents vs. Single Agent
@@ -1474,6 +2131,34 @@ Keep all functionality and design, optimize performance:
 ---
 
 ## QUICK REFERENCE
+
+### How to Spawn Agents (Quick Summary)
+
+**Recommended: Use Agent Tool (Sub-Agents)**
+```
+Main conversation → Spawn sub-agents → Review outputs → Integrate
+
+Example:
+{
+  "description": "Build Flask API",
+  "prompt": "You are a backend developer. Build a Flask API with endpoint
+             GET /flights. Use SQLite. Run on port 5001."
+}
+```
+
+**Alternative: Multiple Tabs**
+- Open 2-3 Claude Code tabs
+- Each tab = one agent conversation
+- Manually copy-paste between tabs
+
+**Advanced: Agent Teams**
+- Persistent specialist agents
+- Multi-quarter projects
+- Agents communicate with each other
+
+**Decision:** Start with Agent Tool (Sub-Agents) for most scenarios.
+
+---
 
 ### Prompt Template Cheat Sheet
 
@@ -1573,11 +2258,13 @@ When passing work from Agent 1 to Agent 2:
 
 ### Before You Start
 
-1. **Read one full example** (from Practical Examples section)
-2. **Choose your pattern** (Parallel? Sequential? Specialist?)
-3. **Sketch your agent breakdown** (2-3 sentences per agent)
-4. **Identify integration points** (where agents connect)
-5. **Estimate timing** (X min per agent + integration buffer)
+1. **Understand how to spawn agents** (review Claude Code Mechanics section)
+2. **Read one full example** (from Practical Examples section)
+3. **Choose your pattern** (Parallel? Sequential? Specialist?)
+4. **Decide: Multiple Tabs or Agent Tool?** (Agent Tool recommended for 3+ agents)
+5. **Sketch your agent breakdown** (2-3 sentences per agent)
+6. **Identify integration points** (where agents connect)
+7. **Estimate timing** (X min per agent + integration buffer)
 
 ### During Building
 
@@ -1621,10 +2308,10 @@ When passing work from Agent 1 to Agent 2:
 **Multi-agent orchestration is a skill.** Like any skill, you'll improve with practice.
 
 **Start simple:**
-- First time: 2 agents, parallel pattern, 30 minutes
-- Second time: 3 agents, try sequential
+- First time: Use Agent Tool with 2 agents, parallel pattern, 30 minutes
+- Second time: 3 agents via Agent Tool, try sequential
 - Third time: Experiment with specialist roles
-- Fourth time: Try advanced techniques
+- Fourth time: Try advanced techniques (Agent Teams, skills)
 
 **Key principles:**
 1. **Clear prompts** - Specific role, task, deliverable
