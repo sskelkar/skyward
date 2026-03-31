@@ -1,7 +1,7 @@
 # GAMERUNNER GUIDE
 ## Skyward: Running a Silicon Valley Startup Simulator
 
-**Welcome, Gamerunner.** You're about to guide six engineers through the chaotic, hilarious, and occasionally terrifying world of building SkywardAI - a tech startup that's either going to disrupt the airline industry or become a cautionary tale on TechCrunch.
+**Welcome, Gamerunner.** You're about to guide 4-6 engineers through the chaotic, hilarious, and occasionally terrifying world of building SkywardAI - a tech startup that's either going to disrupt the airline industry or become a cautionary tale on TechCrunch.
 
 Think less "epic fantasy quest" and more "Silicon Valley TV show meets The Office." You're not running a D&D campaign - you're simulating startup life: the all-hands meetings, the investor pitch pressure, the 2am production incidents, the existential dread when a competitor launches your exact feature.
 
@@ -27,7 +27,7 @@ This guide will help you create an engaging, educational, and entertainingly rea
 
 ### The Narrative Arc
 
-You are narrating the **1-year journey of SkywardAI** - a scrappy airline tech startup racing to disrupt an industry. Your six players aren't just engineers writing code - they are **department directors** fighting for success, promotion, and glory.
+You are narrating the **1-year journey of SkywardAI** - a scrappy airline tech startup racing to disrupt an industry. Your 4-6 players aren't just engineers writing code - they are **department directors** fighting for success, promotion, and glory.
 
 **Act I: The Vision (Q1-Q2)**
 - The company is born
@@ -336,45 +336,15 @@ Step aside. Calculate scores using the rubric. Return with gravitas.
 
 **OPTIONAL: The Chaos Event**
 
-**Gamerunner Decision:** Do you want to introduce chaos this quarter? Consider:
-- ✅ **Yes, add chaos if:** Group is doing well, energy is high, they can handle pressure, adds excitement
-- ❌ **Skip chaos if:** Group is struggling, behind schedule, overwhelmed, need focus time
+**Gamerunner Decision:** Do you want to introduce chaos this quarter?
+- ✅ **Yes:** Group is doing well, can handle pressure
+- ❌ **Skip:** Group is struggling or needs focus time
 
-**If you choose chaos, introduce it 10-15 minutes into the quarter:**
+**If using chaos, introduce it 10-15 minutes into the quarter:**
 
-Pull out your d6. Hold it up mid-quarter.
+> "Actually, Directors... something just came up. Welcome to startup reality."
 
-> "Actually, Directors... something just came up."
->
-> *[dramatic pause]*
->
-> "Welcome to startup reality. Let's see what challenge the market throws at us today."
-
-**Choose a scenario from [design-notes/UNIVERSAL_CHAOS_SCENARIOS.md](design-notes/UNIVERSAL_CHAOS_SCENARIOS.md):**
-
-The scenarios document provides **six comprehensive chaos events** that give ALL 8 directors specific challenges:
-
-1. **Competitor Launched Superior App** - MegaAir beats you on features, respond competitively (30-45 min)
-2. **Enterprise Customer Deal** - Fortune 500 wants B2B features, build corporate capabilities (45-60 min)
-3. **Regulatory Audit** - Privacy and accessibility compliance required (45-60 min)
-4. **Security Breach Discovered** - Find and fix vulnerabilities before disclosure (60 min)
-5. **Acquisition Due Diligence** - Tech giant wants to buy, prove production-readiness (60-90 min)
-6. **Market Crash - Travel Downturn** - Economic crisis, pivot to survive (60 min)
-
-Each scenario includes:
-- Dramatic narrative setup to read aloud
-- Department-specific challenges for all 8 roles
-- Clear success criteria
-- Gamerunner tips and variations
-
-**Pick the scenario that fits, or roll a d6 for random chaos!**
-- Competitive energy? → Scenario 1 (Competitor Attack)
-- Business value focus? → Scenario 2 (Enterprise Deal)
-- Educational/junior engineers? → Scenario 3 (Regulatory) or 4 (Security)
-- Experienced engineers? → Scenario 5 (Acquisition Due Diligence)
-- Strategic/business thinking? → Scenario 6 (Market Crash)
-
-**Announce the scenario with startup panic energy and let directors respond.**
+**See [design-notes/UNIVERSAL_CHAOS_SCENARIOS.md](design-notes/UNIVERSAL_CHAOS_SCENARIOS.md) for six comprehensive scenarios.** Roll a d6 or pick one that fits your group's learning goals.
 
 **The Scramble (if chaos introduced)**
 
@@ -415,17 +385,15 @@ The energy should shift from building to refining:
 
 **OPTIONAL: Last-Minute Crisis**
 
-**Gamerunner Decision:** Want to add one final challenge? Consider:
-- ✅ **Yes, add chaos if:** You want to simulate realistic launch day stress, group can handle it, chaos in Q3 went well
-- ❌ **Skip chaos if:** Group needs focus time for polish, Q3 was chaotic enough, running behind schedule
+**Gamerunner Decision:** Want to add one final challenge?
+- ✅ **Yes:** Simulate launch day stress, group handled Q3 chaos well
+- ❌ **Skip:** Group needs focus time, running behind schedule
 
-**If you choose chaos, introduce it ~20-30 minutes into the quarter:**
+**If using chaos, introduce ~20-30 minutes into quarter:**
 
-> "Uh, Directors... we have a situation.
->
-> You've got to handle this AND still launch on time. Welcome to production."
+> "Uh, Directors... we have a situation. Handle this AND still launch on time."
 
-**Choose a scenario from [design-notes/UNIVERSAL_CHAOS_SCENARIOS.md](design-notes/UNIVERSAL_CHAOS_SCENARIOS.md)** (same options as Q3, or adapt one for launch context - e.g., "Enterprise customer needs features before they'll sign" or "Competitor announced same launch day - differentiate NOW")
+**See [design-notes/UNIVERSAL_CHAOS_SCENARIOS.md](design-notes/UNIVERSAL_CHAOS_SCENARIOS.md)** - same six scenarios as Q3.
 
 **Final Push (Last 10-15 minutes)**
 
@@ -599,55 +567,19 @@ Maximum possible: 42 points
 
 ### Crisis Events (Optional for Q3 and/or Q4)
 
-**See [design-notes/UNIVERSAL_CHAOS_SCENARIOS.md](design-notes/UNIVERSAL_CHAOS_SCENARIOS.md) for comprehensive scenarios.**
+**All chaos scenarios are in [design-notes/UNIVERSAL_CHAOS_SCENARIOS.md](design-notes/UNIVERSAL_CHAOS_SCENARIOS.md).**
 
-**When to Use:** Gamerunner's discretion. Use when:
-- Group is performing well and can handle added pressure
-- Energy needs a boost
-- You want to simulate realistic startup chaos
-- Time permits (chaos events add 30-60 min of response time)
+**When to use:** Group is performing well and can handle pressure. **When to skip:** Group is struggling or behind schedule.
 
-**When to Skip:**
-- Group is struggling or behind schedule
-- Directors need uninterrupted build time
-- Already chaotic enough without events
+**Six scenarios (roll d6 or choose):**
+1. Competitor Launched Superior App (30-45 min)
+2. Enterprise Customer Deal (45-60 min)
+3. Regulatory Audit (45-60 min)
+4. Security Breach Discovered (60 min)
+5. Acquisition Due Diligence (60-90 min)
+6. Market Crash - Travel Downturn (60 min)
 
-**How to Use:**
-1. Choose one of the three scenarios from the scenarios document (or create your own using the template)
-2. Announce the scenario with dramatic startup energy
-3. Give directors 30-60 minutes to respond
-4. Each director gets their specific department challenge from the scenario
-5. Judge their responses as part of delivery score
-
-**Timing:**
-- **Q3:** Introduce 10-15 min into the quarter if using
-- **Q4:** Introduce 20-30 min into the quarter if using (gives time for polish first)
-
-**The six scenarios (roll a d6!):**
-1. **Competitor Launched Superior App** - Defensive pressure, rapid competitive response
-2. **Enterprise Customer Deal** - Positive pressure, build B2B features for Fortune 500
-3. **Regulatory Audit** - Educational pressure, privacy and accessibility compliance
-4. **Security Breach Discovered** - High-stakes pressure, find and fix vulnerabilities
-5. **Acquisition Due Diligence** - Aspirational pressure, prove production-readiness to tech giant
-6. **Market Crash - Travel Downturn** - Economic crisis, pivot strategy to survive
-
-**Key advantage:** All six scenarios give EVERY director something specific to do, ensuring no one sits idle during chaos.
-
-**Using the die:** Roll a d6 to randomly select which crisis hits, or intentionally choose based on your group's needs and learning goals.
-
-### Chaos Event Tips
-
-**Making scenarios impactful:**
-- Personalize to what directors actually built (if Booking director built great UI, competitor's UI is what threatens them)
-- Use real startup language: Slack messages, tweets, TechCrunch headlines
-- Give directors time to respond (30-60 min depending on scenario complexity)
-- Judge their responses as part of delivery score
-- Celebrate creative solutions
-
-**Mixing scenarios across Q3 and Q4:**
-- See the "Mixing Scenarios" section in UNIVERSAL_CHAOS_SCENARIOS.md for narrative arc ideas
-- Can use same scenario twice (escalation) or different scenarios (variety)
-- Can let directors vote on which scenario they face (player agency)
+Each gives all directors specific challenges. See the full document for narrative setup, department tasks, and gamerunner tips.
 
 ---
 
@@ -817,20 +749,13 @@ Carol (Recs)  | 3  | 2  | 2  | 3  |    10    |    11     |  7   |   +1   |  29
 
 ### Chaos Event Strategy
 
-See [design-notes/UNIVERSAL_CHAOS_SCENARIOS.md](design-notes/UNIVERSAL_CHAOS_SCENARIOS.md) for detailed scenarios.
+**Double Chaos:** Q3 + Q4. Strong groups only.
+**Single Chaos (Recommended):** Q3 only. Balanced challenge.
+**No Chaos:** Skip all. Learning-focused groups.
 
-**Double Chaos (Ambitious):** Q3 + Q4 events. Strong groups, high energy, want full pressure.
-**Single Chaos (Recommended):** Q3 only. Most groups, balanced learning and challenge.
-**No Chaos (Simplified):** Skip all events. Struggling groups, learning-focused, need build time.
+**Selection guide:** Competitive group → Scenario 1, Business-minded → Scenario 2, Junior → Scenario 3 or 4, Experienced → Scenario 5, Maximum drama → Scenario 4, Strategic → Scenario 6, Random → d6 roll
 
-**Scenario Selection Guide:**
-- **Competitive group** → Scenario 1 (Competitor Attack)
-- **Business-minded group** → Scenario 2 (Enterprise Deal)
-- **Junior engineers** → Scenario 3 (Regulatory Audit) or 4 (Security Breach) for educational value
-- **Experienced engineers** → Scenario 5 (Acquisition Due Diligence) - highest difficulty
-- **Maximum drama** → Scenario 4 (Security Breach) - 2am crisis mode
-- **Strategic thinking** → Scenario 6 (Market Crash) - business resilience and pivoting
-- **Let fate decide** → Roll d6 for random chaos!
+See [design-notes/UNIVERSAL_CHAOS_SCENARIOS.md](design-notes/UNIVERSAL_CHAOS_SCENARIOS.md) for full details.
 
 ### If Running Behind
 

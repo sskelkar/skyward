@@ -23,25 +23,23 @@ Think of it as:
 
 ## Game Overview
 
-**Format:** Full-day workshop (7 hours with lunch break)
+**Format:** Half-day workshop (6-6.5 hours with lunch break)
 **Players:** 4-6 backend engineers
-**Duration:** 6 quarters across 2 fictional years
-**Setting:** Building an airline startup from vision to launch to survival
+**Duration:** 4 quarters across 1 fictional year
+**Setting:** Building an airline startup from vision to launch
 
 ### Timeline
 
 **Morning (Research & Build):**
-- 09:00-09:30 | Tutorial on multi-agent basics
-- 09:30-10:30 | **Q1 - Research & Vision** (60 min)
-- 10:30-11:30 | **Q2 - Investor Demo Build** (60 min)
-- 11:30-12:00 | Investor Demo presentations
-- 12:00-13:00 | Lunch
+- 10:00-10:30 | Tutorial on multi-agent basics
+- 10:30-11:30 | **Q1 - Research & Vision** (45-60 min)
+- 11:30-12:30 | **Q2 - Investor Demo Build** (45-60 min)
+- 12:30-13:00 | Investor Demo presentations
+- 13:00-14:00 | Lunch
 
-**Afternoon (Launch & Survive):**
-- 13:00-14:00 | **Q3 - Integration & Features** (60 min)
-- 14:00-15:00 | **Q4 - Launch Sprint** (60 min)
-- 15:00-15:30 | **Q5 - Crisis Response** (30 min, dice-driven)
-- 15:30-16:00 | **Q6 - Final Challenge** (30 min, dice-driven)
+**Afternoon (Launch Sprint):**
+- 14:00-15:00 | **Q3 - Integration & Features** (45-60 min, optional chaos)
+- 15:00-16:00 | **Q4 - Launch Sprint** (45-60 min, optional chaos)
 - 16:00-16:30 | Performance Review & VP Promotion
 
 ### 8 Director Roles
@@ -68,8 +66,8 @@ skyward/
 ├── README.md                    # This file
 ├── GAME.md                      # Player-facing game overview
 ├── GAMERUNNER.md                # Facilitator guide (scoring, scenarios, dice mechanics)
-├── TUTORIAL.md                  # Multi-agent orchestration tutorial (13K words)
-├── DIRECTOR-GUIDE.md            # How to think and operate as a director (7K words)
+├── TUTORIAL.md                  # Multi-agent orchestration tutorial
+├── DIRECTOR-GUIDE.md            # How to think and operate as a director
 ├── MULTI-SERVICE-GUIDE.md       # Multi-service architecture patterns
 ├── characters/                  # Character sheets for all 8 director roles
 │   ├── README.md
@@ -81,11 +79,9 @@ skyward/
 │   ├── marketing-growth.md
 │   ├── checkin-boarding.md
 │   └── flight-status.md
-└── design-notes/                # Historical design documents (not needed for gameplay)
-    ├── README.md
-    ├── idea.txt
-    ├── FEEDBACK_AND_OPTIONS.md
-    └── GAME_DESIGN.md
+└── design-notes/                # Design documents and scenarios
+    ├── UNIVERSAL_CHAOS_SCENARIOS.md  # 6 chaos scenarios for Q3/Q4
+    └── ...other historical design docs
 ```
 
 ---
@@ -104,11 +100,12 @@ skyward/
 ### For Facilitators
 
 1. **Read the facilitator guide**: [GAMERUNNER.md](GAMERUNNER.md) has everything you need
-2. **Prepare materials**: Print scoring sheets, prepare dice for Q5-Q6
-3. **Set up the room**: Ensure all players have Claude API access
-4. **Run the tutorial**: 30-minute intro to multi-agent basics (09:00-09:30)
-5. **Facilitate quarters**: Follow the turn-by-turn guide in GAMERUNNER.md
-6. **Score and celebrate**: Use rubrics in GAMERUNNER.md for performance review
+2. **Review chaos scenarios**: Read [design-notes/UNIVERSAL_CHAOS_SCENARIOS.md](design-notes/UNIVERSAL_CHAOS_SCENARIOS.md) for optional Q3/Q4 challenges
+3. **Prepare materials**: Print scoring sheets, prepare d6 die if using chaos scenarios
+4. **Set up the room**: Ensure all players have Claude API access
+5. **Run the tutorial**: 30-minute intro to multi-agent basics (10:00-10:30)
+6. **Facilitate quarters**: Follow the quarter-by-quarter guide in GAMERUNNER.md
+7. **Score and celebrate**: Use rubrics in GAMERUNNER.md for performance review
 
 ---
 
@@ -125,8 +122,8 @@ skyward/
 
 - **Q1**: Research and vision (no code pressure)
 - **Q2**: Build for investors (polish matters)
-- **Q3-Q4**: Integration and launch (systems must work)
-- **Q5-Q6**: Crisis response (dice-driven chaos)
+- **Q3**: Integration and features (optional chaos scenarios)
+- **Q4**: Launch sprint (systems must work, optional chaos)
 
 ### Real-World Parallels
 
@@ -215,11 +212,12 @@ Directors can assign agents to roles like:
 
 Directors are evaluated on:
 
-1. **Delivery Score** (max 18 points)
-   - 1-3 points per quarter based on demo quality
-   - Bronze (1pt): Works
-   - Silver (2pts): Polished
-   - Gold (3pts): Impressive
+1. **Delivery Score** (max 12 points)
+   - 0-3 points per quarter based on demo quality
+   - 0pt: Nothing works
+   - 1pt: Partial/struggling
+   - 2pts: Solid/working
+   - 3pts: Exceptional/polished
 
 2. **Tech Debt Score** (max 15 points)
    - AI reviews code quality
@@ -233,7 +231,7 @@ Directors are evaluated on:
    - Helping other directors
    - Successful integrations
 
-**Total possible: 48 points**
+**Total possible: 42 points**
 
 Director with best metrics gets promoted to VP! 🏆
 
@@ -291,8 +289,8 @@ This is an open-source educational game. Contributions welcome!
 ### Ideas for Contributions
 
 - **New character roles**: Suggest additional director positions
-- **New scenarios**: Q5-Q6 crisis scenarios for the dice table
-- **Alternative settings**: Adapt the game to different industries
+- **New chaos scenarios**: Additional crisis scenarios for Q3/Q4
+- **Alternative settings**: Adapt the game to different industries (e-commerce, fintech, etc.)
 - **Translations**: Help make this accessible globally
 - **Actual play reports**: Document your gameplay sessions
 - **Improvements**: Better rubrics, clearer instructions, new patterns

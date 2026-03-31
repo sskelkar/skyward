@@ -26,6 +26,7 @@ Most engineers today use AI assistants like Claude as glorified autocomplete: as
 - ❌ Slides don't stick—people forget theory without practice
 - ❌ Toy examples feel artificial—no pressure, no real decisions
 - ❌ No feedback loop—you don't know if you're doing it right
+- ❌ Wrong complexity—production apps too critical to experiment on, side projects too simple to need advanced patterns
 
 **Game-based learning succeeds because:**
 - ✅ **Immersion:** Role-playing as directors creates real emotional stakes
@@ -33,6 +34,7 @@ Most engineers today use AI assistants like Claude as glorified autocomplete: as
 - ✅ **Iteration:** Four quarters = four chances to learn from mistakes
 - ✅ **Peer learning:** See how others orchestrate agents differently
 - ✅ **Safe failure:** Mistakes teach without real-world consequences
+- ✅ **Right complexity:** Production apps are too risky to experiment on, weekend projects too simple—this game hits the sweet spot for learning advanced multi-agent patterns
 
 ### Why the Director Role-Play Matters
 
