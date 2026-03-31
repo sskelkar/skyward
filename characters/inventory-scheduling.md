@@ -63,33 +63,51 @@ You're the **engineer's engineer** - you love data structures, algorithms, and s
 
 ## YOUR DEPARTMENT ARCHITECTURE
 
-As a director, you don't code - you **orchestrate teams**. You manage **2-3 agent teams**, each building a separate microservice.
+As a director, you don't code - you **orchestrate teams**. You manage **2-3 agent teams**, each building a separate service.
 
 ### Recommended Multi-Service Architecture
 
-**Service 1: Flight Schedule API** (Agent Team A)
-- Tech: Flask/FastAPI backend
-- Port: 5001
-- Purpose: Flight schedule management, route data
-- Team: 1-2 backend agents
+**Service 1: Flight Schedule Management**
+- **Purpose:** Maintain flight schedules, routes, aircraft assignments
+- **Key Decisions:**
+  - How to model time zones and daylight savings transitions
+  - How often schedules update (real-time vs. batch)
+  - Handling schedule conflicts and aircraft swaps
+  - Storing historical vs. future schedules
+- **Integration:** Provides schedule data to booking systems, pricing engines, operations teams
+- **Team:** 1-2 agents
 
-**Service 2: Seat Inventory API** (Agent Team B)
-- Tech: Flask/FastAPI backend
-- Port: 5002
-- Purpose: Real-time seat tracking, booking operations
-- Team: 1-2 backend agents
+**Service 2: Seat Inventory Tracking**
+- **Purpose:** Real-time tracking of seat availability across all flights
+- **Key Decisions:**
+  - Data structure for fast seat lookups (per flight, per class, per row)
+  - Concurrency strategy (how to prevent double-booking)
+  - Transaction boundaries (when to lock, when to rollback)
+  - Overbooking rules and risk thresholds
+- **Integration:** Consumed by booking systems, reports to analytics, notifies pricing of availability changes
+- **Team:** 1-2 agents
 
-**Service 3: Admin Dashboard** (Agent Team C)
-- Tech: React/Vue/vanilla JS frontend
-- Port: 3000
-- Purpose: Inventory visualization, analytics, operations console
-- Team: 1-2 frontend agents
+**Service 3: Operations Dashboard**
+- **Purpose:** Visualize inventory status, analytics, and provide operations console
+- **Key Decisions:**
+  - Which metrics matter most (load factor, overbooking rate, availability trends)
+  - Real-time vs. batch data refresh
+  - User workflows (searching, filtering, manual interventions)
+  - Alert thresholds (low inventory, high overbooking risk)
+- **Integration:** Consumes data from Schedule and Inventory services, displays operational insights
+- **Team:** 1-2 agents
 
 **Why multiple services?**
 - ✅ Each agent team has focused responsibility
 - ✅ Services can be built in parallel
 - ✅ Easy to demo incrementally (Service 1 in Q1, add Service 2 in Q2, etc.)
 - ✅ Realistic microservices practice
+
+**Technical decisions to make in Q1 with your agent teams:**
+- Tech stack selection (Python/Node, database choice, frontend framework)
+- API design patterns (REST/GraphQL, sync/async)
+- Communication between services (direct HTTP, message queue, shared database)
+- Deployment approach (ports, processes, containerization)
 
 📚 **For detailed multi-service patterns:** See [MULTI-SERVICE-GUIDE.md](../MULTI-SERVICE-GUIDE.md)
 
@@ -117,18 +135,24 @@ As a director, you don't code - you **orchestrate teams**. You manage **2-3 agen
 - **Technical Architect:** Design service architecture and API contracts
 - **Operations Analyst:** Define overbooking rules and inventory logic
 
+**Example Director Focus:**
+- What data entities matter most? (Flights, aircraft, seats, bookings)
+- What relationships prevent common errors? (Foreign keys, constraints)
+- What queries will be most frequent? (Availability checks, booking lookups)
+- How do we ensure zero double-bookings? (Transactions, locking strategy)
+
 **Example Prompt:**
 ```
 "You are a database architect designing an airline inventory system.
 
-Design a relational schema that handles:
+Design a schema that handles:
 - Flights (routes, times, aircraft assignments)
 - Aircraft (models, seat configurations)
 - Seat inventory (available, booked, blocked)
 - Bookings (reservations, status tracking)
 
-Include proper foreign keys and indexes.
-Focus on preventing double-bookings and ensuring data integrity."
+Focus on preventing double-bookings and ensuring data integrity.
+Consider: What constraints prevent errors? What indexes speed up queries?"
 ```
 
 **Demo:** Present your vision doc, schema diagrams, or MVP. Explain your strategy and what you'll build in Q2.
@@ -288,53 +312,39 @@ Operations teams live in dashboards. Invest agent time in clear inventory visual
 ### Inventory & Scheduling-Specific Challenges
 
 **"Concurrent bookings cause race conditions"**
-- **Solution:** Tell backend agent: "Use database transactions with SELECT FOR UPDATE"
-- Or use testing agent: "Write tests that simulate concurrent bookings, then fix race conditions"
-- Quick fix: Implement row-level locking in booking endpoint
+- **Director Decision:** What's your concurrency strategy?
+  - Option 1: Database transactions with row locking
+  - Option 2: Optimistic locking with version numbers
+  - Option 3: Queue-based serialization
+- **Solution:** Work with agents to implement chosen strategy
 - See TUTORIAL.md for transaction handling patterns
+- Test with concurrent booking simulations
 
 **"Overbooking logic is complex"**
-- **Solution:** Start simple: "Allow 5% overbooking for economy class only"
-- Iterate: "Add seat class differentiation and historical no-show rates"
-- Use specialist agent: "Design overbooking algorithm based on airline industry standards"
-- Don't overthink in Q1-Q2, add sophistication in Q3-Q4
+- **Director Decision:** Start simple or sophisticated?
+  - Q1-Q2: Fixed percentage (e.g., 5% overbooking for economy)
+  - Q3-Q4: Dynamic based on historical no-show rates
+- **Key Questions:**
+  - Which seat classes allow overbooking?
+  - What risk threshold is acceptable?
+  - How do we calculate optimal overbooking?
+- Work with specialist agent to design algorithm
 
 **"Performance is slow with many flights"**
-- **Solution:** Database optimization agent: "Add indexes on flight_id, departure_date, status"
-- Common issue: N+1 queries - fix with proper JOINs
-- Use caching agent: "Cache flight availability for 30 seconds to reduce database load"
-- Target: < 100ms API response time
+- **Director Decision:** Where's the bottleneck?
+  - Database queries (add indexes, optimize JOINs)
+  - Data volume (implement caching)
+  - API design (batch operations, pagination)
+- **Target:** < 100ms API response time
+- Use performance testing agent to identify issues
 
 **"Data integrity issues - negative inventory or orphaned bookings"**
-- **Solution:** Reconciliation agent: "Build nightly job that validates inventory counts"
-- Add database constraints: "CREATE CHECK constraint ensuring available_seats >= 0"
-- Use audit agent: "Log all inventory changes with timestamps and user IDs"
+- **Director Decision:** Prevention vs. detection vs. repair?
+  - Prevention: Database constraints (e.g., available_seats >= 0)
+  - Detection: Reconciliation jobs, audit logs
+  - Repair: Manual tools or automated fixes
+- Work with agents to implement multi-layer approach
 - Critical for production readiness in Q4
-
----
-
-## TECH STACK SUGGESTIONS
-
-### Option A: Python Backend (Recommended)
-- **Backend:** Flask or FastAPI
-- **Database:** SQLite (simple) or Postgres (robust)
-- **Admin UI:** Flask-Admin or custom HTML
-- **Charts:** Chart.js or Plotly
-- **Why:** Python is backend-engineer friendly, great for data
-
-### Option B: Node.js Backend
-- **Backend:** Express.js
-- **Database:** SQLite or MongoDB
-- **Admin UI:** Admin-bro or custom
-- **Charts:** Chart.js
-- **Why:** Fast development, JavaScript everywhere
-
-### Option C: Full Framework
-- **Framework:** Django (includes admin panel!)
-- **Database:** Built-in SQLite
-- **Why:** Django Admin gives you 80% of UI for free
-
-**Pro tip:** If you know Django, use it. The admin panel is a massive time-saver for inventory dashboards.
 
 ---
 
@@ -419,13 +429,20 @@ You can work independently with mock bookings, or integrate:
 **First 10 minutes:**
 1. Decide: What will I deliver? (Vision doc? Schema diagrams? MVP?)
 2. Plan your agent strategy: Which agents for which tasks?
-3. Start Agent 1 (Database Architect): Begin schema design
+3. Define your key architectural decisions (see service architecture above)
 
 **Minutes 10-50:**
 Use agents for research and planning:
-- Agent 1: Design database schema for flights, inventory, bookings
-- Agent 2: Research overbooking algorithms and inventory best practices
-- Agent 3: Design service architecture and API contracts
+- Research airline inventory systems and best practices
+- Design data models and service boundaries
+- Define key decisions: concurrency strategy, overbooking rules, data refresh patterns
+- Create service contracts and integration points
+
+**Director Questions to Answer:**
+- What are my 2-3 services and why?
+- What data models prevent common inventory errors?
+- How will services communicate?
+- What tech stack fits our needs? (Decide with agent input in Q1)
 
 **Last 10 minutes:**
 1. Compile vision document or polish MVP
@@ -435,15 +452,21 @@ Use agents for research and planning:
 ### Quarter 2: Investor Demo Build (60 min)
 
 **First 5 minutes:**
-1. Review your Q1 vision and schema
-2. Decide which 1-2 services to build
-3. Start Agent 1 (Backend): Build first service
+1. Review your Q1 vision and architecture decisions
+2. Decide which 1-2 services to build first
+3. Confirm tech stack choices with agent teams
 
 **Minutes 5-50:**
 Build your investor demo:
-- Agents build services based on Q1 architecture
-- Focus on data accuracy and reliability
-- Test as you go
+- Agent teams implement services based on Q1 architecture
+- Focus on demonstrating operational excellence
+- Prove your key decisions work (concurrency handling, data accuracy)
+
+**What to Show Investors:**
+- Zero inventory errors (data integrity)
+- Real-time accuracy (booking updates inventory instantly)
+- Operational metrics (load factor, availability status)
+- Professional presentation (dashboard or clean API demo)
 
 **Last 10 minutes:**
 1. Integration and testing

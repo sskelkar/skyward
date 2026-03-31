@@ -723,13 +723,7 @@ Q4: Scramble to integrate everything
 
 ### Director Mindset Cheat Sheet
 
-| Engineer Thinks | Director Thinks |
-|-----------------|-----------------|
-| "I'll build the API" | "Agent Team A will build the API" |
-| "How do I code this?" | "What outcome do I need?" |
-| "Let me debug this" | "QA team, find bugs. Dev team, fix them" |
-| "This needs to be perfect" | "This needs to ship, we can improve later" |
-| "I need to understand every line" | "I need to understand the architecture" |
+See "Director vs. Engineer Mindset" comparison table in the "Thinking Like a Director" section above.
 
 ### Quarter Strategy Guide
 

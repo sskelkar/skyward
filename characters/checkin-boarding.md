@@ -67,29 +67,40 @@ As a director, you don't code - you **orchestrate teams**. You manage **2-3 agen
 
 ### Recommended Multi-Service Architecture
 
-**Service 1: Check-in API** (Agent Team A)
-- Tech: Flask/FastAPI backend
-- Port: 5001
-- Purpose: Check-in processing, booking validation, status management
-- Team: 1-2 backend agents
+**Service 1: Check-in System** (Agent Team A)
+- **Purpose:** Handle online check-in flow and booking validation
+- **Key Decisions:**
+  - Check-in window timing (24hr? 48hr?)
+  - What validation rules prevent check-in?
+  - How to handle group bookings?
+- **Integration:** Consumes booking data, triggers boarding pass generation
+- **Team:** 1-2 agents
 
-**Service 2: Seat Assignment Service** (Agent Team B)
-- Tech: Flask/FastAPI backend
-- Port: 5002
-- Purpose: Seat map management, assignment algorithms, availability tracking
-- Team: 1-2 backend agents
+**Service 2: Seat Assignment Engine** (Agent Team B)
+- **Purpose:** Manage seat maps, selection logic, and availability
+- **Key Decisions:**
+  - Seat selection UX (interactive map? list view?)
+  - Priority rules (families together? premium seats?)
+  - How to optimize aircraft balance and revenue?
+- **Integration:** Receives seat preferences, provides seat assignments
+- **Team:** 1-2 agents
 
 **Service 3: Boarding Pass Generator** (Agent Team C)
-- Tech: Python/Node.js service or frontend integration
-- Port: 5003 or embedded in frontend
-- Purpose: Generate boarding passes with QR codes, mobile passes
-- Team: 1-2 agents (backend + frontend)
+- **Purpose:** Create and distribute boarding passes
+- **Key Decisions:**
+  - QR code vs barcode vs both?
+  - Mobile-first or print-friendly?
+  - What info passengers need at gate?
+- **Integration:** Receives check-in confirmation, outputs boarding passes
+- **Team:** 1-2 agents
 
 **Why multiple services?**
 - ✅ Each agent team has focused responsibility
 - ✅ Services can be built in parallel
 - ✅ Easy to demo incrementally (Service 1 in Q1, add Service 2 in Q2, etc.)
 - ✅ Realistic microservices practice
+
+**Tech Stack:** Work with your agent teams in Q1 to determine the best implementation approach for each service.
 
 📚 **For detailed multi-service patterns:** See [MULTI-SERVICE-GUIDE.md](../MULTI-SERVICE-GUIDE.md)
 
@@ -102,19 +113,25 @@ As a director, you don't code - you **orchestrate teams**. You manage **2-3 agen
 
 **Your Objectives:**
 - Research what makes great check-in systems (use agents to analyze airline apps)
-- Define your 2-3 service architecture (Check-in API, Seat Assignment, Boarding Pass)
-- Create vision document with user flows and seat map designs
-- Plan your technical approach and agent team structure
+- Define your 2-3 service architecture (Check-in, Seat Assignment, Boarding Pass)
+- Create vision document with user flows and key business decisions
+- Plan your agent team structure and delegation strategy
 
 **Deliverable Options:**
 - Vision document with architecture diagram and user flows
 - Wireframes or mockups of seat selection and boarding pass
 - Simple MVP (if time permits) - basic prototype
 
+**Key Questions to Answer:**
+- What's our check-in window policy? (24hr, 48hr, rolling?)
+- How do we handle seat selection? (Free-for-all? Tiered access?)
+- What makes a great boarding pass? (Info density vs simplicity)
+- How do we measure success? (Speed? Satisfaction? Self-service rate?)
+
 **Agent Roles to Use:**
 - **Business Analyst:** Research check-in process best practices and boarding flows
 - **UX Designer:** Create seat map wireframes and boarding pass designs
-- **Technical Architect:** Design service architecture and seat assignment algorithms
+- **Strategy Consultant:** Define service architecture and key decisions
 
 **Example Prompt:**
 ```
@@ -146,12 +163,18 @@ Focus on efficiency and passenger satisfaction."
 **Deliverable:**
 - Working check-in functionality (mock data is fine)
 - Interactive seat map OR
-- Impressive boarding pass design with QR code
+- Impressive boarding pass design
+
+**Key Director Decisions:**
+- Which services to prioritize for demo impact?
+- What's the minimum viable flow that impresses investors?
+- Where to invest polish vs where "good enough" is fine?
+- How to demonstrate your multi-service vision in action?
 
 **Agent Roles to Use:**
-- **Backend Developer:** Build check-in/seat assignment APIs
-- **Frontend Developer:** Build polished seat selection UI
-- **QA Engineer:** Test the demo flow
+- Agents build services based on Q1 architecture
+- You decide tech stack WITH your agent teams (not before)
+- Focus delegation on demo impact, not technical perfection
 
 **Example Focus:**
 ```
@@ -261,13 +284,13 @@ Priority 3: Handle edge cases (defer if time-limited)
 ### Role-Specific Tips
 
 **Keep seat assignment separate from check-in logic:**
-Algorithm complexity is easier to manage when one agent focuses purely on optimization while another handles the check-in workflow.
+Algorithm complexity is easier to manage when one agent focuses purely on optimization while another handles the check-in workflow. This is a business decision about separation of concerns.
 
-**Use visual libraries early:**
-Prompt agents with "Use CSS Grid for seat map" or "Make boarding pass look like Southwest Airlines" rather than building from scratch. Saves time, looks better.
+**Focus on business value, not tech details:**
+Tell agents WHAT you need and WHY, let them propose HOW. "We need an intuitive seat selection experience that works on mobile" beats "Build a React component with CSS Grid."
 
 **Demo-first thinking:**
-Structure your agents around what you'll show: "Agent 1 builds check-in API, Agent 2 builds seat selection UI, Agent 3 builds boarding pass display."
+Structure your agents around what you'll show: "Agent 1 builds check-in flow, Agent 2 builds seat selection experience, Agent 3 builds boarding pass output." Focus on customer journey, not technology.
 
 **For prompts and examples:** See TUTORIAL.md sections:
 - "Prompt Engineering for Agents" (templates)
@@ -283,59 +306,59 @@ Structure your agents around what you'll show: "Agent 1 builds check-in API, Age
 ### Check-in & Boarding-Specific Challenges
 
 **"Seat map is hard to visualize"**
-- **Solution:** Tell agent: "Use CSS Grid with 6 columns and 30 rows for seat layout"
-- Or use integration agent: "Create interactive seat map with color coding for status"
-- Quick fix: Use HTML table as fallback, style with Bootstrap
-- Show examples: "Make it look like airline seat selection screens"
+- **Director Decision:** Do we need interactive visual map, or is a simple list acceptable for MVP?
+- **Solution:** Ask agent to research seat selection UX patterns, propose options
+- Quick win: "Make it look like airline seat selection screens" - let agent propose how
+- Defer complexity: Interactive map is Q2+, simple selection works for Q1 vision
 
-**"QR code generation is complex"**
-- **Solution:** Be specific in prompts: "Use Python qrcode library" or "Use JavaScript qrcode.js"
-- Common issue: QR code too small to scan - specify minimum 300x300px
-- Tell agent: "Generate QR code from booking ID and embed in boarding pass HTML"
-- Quick win: "Use qrcode library to generate PNG, display in img tag"
+**"QR code vs barcode debate"**
+- **Director Decision:** What encoding serves our passengers best? What do gate systems need?
+- **Solution:** Have agent research industry standards, show you examples
+- Consider: QR codes scan faster, barcodes are more universally compatible
+- Quick win: Start with one, add the other in Q3 if needed
 
 **"Seat assignment algorithm is complicated"**
-- **Solution:** Start simple: "Assign window-preference passengers to window seats first"
-- Or use specialist agent: "Build seat assignment algorithm with preference matching"
-- Common issue: Overthinking optimization - simple rules work for demos
-- Quick fix: "Random assignment from available seats as MVP, improve later"
+- **Director Decision:** What's our seat assignment philosophy? Revenue optimization? Passenger satisfaction? Both?
+- **Solution:** Start with simple rules, iterate based on feedback
+- Example rules: Families together, window lovers get windows, balance aircraft weight
+- Defer optimization: Simple heuristics work for demos, sophisticated algorithms are Q3+
 
 **"Boarding pass doesn't look real"**
-- **Solution:** Add to prompt: "Design boarding pass similar to Southwest Airlines"
-- Or use refinement agent: "Make this boarding pass look professional and airline-quality"
-- Show examples: "Include airline branding, large seat number, QR code, barcode aesthetic"
-- Quick win: "Use template from airline boarding pass examples online"
+- **Director Decision:** What information is essential vs nice-to-have? Mobile or print priority?
+- **Solution:** Define requirements, let agent propose design
+- Key elements: Flight number, seat, gate, boarding time, passenger name, QR/barcode
+- Polish matters: This is customer-facing, worth extra iteration
 
-**"Check-in API can't validate bookings"**
-- **Solution:** Use mock data: "Create sample bookings table with 20 test passengers"
-- Or integrate with booking system if available
-- Test with curl: "Test check-in endpoint with booking reference ABC123"
+**"Integration with booking system unclear"**
+- **Director Decision:** Do we integrate in Q1, or use mocks until Q2+?
+- **Solution:** Mock data for early demos, plan integration timeline
+- Consider: Can we shape our mock data to match booking system's format?
+- Parallel work: Ask booking director for API spec while you build with mocks
 
 ---
 
-## TECH STACK SUGGESTIONS
+## TECHNOLOGY DECISIONS
 
-### Option A: Simple & Fast (Recommended for Q1-Q2)
-- **Backend:** Flask (Python) or Express (Node.js)
-- **Frontend:** Vanilla HTML/CSS/JavaScript for seat map
-- **QR Code:** Python qrcode library or qrcode.js
-- **Database:** SQLite or JSON files
-- **Why:** Minimal setup, agents know these well, easy QR generation
+As director, you'll work with your agent teams in Q1 to determine the best tech stack for each service. Focus on business requirements first, then let agents propose technical solutions.
 
-### Option B: Modern Stack (If you're comfortable)
-- **Backend:** FastAPI or Express
-- **Frontend:** React or Vue for interactive seat map
-- **QR Code:** qrcode.js or node-qrcode
-- **Database:** Postgres or SQLite
-- **Why:** More realistic, better interactive capabilities
+### Key Technical Decisions to Make
 
-### Option C: Full-Stack Framework
-- **Framework:** Next.js or Django
-- **QR Code:** Built-in library support
-- **Database:** Built-in SQLite
-- **Why:** Less coordination between frontend/backend
+**Check-in System:**
+- How will passengers look up bookings? (Reference number? Email? Both?)
+- What validations prevent check-in? (Too early? Already checked in? Payment issues?)
+- How to handle special cases? (Minors, groups, special needs)
 
-**Pro tip:** Use whatever you know best. Learning a new framework + learning multi-agent = too much for 30 minutes. Focus on the seat selection UX and boarding pass design - those are the most visual and impressive parts.
+**Seat Assignment:**
+- How should seat maps be displayed? (Interactive? Visual? Accessible?)
+- What algorithm drives seat assignment? (First-come? Optimize revenue? Family preference?)
+- How to balance passenger preferences vs airline needs?
+
+**Boarding Pass:**
+- What format? (Mobile-first? Print-ready? Both?)
+- What encoding? (QR code for efficiency? Barcode for compatibility?)
+- What information is essential vs nice-to-have?
+
+**Pro tip:** In Q1, have your agent teams research and propose solutions. You make the final call based on demo impact, time constraints, and business value.
 
 ---
 
@@ -424,37 +447,37 @@ You can work completely independently with mock data, or optionally integrate:
 
 **First 10 minutes:**
 1. Decide: What will I deliver? (Vision doc? Wireframes? MVP?)
-2. Plan your agent strategy: Which agents for which tasks?
+2. Define key business questions to answer
 3. Start Agent 1 (Researcher or BA): Begin research/vision work
 
 **Minutes 10-50:**
 Use agents for research and planning:
 - Agent 1: Research check-in system best practices
 - Agent 2: Create seat map and boarding pass wireframes
-- Agent 3: Design service architecture
+- Agent 3: Propose service architecture and key decisions
 
 **Last 10 minutes:**
-1. Compile vision document or polish MVP
+1. Compile vision document with your key decisions documented
 2. Practice your vision presentation (3 min)
-3. Prepare to explain your Q2-Q4 strategy
+3. Prepare to explain your Q2-Q4 strategy and why you made these choices
 
 ### Quarter 2: Investor Demo Build (60 min)
 
 **First 5 minutes:**
-1. Review your Q1 vision
-2. Decide which 1-2 services to build
-3. Start Agent 1 (Backend): Build first service
+1. Review your Q1 vision and key decisions
+2. Decide which 1-2 services to build for maximum demo impact
+3. Delegate: Start agents on high-priority services
 
 **Minutes 5-50:**
 Build your investor demo:
-- Agents build services based on Q1 architecture
-- Focus on polish and "wow factor"
-- Test as you go
+- Agents build services (you determine tech WITH them, not before)
+- Focus on polish and "wow factor" - what impresses investors?
+- Make director-level decisions when agents need guidance
 
 **Last 10 minutes:**
 1. Integration and testing
 2. Practice your investor demo
-3. Prepare to answer investor questions
+3. Prepare to answer: "Why this approach?" and "What's next?"
 
 ### Quarter 3 & Beyond: Execute & Adapt
 

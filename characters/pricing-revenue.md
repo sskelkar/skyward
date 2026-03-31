@@ -67,29 +67,44 @@ As a director, you don't code - you **orchestrate teams**. You manage **2-3 agen
 
 ### Recommended Multi-Service Architecture
 
-**Service 1: Pricing Engine API** (Agent Team A)
-- Tech: FastAPI/Flask backend
-- Port: 5003
-- Purpose: Dynamic pricing calculations, price optimization algorithms
-- Team: 1-2 backend agents (data science focus)
+**Service 1: Dynamic Pricing Engine**
+- **Purpose:** Calculate optimal prices based on demand, competition, inventory levels, and time-to-departure
+- **Key Decisions:**
+  - Pricing algorithms (rule-based vs ML-based vs hybrid)
+  - Update frequency (real-time vs batch)
+  - Handling edge cases (sold out flights, competitor blackouts, special events)
+  - Price bounds and safety limits
+- **Integration:** Consumes inventory data and competitor prices, provides prices to booking system
+- **Team:** 1-2 agents with data science focus
 
-**Service 2: Revenue Analytics API** (Agent Team B)
-- Tech: FastAPI/Flask backend
-- Port: 5004
-- Purpose: Revenue metrics, forecasting, competitor analysis
-- Team: 1-2 analytics agents
+**Service 2: Revenue Analytics & Forecasting**
+- **Purpose:** Track revenue metrics, forecast demand, analyze pricing performance
+- **Key Decisions:**
+  - Which metrics matter (yield per seat, load factor, revenue per flight, competitive index)
+  - Forecasting approach (historical trends vs predictive models)
+  - Reporting granularity (per route, per day, per cabin class)
+  - Alert thresholds (when to notify about pricing issues)
+- **Integration:** Consumes booking data and pricing history, provides insights to executives and pricing engine
+- **Team:** 1-2 agents with analytics focus
 
-**Service 3: Competitor Monitor Dashboard** (Agent Team C)
-- Tech: React/Vue/vanilla JS frontend
-- Port: 3001
-- Purpose: Price visualization, competitor tracking, scenario simulator
-- Team: 1-2 frontend agents
+**Service 3: Competitor Intelligence & Monitoring**
+- **Purpose:** Track competitor pricing, visualize market position, simulate scenarios
+- **Key Decisions:**
+  - Data collection strategy (scraping vs APIs vs manual input)
+  - Competitor response modeling (how competitors react to our prices)
+  - Visualization priorities (price comparison, market share, trend analysis)
+  - Scenario planning tools (what-if simulators for pricing strategies)
+- **Integration:** Provides competitor data to pricing engine, displays insights for strategic decisions
+- **Team:** 1-2 agents with frontend and data visualization focus
 
-**Why multiple services?**
+**Why Multiple Services?**
 - ✅ Each agent team has focused responsibility
 - ✅ Services can be built in parallel
 - ✅ Easy to demo incrementally (Service 1 in Q1, add Service 2 in Q2, etc.)
 - ✅ Realistic microservices practice
+- ✅ Clear separation of concerns (pricing logic, analytics, intelligence)
+
+**Director Tip:** You and your agent teams will decide the specific tech stack and implementation details in Q1. Focus on WHAT each service does and WHY it matters, not HOW to build it yet.
 
 📚 **For detailed multi-service patterns:** See [MULTI-SERVICE-GUIDE.md](../MULTI-SERVICE-GUIDE.md)
 
@@ -104,33 +119,35 @@ As a director, you don't code - you **orchestrate teams**. You manage **2-3 agen
 - Research dynamic pricing strategies (airlines, hotels, ride-sharing)
 - Analyze competitor pricing approaches and revenue models
 - Design pricing algorithms and optimization framework
-- Plan your 2-3 service architecture (Pricing Engine, Analytics, Dashboard)
+- Plan your 2-3 service architecture (Pricing Engine, Analytics, Intelligence)
+- Make key architectural decisions with your agent teams
+
+**Key Strategic Decisions to Make:**
+- **Pricing Philosophy:** Simple rules vs ML-driven vs hybrid approach?
+- **Service Boundaries:** Which service owns what responsibilities?
+- **Data Strategy:** What data do you need and where will it come from?
+- **Integration Points:** Which other departments do you need to connect with?
+- **Tech Stack:** What technologies best support your pricing strategy?
 
 **Deliverable Options:**
 - Vision document with pricing strategy and architecture diagram
-- Pricing algorithm design with mathematical models
-- Simple MVP (if time permits) - basic pricing calculator
+- Pricing algorithm design with mathematical models and business rationale
+- Service architecture plan showing purpose, decisions, and integration points
+- Simple MVP (if time permits) to validate core concepts
 
 **Agent Roles to Use:**
 - **Business Analyst:** Research pricing models and revenue optimization strategies
 - **Data Scientist:** Design pricing algorithms and demand forecasting models
 - **Technical Architect:** Design service architecture and data flows
 
-**Example Prompt:**
-```
-"You are a data scientist specializing in airline revenue management.
+**Example Strategic Questions to Explore:**
+- How do airlines balance revenue maximization with competitive positioning?
+- What factors most influence optimal pricing (time, demand, competition)?
+- Should we start simple and add ML later, or build ML-first?
+- How frequently should prices update (real-time vs periodic batches)?
+- What safety mechanisms prevent pricing disasters (too high/low)?
 
-Research dynamic pricing strategies used by major airlines.
-Design a pricing algorithm that considers:
-1. Time to departure (advance purchase curves)
-2. Current demand (booking pace)
-3. Competitor prices
-4. Seasonality and events
-
-Create a mathematical model with formulas and parameters."
-```
-
-**Demo:** Present your vision doc, pricing models, or MVP. Explain your strategy and what you'll build in Q2.
+**Demo:** Present your vision doc, pricing strategy, and architectural decisions. Explain what you'll build in Q2-Q4 and WHY these choices support revenue optimization.
 
 ---
 
@@ -139,28 +156,34 @@ Create a mathematical model with formulas and parameters."
 
 **Your Objectives:**
 - Build 1-2 working services based on Q1 vision
-- Create a demoable pricing system (with intelligent price adjustments)
-- Build revenue dashboard with professional visualizations
-- Focus on what investors want to see: sophisticated optimization
+- Create a demoable pricing system that demonstrates intelligent optimization
+- Show sophisticated logic investors want to see (your "secret sauce")
+- Focus on visual impact and clear business value
+
+**Key Director Decisions:**
+- **What to Build First:** Which service makes the strongest investor impression?
+- **Depth vs Breadth:** One sophisticated service or two simpler ones?
+- **Demo Strategy:** What sequence of actions shows off your pricing intelligence?
+- **IP Showcase:** How do you demonstrate your unique optimization approach?
 
 **Deliverable:**
 - Working pricing engine with dynamic calculations OR
-- Impressive analytics dashboard showing revenue optimization
-- Clear demonstration of "smart" pricing in action
+- Impressive analytics dashboard showing revenue optimization OR
+- Integrated demo showing pricing + analytics working together
+- Clear demonstration of "smart" pricing that outperforms static pricing
+
+**What Investors Want to See:**
+- **Sophisticated Logic:** "Our algorithm considers X factors in real-time..."
+- **Business Impact:** "This increases revenue per seat by Y%..."
+- **Competitive Edge:** "Unlike competitors who use static pricing, we..."
+- **Scalability:** "This architecture can handle Z routes/transactions..."
 
 **Agent Roles to Use:**
-- **Backend Developer:** Build pricing and analytics APIs
-- **Data Scientist:** Implement pricing algorithms
-- **Frontend Developer:** Build polished dashboard
+- **Implementation Agents:** Build the services based on Q1 architecture decisions
+- **Specialist Agents:** Implement specific algorithms or visualizations
+- **Polish Agents:** Refine the demo flow and user experience
 
-**Example Focus:**
-```
-Priority 1: Show sophisticated pricing logic (investors want to see IP)
-Priority 2: Beautiful visualizations (charts, graphs, metrics)
-Priority 3: Real-time optimization demo
-```
-
-**Demo:** Live demo of pricing system to "investors" (gamerunner + other directors).
+**Demo:** Live demo of pricing system to "investors" (gamerunner + other directors). Show the pricing intelligence, explain the business value, and demonstrate clear competitive advantage.
 
 ---
 
@@ -244,30 +267,36 @@ Priority 3: Real-time optimization demo
 
 ### Recommended Patterns for Pricing & Revenue
 
-**Q1-Q2 (Foundation building):** **Parallel Execution** ⚡
-- Agent 1: Pricing Engine API (dynamic pricing calculations)
-- Agent 2: Analytics API (revenue metrics and forecasting)
-- Agent 3: Dashboard (visualizations and monitoring)
+**Q1 (Research & Vision):** **Sequential Strategy Development**
+- Agent 1: Research pricing strategies and industry best practices
+- Agent 2: Design algorithms based on research findings
+- Agent 3: Architect services based on algorithm requirements
+- **Why:** Each agent builds on the previous agent's work to create coherent strategy
+- See TUTORIAL.md "Pattern 2: Sequential Pipeline" for detailed example
+
+**Q2 (Foundation Building):** **Parallel Execution** ⚡
+- Multiple agent teams build different services simultaneously
+- Each team focuses on one service (pricing engine, analytics, intelligence)
 - **Why:** Fastest way to get working end-to-end pricing system
 - See TUTORIAL.md "Pattern 1: Parallel Execution" for detailed example
 
 **Q3-Q4 (Optimization & ML):** **Iterative Refinement** ✨
-- Agent 1: Add ML forecasting or competitor intelligence
-- Agent 2: Review and optimize algorithms
-- **Why:** Build on existing work, incremental improvement
+- Agents enhance existing services with advanced features
+- Focus on optimization, ML models, and sophisticated analytics
+- **Why:** Build on existing foundation, incremental improvement
 - See TUTORIAL.md "Pattern 4: Iterative Refinement" for examples
 
 
 ### Role-Specific Tips
 
-**Separate algorithm design from implementation:**
-One agent designs the pricing model (mathematical formulas), another implements it in code. Keeps logic clear.
+**Separate strategy from implementation:**
+Use one agent to make strategic decisions (algorithm choice, pricing philosophy) and different agents to implement those decisions. Keeps decision rationale clear.
 
-**Use data visualization libraries early:**
-Prompt agents with "Use Chart.js/Plotly" rather than building charts from scratch. Professional visualizations matter for credibility.
+**Think demo-first:**
+Structure your agent teams around what you'll demonstrate: "Team 1 builds the core pricing intelligence, Team 2 builds the analytics that prove it works, Team 3 builds the interface that shows it off."
 
-**Demo-first thinking:**
-Structure your agents around what you'll show: "Agent 1 builds the pricing brain, Agent 2 builds the analytics eyes, Agent 3 builds the executive interface."
+**Focus agents on outcomes, not technologies:**
+Instead of "Build a FastAPI service," say "Build a service that calculates optimal prices based on these factors." Let agents recommend technology based on requirements.
 
 **For prompts and examples:** See TUTORIAL.md sections:
 - "Prompt Engineering for Agents" (templates)
@@ -282,60 +311,56 @@ Structure your agents around what you'll show: "Agent 1 builds the pricing brain
 
 ### Pricing & Revenue-Specific Challenges
 
-**"Pricing algorithm complexity - too many factors"**
-- **Solution:** Start simple, add complexity incrementally
-- Use refinement agent: "Review this pricing formula and simplify it"
-- Agent prompt: "Break down multi-factor pricing into modular functions"
-- Test each factor separately before combining
+**"Too many pricing factors to consider - algorithm is overwhelming"**
+- **Director Decision:** Start with 2-3 core factors, add complexity incrementally
+- **Strategic Approach:** Identify which factors have the biggest revenue impact (time-to-departure, demand) and build those first
+- **Agent Strategy:** One agent designs simple model, another agent later enhances with additional factors
+- **Success Indicator:** Can explain pricing logic in 30 seconds to investors
 
-**"Real-time price updates causing race conditions"**
-- **Solution:** Implement proper locking or queue-based updates
-- Agent prompt: "Add request queuing to prevent concurrent pricing updates"
-- Or simplify: "Batch price updates every 5 minutes instead of real-time"
-- Use caching to reduce calculation overhead
+**"Should prices update in real-time or periodically?"**
+- **Director Decision:** Consider trade-offs between responsiveness and system complexity
+- **Strategic Approach:** Start with periodic updates (every 5-15 minutes), add real-time if needed
+- **Agent Strategy:** Build with update frequency as a configurable parameter, not hardcoded
+- **Success Indicator:** Prices respond to market changes fast enough to capture revenue opportunities
 
-**"Revenue optimization - don't know the math"**
-- **Solution:** Let agents handle the mathematics
-- Agent prompt: "Explain revenue optimization for airlines, then implement the formula"
-- Focus on business logic, let agent translate to code
-- Use simple models first (linear), add sophistication later
+**"Don't know the mathematical models for revenue optimization"**
+- **Director Decision:** Let agents research and propose approaches, then you decide
+- **Strategic Approach:** Start with simple, explainable models before adding ML complexity
+- **Agent Strategy:** Research agent finds industry approaches, design agent proposes model, you approve
+- **Success Indicator:** Can explain the pricing model and justify why it maximizes revenue
 
-**"Competitor price data integration issues"**
-- **Solution:** Start with mock data, standardize the interface
-- Agent prompt: "Create mock competitor API that returns realistic price data"
-- Design clean interface: `GET /competitors/{airline}/prices/{route}`
-- Real integration can come later after interface is proven
+**"How to get competitor pricing data?"**
+- **Director Decision:** Mock data vs real integration - what's good enough for demo?
+- **Strategic Approach:** Start with realistic mock data, design clear interface for future real data
+- **Agent Strategy:** Agent creates mock competitor API that other services consume
+- **Success Indicator:** Demo shows competitive intelligence without dependency on external data
 
-**"Dashboard showing wrong metrics or confusing data"**
-- **Solution:** Define metrics clearly upfront
-- Agent prompt: "Here are the exact revenue metrics I need calculated: [list]. Build API for each."
-- Validate calculations with known test data
-- Use visualization agent: "Make this revenue chart clearer and more intuitive"
+**"Which revenue metrics actually matter?"**
+- **Director Decision:** Define 3-5 key metrics that tell the revenue story
+- **Strategic Approach:** Align metrics with business goals (revenue per seat, load factor, competitive index)
+- **Agent Strategy:** Analytics agent implements metrics you define, visualization agent makes them clear
+- **Success Indicator:** Dashboard answers "Are we making money?" at a glance
 
 ---
 
-## TECH STACK SUGGESTIONS
+## TECH STACK CONSIDERATIONS
 
-### Option A: Python Analytics Stack (Recommended)
-- **Backend:** Flask or FastAPI
-- **ML/Analytics:** pandas, numpy, scikit-learn
-- **Visualization:** Chart.js (frontend) or Plotly
-- **Database:** SQLite for price history
-- **Why:** Python is perfect for analytics and ML
+As a director, you'll work with your agent teams in Q1 to decide on the technology stack. Here are key considerations:
 
-### Option B: JavaScript Full Stack
-- **Backend:** Express.js
-- **Analytics:** Simple-statistics library
-- **Visualization:** Chart.js or D3.js
-- **Database:** MongoDB or SQLite
-- **Why:** JavaScript everywhere
+### What to Think About
+- **Analytics Capability:** You need strong data manipulation and statistical analysis
+- **Visualization Quality:** Professional charts and dashboards matter for credibility
+- **Performance:** Pricing calculations may need to run frequently or in real-time
+- **Data Storage:** Price history, competitor data, and forecasts need persistence
+- **Integration:** How will your services communicate with each other and other departments?
 
-### Option C: Spreadsheet-First
-- **Engine:** Python backend
-- **Interface:** Export to Excel/CSV, visualize there
-- **Why:** Quick prototyping, executives love Excel
+### Common Approaches
+- **Python-centric:** Strong analytics libraries (pandas, numpy), good ML support, easy visualization
+- **JavaScript full-stack:** Unified language across services, rich frontend ecosystem
+- **Hybrid:** Python for heavy analytics, JavaScript for dashboards and APIs
+- **Spreadsheet integration:** Executives often want Excel exports for scenario planning
 
-**Pro tip:** Use pandas for data manipulation - agents are great at generating pandas code.
+**Director Decision Point:** In Q1, work with your agents to evaluate these trade-offs based on your strategy. What matters most - sophisticated ML, beautiful visualizations, or rapid prototyping?
 
 ---
 
@@ -422,36 +447,41 @@ Work independently with mock data, or integrate:
 **First 10 minutes:**
 1. Decide: What will I deliver? (Vision doc? Algorithm design? MVP?)
 2. Plan your agent strategy: Which agents for which tasks?
-3. Start Agent 1 (Researcher or Data Scientist): Begin research/algorithm design
+3. Identify key strategic decisions to make this quarter
+4. Start Agent 1: Begin research or initial architecture exploration
 
 **Minutes 10-50:**
-Use agents for research and planning:
-- Agent 1: Research dynamic pricing strategies
-- Agent 2: Design pricing algorithms based on research
-- Agent 3: Design service architecture
+Use agents to inform your strategic decisions:
+- Research dynamic pricing strategies and revenue optimization approaches
+- Design pricing algorithms and mathematical models
+- Evaluate technology options for your services
+- Map out service architecture and integration points
+- Make key decisions on pricing philosophy and approach
 
 **Last 10 minutes:**
-1. Compile vision document or polish MVP
+1. Compile vision document with your strategic decisions
 2. Practice your vision presentation (3 min)
-3. Prepare to explain your Q2-Q4 strategy
+3. Prepare to explain your Q2-Q4 strategy and rationale
 
 ### Quarter 2: Investor Demo Build (60 min)
 
 **First 5 minutes:**
-1. Review your Q1 vision
-2. Decide which 1-2 services to build
-3. Start Agent 1 (Backend): Build first service
+1. Review your Q1 vision and strategic decisions
+2. Decide which 1-2 services to build first for maximum investor impact
+3. Define what "success" looks like for the demo
+4. Start your first agent team on the priority service
 
 **Minutes 5-50:**
 Build your investor demo:
-- Agents build services based on Q1 architecture
-- Focus on sophisticated algorithms and visualizations
-- Test as you go
+- Agent teams implement services based on Q1 architecture
+- Focus on what impresses investors (sophisticated logic, clear value)
+- Test and refine the demo flow
+- Ensure the pricing "intelligence" is visible and understandable
 
 **Last 10 minutes:**
 1. Integration and testing
-2. Practice your investor demo
-3. Prepare to answer investor questions
+2. Practice your investor demo narrative
+3. Prepare to answer questions about your approach and competitive advantage
 
 ### Quarter 3 & Beyond: Execute & Adapt
 
@@ -470,6 +500,8 @@ Build your investor demo:
 
 ## PARTING WISDOM
 
-> "You have 30 minutes to build what normally takes weeks of data science work. Your secret weapon is coordinating 2-3 agent teams efficiently. The agent that designs the algorithm doesn't have to be the agent that implements it. The agent that calculates revenue doesn't have to be the agent that visualizes it. Specialization > generalization."
+> "You're not here to code pricing algorithms - you're here to make strategic decisions about how pricing should work, then orchestrate agent teams to build it. The best directors know WHAT they want (maximize revenue through intelligent pricing) and WHY it matters (competitive advantage), but let their teams figure out HOW. Your job is vision and decisions, not implementation details."
+
+> "In Q1, decide your pricing philosophy and architecture. In Q2-Q4, your agent teams bring that vision to life while you make course corrections and strategic pivots. The agent that researches pricing strategies doesn't have to be the agent that implements the algorithm. The agent that builds the pricing engine doesn't have to be the agent that visualizes the results. Think like a director, delegate like a pro."
 
 Good luck, Director. The company's profitability is in your hands. 💰📈

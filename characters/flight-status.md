@@ -68,29 +68,40 @@ As a director, you don't code - you **orchestrate teams**. You manage **2-3 agen
 
 ### Recommended Multi-Service Architecture
 
-**Service 1: Status Update API** (Agent Team A)
-- Tech: Flask/FastAPI backend
-- Port: 5001
-- Purpose: Track flight status, position updates, gate changes
-- Team: 1-2 backend agents
+**Service 1: Status Tracking System**
+- **Purpose:** Track real-time flight status, delays, gate changes, and cancellations
+- **Key Decisions:**
+  - How frequently should status updates be pulled/pushed?
+  - What status values do we track (scheduled, delayed, boarding, departed, etc.)?
+  - How do we handle cascading delays (one delayed flight affects the next)?
+- **Integration:** Consumes flight schedule data, provides status to passengers and other departments
+- **Team:** 1-2 agents
 
-**Service 2: Flight Tracking Service** (Agent Team B)
-- Tech: Flask/FastAPI backend + WebSocket/SSE
-- Port: 5002
-- Purpose: Real-time position tracking, delay prediction, notifications
-- Team: 1-2 backend agents
+**Service 2: Real-Time Update & Notification System**
+- **Purpose:** Push live updates to passengers and systems, trigger proactive alerts
+- **Key Decisions:**
+  - When should we notify passengers (delay threshold, gate changes, etc.)?
+  - How do we ensure updates propagate within seconds, not minutes?
+  - What notification channels do we support (SMS, email, push, in-app)?
+- **Integration:** Monitors status changes, sends alerts to passenger-facing systems
+- **Team:** 1-2 agents
 
-**Service 3: Airport Status Board Dashboard** (Agent Team C)
-- Tech: React/Vue/vanilla JS frontend
-- Port: 3000
-- Purpose: Status boards, flight maps, operations dashboard
-- Team: 1-2 frontend agents
+**Service 3: Operations Dashboard & Visualization**
+- **Purpose:** Display status boards, flight maps, and operational analytics
+- **Key Decisions:**
+  - What information is most critical for airport staff vs passengers?
+  - How do we visualize flight positions and routes?
+  - What metrics matter for operations (on-time %, delay trends, etc.)?
+- **Integration:** Displays data from tracking and notification services
+- **Team:** 1-2 agents
 
 **Why multiple services?**
 - ✅ Each agent team has focused responsibility
 - ✅ Services can be built in parallel
 - ✅ Easy to demo incrementally (Service 1 in Q1, add Service 2 in Q2, etc.)
 - ✅ Realistic microservices practice for real-time systems
+
+**Tech decisions are yours to make in Q1 with your agent teams.**
 
 📚 **For detailed multi-service patterns:** See [MULTI-SERVICE-GUIDE.md](../MULTI-SERVICE-GUIDE.md)
 
@@ -129,11 +140,12 @@ Analyze how FlightRadar24 and FlightAware handle:
 4. Airport status boards
 
 Design our architecture for:
-- Status Update API (flight status, gate changes)
-- Flight Tracking Service (positions, ETAs)
-- Dashboard UI (boards, maps, alerts)
+- Status Tracking System (what status data we track, how we handle updates)
+- Real-Time Update & Notification System (when/how we alert passengers)
+- Operations Dashboard (what we visualize, what metrics we track)
 
-Focus on data freshness and notification speed."
+Focus on data freshness and notification speed. Recommend tech approaches but
+let the team decide final stack in implementation."
 ```
 
 **Demo:** Present your vision doc, wireframes, or MVP. Explain your strategy for real-time updates and what you'll build in Q2.
@@ -289,45 +301,59 @@ Structure your agents around what you'll show: "Agent 1 builds the data I'll que
 
 ```
 Agent 1 (Status Backend):
-"Build flight status system:
+"Build flight status tracking system:
 
-Database:
-- FlightStatus: flight_id, flight_number, status, scheduled_time, actual_time, gate, terminal
-- StatusHistory: status_id, flight_id, old_status, new_status, timestamp, reason
+WHAT to track:
+- Flight status (scheduled, delayed, boarding, departed, in_air, landed, cancelled)
+- Scheduled vs actual times
+- Gate and terminal assignments
+- Status change history
 
-Status values: 'scheduled', 'delayed', 'boarding', 'departed', 'in_air', 'landed', 'arrived', 'cancelled'
+KEY DECISIONS for you to make:
+- What status values do we need?
+- How do we model status transitions?
+- What data do we store in history?
+- How do we handle time zones?
 
-API:
-- GET /flights (all flights with current status)
-- GET /flights/{number} (specific flight details)
-- PUT /flights/{id}/status (update status)
-- GET /flights/{id}/history (status change timeline)
+Build APIs that let us:
+- Query current status for all flights
+- Look up specific flight details
+- Update status when things change
+- View status history timeline
 
-Generate 50 sample flights with realistic statuses."
+Generate realistic sample data for demo."
 
 Agent 2 (Status Board UI):
-"Build departure/arrival board (like at airport):
-- Table with columns: Flight, Destination/Origin, Scheduled, Actual, Status, Gate
-- Color coding:
-  - Green: On time
-  - Yellow: Delayed
-  - Red: Cancelled
-  - Blue: Boarding
-- Auto-refresh every 30 seconds
-- Sort by departure time
+"Build departure/arrival board display:
 
-Make it look like real airport displays."
+WHAT it shows:
+- Flight number, destination/origin, times, status, gate
+- Real-time updates without page refresh
+- Clear visual status indicators
+- Sorted by departure time
+
+KEY DECISIONS for you to make:
+- How should we visualize different statuses (colors, icons, etc.)?
+- What refresh strategy works best (polling, websockets, etc.)?
+- What information is most critical to surface?
+
+Make it look like professional airport displays."
 
 Agent 3 (Flight Map):
-"Build live flight map visualization:
-- Map showing flight routes (simple lines)
-- Plane icons at current positions
-- Click plane → show flight details
-- Color by status (green on-time, yellow delayed)
-- Show origin/destination markers
+"Build live flight tracking visualization:
 
-Use simple map library (Leaflet.js) or just SVG.
-Simulate flight positions between origin and destination."
+WHAT it shows:
+- Flight routes and current positions
+- Visual status indicators
+- Interactive flight details
+- Origin and destination markers
+
+KEY DECISIONS for you to make:
+- How do we visualize flight positions (choose a mapping approach)?
+- How do we calculate/simulate positions between origin and destination?
+- What level of detail is needed for demo vs production?
+
+Create something visually impressive for demos."
 ```
 
 **Timeline:**
@@ -342,54 +368,53 @@ Simulate flight positions between origin and destination."
 
 ```
 Agent 1 (Alert Engine):
-"Build flight alert system:
+"Build proactive flight alert system:
 
-Alert triggers:
+WHAT triggers alerts:
 - Status changes (delayed, gate change, cancelled)
-- Delay > 30 minutes
-- Gate change
-- Early departure
-- Weather warnings for route
+- Significant delays
+- Early departures
+- Gate reassignments
 
-Alert channels:
-- Email
-- SMS
-- Push notification
-- In-app alert
+KEY DECISIONS for you to make:
+- When exactly should we notify? (delay threshold, timing, frequency)
+- What notification channels do we support?
+- How do we prevent notification spam?
+- How do we track notification delivery and engagement?
 
-API:
-- POST /alerts/subscribe (flight_number, passenger_id, channels)
-- GET /alerts/{passenger_id} (active alerts)
-- POST /alerts/send (trigger notification)
-
-Track: alert sent, delivered, opened."
+Build system that lets passengers subscribe to flights and receive timely alerts."
 
 Agent 2 (Delay Predictor):
-"Build delay prediction system:
+"Build delay prediction and early warning system:
 
-Factors:
-- Weather at origin/destination
-- Previous flight delays (cascading)
-- Aircraft turnaround time
-- Time of day (peak vs off-peak)
+WHAT it predicts:
+- Likelihood of delays before they're officially announced
+- Cascading delay effects (one delayed flight impacts others)
+- Risk factors affecting on-time performance
 
-Calculate delay probability:
-- Green: < 10% chance
-- Yellow: 10-50% chance
-- Red: > 50% chance
+KEY DECISIONS for you to make:
+- What factors should we consider (weather, previous delays, turnaround time)?
+- How do we calculate and display probability/confidence?
+- When should we show predictions vs confirmed delays?
+- How accurate do predictions need to be to be useful?
 
-Show 'likely delayed' warnings before official delay announced.
-API: GET /flights/{id}/delay-prediction"
+Create proactive warnings that help passengers plan ahead."
 
 Agent 3 (Notification UI):
-"Build passenger notification center:
-- List of all active alerts for user
-- Notification history
-- Subscription management (which flights to track)
-- Alert preferences (email vs SMS)
-- Test notification sender
+"Build passenger notification management interface:
 
-Create notification templates (delay, gate change, cancellation)."
+WHAT it manages:
+- Active alerts and notification history
+- Flight subscriptions and tracking
+- Notification preferences and channels
+- Alert testing and preview
+
+KEY DECISIONS for you to make:
+- How should passengers control what they're notified about?
+- How do we display notification templates and previews?
+- What notification settings are most important?
+
+Make it easy for passengers to stay informed without being overwhelmed."
 ```
 
 ---
@@ -399,48 +424,55 @@ Create notification templates (delay, gate change, cancellation)."
 
 ```
 Agent 1 (Operations Analytics):
-"Build flight operations analytics:
+"Build flight operations analytics and metrics:
 
-Metrics:
-- On-time performance (% of flights on time)
-- Average delay duration
-- Cancellation rate
-- Delays by reason (weather, mechanical, crew, etc.)
-- Cascading delay tracking (delayed flight affects next flight)
+WHAT to measure:
+- On-time performance and reliability
+- Delay patterns and trends
+- Cancellation rates and reasons
+- Cascading delay impacts
 
-Calculate:
-- By route
-- By time of day
-- By aircraft
-- Trend over time
+KEY DECISIONS for you to make:
+- What metrics matter most for operations?
+- How do we categorize and track delay causes?
+- How do we identify and track cascading delays?
+- What time periods and comparisons are meaningful?
 
-API: GET /analytics/performance"
+Build analytics that help operations teams understand and improve performance."
 
 Agent 2 (Disruption Dashboard):
-"Build operations control dashboard:
-- Real-time view of all flights
-- Highlight delayed/cancelled flights
-- Show ripple effects (delay causes 3 downstream delays)
-- Weather overlay on map
-- Quick actions (send notifications, reassign gates)
-- Crisis mode (mass cancellation handling)
+"Build operations control center interface:
 
-Make it look like airline operations center."
+WHAT it displays:
+- Real-time flight status overview
+- Disruptions and their ripple effects
+- Crisis situations requiring intervention
+- Quick action capabilities
+
+KEY DECISIONS for you to make:
+- How do we visualize disruptions and their downstream impacts?
+- What information is most critical during crisis situations?
+- What quick actions should operators be able to take?
+- How do we prioritize and surface the most urgent issues?
+
+Make it look and feel like a professional airline operations center."
 
 Agent 3 (Historical Tracking):
-"Build flight history system:
-- Complete status timeline for any flight
-- On-time performance history by route
-- Delay pattern analysis
-- Seasonal trends
-- Reliability scoring
+"Build flight history and trend analysis:
 
-Visualize:
-- Status change timeline
-- Delay duration charts
-- Reliability heatmap
+WHAT it tracks:
+- Complete status timeline for flights
+- Historical on-time performance
+- Delay patterns and seasonality
+- Route and aircraft reliability
 
-Store 30 days of historical data for demo."
+KEY DECISIONS for you to make:
+- How much history should we store and display?
+- How do we visualize trends and patterns?
+- What comparisons are most valuable?
+- How do we calculate and display reliability scores?
+
+Create insights that help predict and prevent future delays."
 ```
 
 ---
@@ -450,36 +482,55 @@ Store 30 days of historical data for demo."
 
 ```
 Agent 1 (Flight Simulator):
-"Build flight position simulator:
-- Simulate flights moving from origin to destination
-- Update position every 30 seconds
-- Progress: 0% (at gate) → 100% (arrived)
-- Include phases: taxi, takeoff, cruise, descent, landing
-- Random delays injection (5% chance per flight)
+"Build realistic flight simulation for demos:
 
-Make it look realistic with simulated speeds and routes.
-API: Continuously updates flight positions."
+WHAT it simulates:
+- Flight progression from origin to destination
+- Position updates and flight phases
+- Realistic delays and disruptions
+- Status changes throughout journey
+
+KEY DECISIONS for you to make:
+- How frequently should positions update?
+- How do we make simulated flight paths look realistic?
+- What flight phases should we model (taxi, cruise, landing, etc.)?
+- How often should we inject delays for demo realism?
+
+Create a convincing simulation that makes demos look live and dynamic."
 
 Agent 2 (Live Update Engine):
-"Build real-time update system:
-- WebSocket or Server-Sent Events for live updates
-- Push status changes to all connected clients
-- No page refresh needed
-- Smooth animations for status transitions
-- Show 'LIVE' indicator on dashboard
+"Build real-time update delivery system:
 
-Make the board update automatically like real airport displays."
+WHAT it delivers:
+- Instant status updates to all connected clients
+- Automatic refresh without user action
+- Smooth visual transitions
+- Live indicators and animations
+
+KEY DECISIONS for you to make:
+- What's the best approach for pushing updates (websockets, polling, SSE)?
+- How do we ensure updates propagate within seconds?
+- How do we handle visual transitions smoothly?
+- What feedback tells users they're seeing live data?
+
+Make the system feel truly real-time like professional airport displays."
 
 Agent 3 (Multi-Flight Tracker):
-"Build personal flight tracker:
-- User can 'follow' multiple flights
-- Dashboard shows all tracked flights
-- Side-by-side comparison
-- Alerts for any status changes
-- Share tracking link with others
-- Embed flight status widget
+"Build personal flight tracking and sharing:
 
-Let users track friends/family flights."
+WHAT it enables:
+- Tracking multiple flights simultaneously
+- Comparing flight statuses side-by-side
+- Sharing tracking with others
+- Embedded status widgets
+
+KEY DECISIONS for you to make:
+- How should users manage their tracked flights?
+- What's the best way to display multiple flights?
+- How do we enable sharing and embedding?
+- What alerts matter for personal flight tracking?
+
+Let passengers easily track and share flight status with friends and family."
 ```
 
 ---
@@ -491,61 +542,58 @@ Let users track friends/family flights."
 ### Flight Status & Tracking-Specific Challenges
 
 **"Don't have real flight position data"**
-- **Solution:** Tell agent: "Simulate flight positions based on departure time and route duration. Calculate progress percentage and interpolate lat/lon between origin and destination. Update position every 30 seconds."
-- Or use integration agent: "Create flight simulator that progresses flights from 0% to 100% with realistic phases: taxi, takeoff, cruise, descent, landing"
-- Quick fix: Simple linear interpolation between two points
+- **Solution:** Work with your agents to design a simulation approach. Key decision: How do you model flight progression realistically? Consider phases (taxi, cruise, landing) and update frequencies.
+- Director mindset: "We need simulated positions that look real for demos - what approaches should we explore?"
 
 **"Status board looks terrible / like a basic HTML table"**
-- **Solution:** Be specific in prompts: "Style like real airport departure boards - dark background, monospace font, yellow/white text, blinking BOARDING status"
-- Show examples: "Look at real FIDS (Flight Information Display System) for reference"
-- Dedicate Agent 2 purely to visual polish: "Make this status board look like a professional airport display"
+- **Solution:** Set clear expectations for visual quality. Reference real systems (FIDS displays at airports).
+- Director mindset: "The status board needs to look professional - research real airport displays and make design decisions about layout, colors, and information hierarchy."
 
 **"Real-time updates don't work / require manual refresh"**
-- **Solution:** Start simple with polling: "Use setInterval to fetch status every 30 seconds"
-- For advanced: "Implement Server-Sent Events for push updates from backend"
-- Use integration agent to bridge: "Connect frontend polling to backend status changes"
-- Quick win: "Add auto-refresh every 30 seconds with visual indicator"
+- **Solution:** This is a key architectural decision. Have your agents research and recommend update strategies (polling, websockets, SSE) with tradeoffs.
+- Director mindset: "Updates must happen automatically - research approaches and decide what works best for our use case."
 
 **"Map visualization is too complex to build quickly"**
-- **Solution:** Add to prompt: "Use Leaflet.js library for simple map with markers and lines"
-- Or simplify: "Create SVG-based flight map - just draw lines between origin/destination with plane icon at current position"
-- Quick win: "Show flight route as line with progress indicator, no need for real geography"
+- **Solution:** Scope appropriately. Decide what level of sophistication you need for your demo vs production goals.
+- Director mindset: "We need flight visualization - research options and recommend an approach that balances visual impact with implementation time."
 
 **"Demo shows static data - not impressive for 'real-time' system"**
-- **Solution:** Use simulation agent: "Create background simulator that randomly delays flights, changes gates, and updates positions every 30 seconds during demo"
-- Or use refinement agent: "Add demo mode that injects realistic status changes to show live updates"
-- Test your demo setup 2 minutes before presenting to ensure updates are visible
+- **Solution:** Plan for simulation as a deliberate feature. Real-time systems need dynamic data for compelling demos.
+- Director mindset: "Our demos must show live updates - design a simulation system that makes our real-time capabilities visible."
 
 **"Can't show accurate ETAs or delay predictions"**
-- **Solution:** Tell agent: "Calculate ETA based on current position, remaining distance, and average speed. Add random delay factor for realism."
-- Or use data agent: "Build simple delay predictor - if previous flight delayed, next flight 70% likely delayed. Show prediction confidence."
-- Quick win: "Show basic ETA calculation - scheduled time plus current delay duration"
+- **Solution:** This is a product decision. Define what accuracy means for your system and what factors to consider.
+- Director mindset: "What prediction capabilities are valuable vs realistic to build? Research approaches and decide on scope."
 
 ---
 
-## TECH STACK SUGGESTIONS
+## TECH CONSIDERATIONS
 
-### Option A: Python + JavaScript Frontend (Recommended)
-- **Backend:** Flask or FastAPI
-- **Frontend:** HTML/CSS/JavaScript
-- **Map:** Leaflet.js or simple SVG
-- **Real-time:** Simple polling or SSE
-- **Database:** SQLite for flight data
-- **Why:** Easy to build status APIs and boards
+**You'll decide tech stack with your agent teams in Q1.** Here are some considerations:
 
-### Option B: Node.js Real-Time Stack
-- **Backend:** Express.js with Socket.io
-- **Frontend:** React
-- **Map:** Leaflet or Mapbox
-- **Real-time:** WebSockets via Socket.io
-- **Why:** Great for real-time updates
+### Key Technical Decisions to Make
 
-### Option C: Data Visualization Focus
-- **Backend:** Any
-- **Frontend:** D3.js for visualizations
-- **Why:** Beautiful data-driven displays
+**Real-Time Update Strategy:**
+- How will you push updates to clients? (polling, websockets, server-sent events)
+- What update frequency balances freshness with performance?
+- How do you handle many concurrent connections?
 
-**Pro tip:** Focus on the status board and map visualization - those are the most impressive and visual parts.
+**Data Storage:**
+- What data needs to be persisted vs in-memory?
+- How do you store and query status history?
+- How do you handle time zones and timestamps?
+
+**Visualization Approach:**
+- How will you render maps and flight positions?
+- What libraries or approaches work best for status boards?
+- How do you create smooth, live-updating displays?
+
+**Integration Strategy:**
+- How do services communicate with each other?
+- What data formats work best (JSON, Protocol Buffers, etc.)?
+- How do you handle service failures gracefully?
+
+**Your agent teams will research options and recommend approaches based on your requirements.**
 
 ---
 

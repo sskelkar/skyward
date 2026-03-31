@@ -140,20 +140,25 @@ Give them 5 minutes to summon their first agent: "Build a Hello World API"
 
 ## CAMPAIGN TIMELINE
 
-### The Full Epic (6 Hours: 10am-4pm)
+### The Full Workshop (6-6.5 Hours: 10am-4pm or 4:30pm)
 
 ```
-10:00 - 10:30  Tutorial: Learning the Magic
-10:30 - 11:30  Q1: The Vision - Planning the Dream (60 min)
-11:30 - 12:30  Q2: The Prototype - Building for Investors (60 min)
-12:30 - 13:00  The Investor Gauntlet - Judgment Day
+10:00 - 10:30  Tutorial: Onboarding (30 min)
+10:30 - 11:30  Q1: The Vision (45-60 min, flexible)
+11:30 - 12:30  Q2: The Prototype (45-60 min, flexible)
+12:30 - 13:00  The Investor Gauntlet (30 min)
 
-13:00 - 14:00  ═══ THE FEAST (Lunch Break) ═══
+13:00 - 14:00  ═══ LUNCH BREAK ═══
 
-14:00 - 14:45  Q3: The Chaos Quarter - DICE DRIVEN CRISIS (45 min)
-14:45 - 15:30  Q4: The Launch Sprint - Going Live (45 min)
-15:30 - 16:00  The Reckoning - Scores Revealed, VP Crowned
+14:00 - 15:00  Q3: Market Challenges (45-60 min, optional chaos)
+15:00 - 16:00  Q4: Launch Sprint (45-60 min, optional chaos)
+16:00 - 16:30  Performance Review (30 min)
 ```
+
+**Timing Flexibility:**
+- Quarters can be 45-60 min based on group pace
+- Chaos events are OPTIONAL in Q3 and Q4 (gamerunner's discretion)
+- Total time: 6-6.5 hours depending on quarter lengths
 
 ---
 
@@ -199,7 +204,30 @@ Each director presents. React as the CEO:
 - Curious: *"Interesting choice. Can you deliver on that?"*
 - Concerned: *"That's ambitious. Very ambitious."*
 
-**No scoring in Q1** - just set the tone. Close with:
+**Q1 Scoring (0-3 points):**
+
+Score based on strategy quality, NOT code:
+
+**3 Points - Exceptional Vision:**
+- Clear, well-researched strategy
+- Thoughtful architecture with concrete service breakdown
+- Realistic roadmap for Q2-Q4
+- Demonstrates understanding of multi-agent approach
+
+**2 Points - Solid Planning:**
+- Clear direction and basic architecture
+- Feasible plan for Q2-Q4
+- Shows planning effort
+
+**1 Point - Basic/Vague:**
+- Unclear strategy or overly ambitious
+- Minimal planning or unrealistic expectations
+- Rushed or incomplete vision
+
+**0 Points - No Vision:**
+- Nothing prepared or completely off-track
+
+Close with:
 
 > "Visions accepted. Now comes the hard part - building them. We have investors arriving in Q2. Don't let me down."
 
@@ -294,88 +322,68 @@ Step aside. Calculate scores using the rubric. Return with gravitas.
 
 ---
 
-### Quarter 3: The Chaos Quarter (45 minutes)
+### Quarter 3: Market Challenges (45-60 minutes)
 
-**The Random Disaster Generator**
+**The Standard Opening**
 
-Pull out your d6. Hold it up.
-
-> "Hope you enjoyed lunch, Directors. Because we're about to simulate what every startup inevitably experiences: something going catastrophically wrong.
+> "Welcome back from lunch, Directors. Q3 - we're halfway through the year.
 >
-> It's July. SkywardAI has been live for 3 months. Customers are actually using your stuff. Revenue is happening. You're thinking maybe you'll make it.
+> It's July. SkywardAI has been live for 3 months. You've got traction, you've got customers, you've got momentum. Time to keep building on what you started in Q1-Q2.
 >
-> And then...
+> This quarter: continue executing on your roadmap. Polish existing features, add new capabilities, prepare for the final Q4 launch push.
+>
+> You've got 45-60 minutes. Make them count."
+
+**OPTIONAL: The Chaos Event**
+
+**Gamerunner Decision:** Do you want to introduce chaos this quarter? Consider:
+- ✅ **Yes, add chaos if:** Group is doing well, energy is high, they can handle pressure, adds excitement
+- ❌ **Skip chaos if:** Group is struggling, behind schedule, overwhelmed, need focus time
+
+**If you choose chaos, introduce it 10-15 minutes into the quarter:**
+
+Pull out your d6. Hold it up mid-quarter.
+
+> "Actually, Directors... something just came up."
 >
 > *[dramatic pause]*
 >
-> ...the universe reminds you that startups are chaos engines. Let's see what breaks today."
+> "Welcome to startup reality. Let's see what fires we're putting out today."
 
-**Roll the die in front of everyone. Read the result with appropriate startup panic energy.**
+**Roll the die. Read the result with appropriate startup panic energy.**
 
 **Roll 1: CRITICAL BUG**
-
-> "3 AM. Your phone explodes with alerts. A critical bug in the [roll randomly for department] system caused a cascading failure. Every. Single. Booking. From the past hour. Corrupted.
->
-> Twitter is melting down. #SkywardAIFail is trending. The CEO is on a red-eye flight home and she's calling every 5 minutes demanding updates.
->
-> 45 minutes. Fix it. Or we're finished."
+> "3 AM alert storm. Critical bug in [department] system corrupted every booking in the past hour. #SkywardAIFail is trending. The CEO is calling every 5 minutes. You have 45 minutes to fix it or we're done."
 
 **Roll 2: COMPETITOR ATTACK**
-
-> "Breaking news alert on your phone. MegaAir - our biggest competitor - just launched [invent a feature]. TechCrunch's headline: 'SkywardAI Already Falling Behind.'
->
-> The CEO's text: 'Find me in the office. NOW.'
->
-> 45 minutes to respond. Ship something better, or explain to the board why we're losing."
+> "MegaAir just launched [feature]. TechCrunch headline: 'SkywardAI Already Falling Behind.' CEO's text: 'Office. NOW.' Ship something better in 45 minutes or explain why we're losing."
 
 **Roll 3: REGULATORY AUDIT**
-
-> "Letter in the mail. Government seal. 'Department of Transportation - Data Privacy Audit Notice.'
->
-> Translation: Government lawyers are arriving in 45 minutes to inspect our GDPR compliance and accessibility features. If we fail? $500,000 fine and front-page news.
->
-> Move. NOW."
+> "DOT Privacy Audit notice. Government lawyers arriving in 45 minutes to inspect GDPR compliance and accessibility. Failure = $500K fine + front-page news. Move."
 
 **Roll 4: INFLUENCER MELTDOWN**
-
-> "Slack notification. Then another. Then fifty more.
->
-> @TechReviewerGuru (5M followers) just posted: 'THREAD: My NIGHTMARE experience with @SkywardAI. This so-called "tech-forward" airline is a dumpster fire. 1/47'
->
-> They're live-streaming. On Twitch. Showing every bug. Every error message. Every broken feature. Chat is already making memes.
->
-> 45 minutes to ship fixes, apologize publicly, or pivot to damage control before this becomes a Harvard Business School case study on what NOT to do."
+> "@TechReviewerGuru (5M followers) is live-streaming on Twitch: 'My NIGHTMARE @SkywardAI experience - 47 tweet thread.' Showing every bug, every error. Chat is making memes. 45 minutes to ship fixes or do damage control before this goes viral."
 
 **Roll 5: ACQUI-HIRE RAID**
-
-> "Your phone buzzes. It's your best backend engineer: 'Hey, can we talk? MegaAir just offered me 2x salary, equity, and a Director title. They're making offers to the whole team.'
->
-> Then another engineer messages. Then another.
->
-> MegaAir isn't trying to compete with you. They're trying to hire away your entire engineering org. If you lose 3+ engineers, the company is toast.
->
-> 45 minutes. Build something so impressive that your team remembers why they joined a scrappy startup instead of Big Corporate. Or watch your company dissolve."
+> "Your best engineers are getting 2x salary offers from MegaAir. Multiple messages: 'Can we talk?' MegaAir is trying to hire away your entire team. 45 minutes to build something impressive enough that they remember why they joined a startup."
 
 **Roll 6: PARTNERSHIP OPPORTUNITY**
+> "Expedia wants to integrate. Working API connecting [2 departments] within 45 minutes = $2M partnership deal. This is your moonshot."
 
-> "Call from Expedia. They want to integrate with SkywardAI. If we can provide a working API that connects [roll for 2 random departments] within 45 minutes, we get a $2M partnership deal.
->
-> Clock's ticking. This is your moonshot."
-
-**The Scramble (38 minutes)**
+**The Scramble (if chaos introduced)**
 
 Let them work. Add urgency every 8-10 minutes:
 - "30 minutes left and Twitter is still angry..."
 - "20 minutes... the CEO is asking for an update..."
 - "10 MINUTES... this is it..."
 
-**The Aftermath (5 minutes)**
+**Quick Check-in (last 5 minutes)**
 
-Quick demos. Judge harshly but fairly. Apply scoring based on how they handled the crisis.
+Quick status updates from each director. If chaos was introduced, judge how they handled it (contributes to delivery score). If no chaos, just check progress on their roadmap.
 
 ---
 
-### Quarter 4: The Launch Sprint (45 minutes)
+### Quarter 4: Launch Sprint (45-60 minutes)
 
 **The Launch Announcement**
 
@@ -383,15 +391,15 @@ Quick demos. Judge harshly but fairly. Apply scoring based on how they handled t
 >
 > The CEO bursts into the all-hands Zoom looking like she's had four espressos and zero sleep:
 >
-> 'Okay people, this is it. In 45 minutes, we're flipping the switch. Real users. Real money. Real Hacker News comments tearing apart our product.
+> 'Okay people, this is it. We're launching in the next hour. Real users. Real money. Real Hacker News comments tearing apart our product.
 >
-> You've got 45 minutes for final polish. Fix anything that would embarrass us on launch day. Make error messages that don't say "Error: undefined at line 47". Add loading states so people don't think it's broken. Handle edge cases. Make it look like adults built this.
+> Final polish time. Fix anything that would embarrass us on launch day. Make error messages that don't say "Error: undefined at line 47". Add loading states so people don't think it's broken. Handle edge cases. Make it look like adults built this.
 >
-> In 45 minutes, we either become a real company or a "What Happened to..." blog post. Ship it.'
+> We either become a real company today or a "What Happened to..." blog post. Ship it.'
 >
 > This is launch day, Directors. Time to find out if you built something people actually want."
 
-**During Launch Prep (38 minutes)**
+**During Launch Prep (First 25-35 minutes)**
 
 The energy should shift from building to refining:
 - "Test your error handling!"
@@ -399,13 +407,29 @@ The energy should shift from building to refining:
 - "Does it look professional?"
 - "Have you practiced your launch demo?"
 
-Call time at intervals: "30 minutes... 20 minutes... 10 MINUTES... 5 MINUTES..."
+**OPTIONAL: Last-Minute Crisis**
 
-**The Launch Demo (5 minutes)**
+**Gamerunner Decision:** Want to add one final challenge? Consider:
+- ✅ **Yes, add chaos if:** You want to simulate realistic launch day stress, group can handle it, chaos in Q3 went well
+- ❌ **Skip chaos if:** Group needs focus time for polish, Q3 was chaotic enough, running behind schedule
 
-Make this ceremonial. Quick demos from each director.
+**If you choose chaos, introduce it ~20-30 minutes into the quarter:**
 
-After all demos:
+> "Uh, Directors... we have a situation. *[pull out d6 or choose a scenario]*
+>
+> You've got to handle this AND still launch on time. Welcome to production."
+
+**Roll for scenario or pick one that fits the narrative (same table as Q3, or choose something launch-specific like "Key investor wants live demo in 15 minutes" or "Major bug found in production staging")**
+
+**Final Push (Last 10-15 minutes)**
+
+Call time urgently: "20 minutes to launch... 10 MINUTES... 5 MINUTES..."
+
+**The Launch Demo (last 5-10 minutes)**
+
+Make this ceremonial. Quick demos from each director showing their final product.
+
+**After all demos:**
 
 > "Okay. It's 11:59pm.
 >
@@ -567,11 +591,30 @@ Maximum possible: 42 points
 
 ## THE DICE OF FATE
 
-### The Crisis Table (Q3 Only)
+### Crisis Events (Optional for Q3 and/or Q4)
 
-At the start of Q3, roll 1d6 publicly. The die determines which crisis strikes the company during the Chaos Quarter.
+**When to Use:** Gamerunner's discretion. Use when:
+- Group is performing well and can handle added pressure
+- Energy needs a boost
+- You want to simulate realistic startup chaos
+- Time permits (chaos events add 10-15 min of response time)
 
-**As Gamerunner, adapt these to what directors actually built.** If the Booking director built an amazing system, maybe their system fails in the crisis. Make it personal and dramatic.
+**When to Skip:**
+- Group is struggling or behind schedule
+- Directors need uninterrupted build time
+- Already chaotic enough without dice
+
+**How to Use:**
+1. Roll 1d6 publicly (or choose a scenario that fits the narrative)
+2. Announce the crisis with dramatic startup energy
+3. Give directors time to respond (adjust their quarter time accordingly)
+4. Judge their response as part of delivery score
+
+**Timing:**
+- **Q3:** Introduce 10-15 min into the quarter if using
+- **Q4:** Introduce 20-30 min into the quarter if using (gives time for polish first)
+
+**As Gamerunner, adapt these to what directors actually built.** If the Booking director built an amazing system, maybe their system is the one that fails. Make it personal and dramatic.
 
 ### Optional: Chaos Modifiers
 
@@ -601,60 +644,34 @@ Display scores on the board transparently. Show the formula. Let them see everyt
 
 **Phase 2: Individual Judgment (15 min)**
 
-Go through each director. Use this template, but speak it dramatically:
+Go through each director (~2 min each). Template:
 
 > "[Director Name], Director of [Department]...
 >
-> Your journey began 1 year ago with a vision. Let's see how that vision became reality.
+> **Delivery:** [X/12] - Your finest hour: Q[Y] when you [achievement].
+> **Tech Debt:** [X/15] - [Code quality observation]
+> **Efficiency:** [X/10] - [Cost observation]
+> **Collaboration:** [+X] - [Teamwork observation]
 >
-> **Delivery:** [X/12 points]. You consistently [pattern]. Your finest hour was Q[Y] when you [achievement]. [Observation about struggles or triumphs]
+> **Total: [XX/42 points]**
 >
-> **Technical Debt:** [X/15 points]. [Code quality observation - did they take shortcuts or build it right?]
->
-> **Resource Efficiency:** [X/10 points]. You spent [amount] on API costs, showing [efficiency observation].
->
-> **Collaboration:** [bonus]. [Teamwork observation]
->
-> **Total Score: [XX/42 points]**
->
-> What you did well: [2-3 specific things]
-> What to improve: [1-2 areas]
->
-> Thank you for your service to SkywardAI."
+> Strengths: [2 specific things]. Areas to improve: [1-2 areas]. Thank you."
 
 **Phase 3: The Ascension (5 min)**
 
-Build maximum suspense:
+Build suspense - announce top 3, then the VP winner:
 
-> "Directors... the board has deliberated on your futures.
+> "The board has deliberated. Everyone gets promoted to Senior Director. But there can be only one VP of Engineering.
 >
-> This was not an easy decision. All of you have shown excellence. All of you will be promoted to Senior Director effective immediately.
->
-> But there can be only one VP of Engineering.
->
+> In third: [Name] with [X] points. Well done.
 > [Pause]
+> In second: [Name] with [Y] points. Outstanding.
+> [Long pause]
 >
-> In third place, with [X] points: Director [Name]. Well done.
+> Your new VP of Engineering... with [Z] points... Director [Winner] of [Department]!
 >
-> [Pause]
->
-> In second place, with [Y] points: Director [Name]. Outstanding work.
->
-> [Long pause. Let tension build.]
->
-> And your new VP of Engineering...
->
-> With [Z] points...
->
-> Director [Winner's Name] of [Department]!
->
-> [Applause]
->
-> Congratulations, VP [Name]. You demonstrated [key strength that set them apart].
->
-> To everyone else: you are all Senior Directors of SkywardAI. You built a company from nothing. That's no small feat.
->
-> Well done, all of you."
+> Congratulations, VP [Name]. You demonstrated [key strength].
+> To everyone: you built a company from nothing. Well done."
 
 **Phase 4: The Reflection (Optional 5-10 min)**
 
@@ -684,10 +701,13 @@ Solution: Pair them with a faster director as "mentor." Give simpler scope. Prov
 Solution: Make it optional. "Real integration is worth bonus points. Mocked integration is acceptable."
 
 **Dice rolls feel unfair:**
-Solution: "Directors, the real world is random. This tests your adaptability." Offer one re-roll token per game.
+Solution: "Directors, the real world is random. This tests your adaptability." Offer one re-roll token per game. Or skip chaos events entirely if group prefers.
 
 **Running out of time:**
-Solution: Reduce Q3-Q4 to 30-40 min each if desperate. Never cut Q1-Q2 or Investor Demo.
+Solution: Run quarters at 45 min instead of 60 min. Skip chaos events in Q3/Q4. Never cut Q1-Q2 or Investor Demo.
+
+**Group cruising too easily:**
+Solution: Run quarters at 60 min, introduce chaos in both Q3 and Q4, ask tougher questions during demos.
 
 **Claude access fails:**
 Solution: Pair programming with working director. Use backup account. Last resort: pivot to planning instead of building.
@@ -765,12 +785,29 @@ Carol (Recs)  | 3  | 2  | 2  | 3  |    10    |    11     |  7   |   +1   |  29
 
 ## TIMING GUIDE
 
+### Flexible Quarter Lengths (45-60 min)
+
+**Run 60 min:** Complex features, good pace, time buffer, chaos planned
+**Run 45 min:** Ahead of schedule, simple work, running behind
+
+**Typical Distributions:**
+- Relaxed: All 60 min → 4:30pm finish
+- Standard: Q1-Q2 = 60 min, Q3-Q4 = 45 min → 4pm finish
+- Tight: All 45-50 min → 3:45pm finish
+
+### Chaos Event Strategy
+
+**Double Chaos (Ambitious):** Q3 + Q4 events. Strong groups, high energy.
+**Single Chaos (Recommended):** Q3 only. Most groups, balanced.
+**No Chaos (Simplified):** Skip all events. Struggling groups, learning-focused.
+
 ### If Running Behind
 
 **Cut from:**
 - Individual feedback in review (group only)
 - Tutorial (if they know Claude)
-- Q3-Q4 (reduce slightly if desperate)
+- Chaos events (skip them)
+- Reduce quarters to 45 min each
 
 **Never cut:**
 - Q1-Q2 (foundation)
@@ -815,12 +852,14 @@ Carol (Recs)  | 3  | 2  | 2  | 3  |    10    |    11     |  7   |   +1   |  29
 - [ ] Everyone tried multi-agent patterns (not just single agent)
 - [ ] Energy stayed high throughout the 4 quarters
 - [ ] Competition felt healthy (not toxic)
+- [ ] Pacing felt right (not too rushed, not too slow)
 - [ ] Post-survey: 80%+ would recommend
 
 **Track for improvement:**
-- Which quarters ran long?
+- Which quarter lengths worked best? (45 vs 60 min)
 - Where did directors get stuck?
-- Which crises landed well vs fell flat?
+- Did chaos events add value or just stress?
+- How many chaos events felt right? (0, 1, or 2)
 - Was scoring clear to participants?
 
 ---

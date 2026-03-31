@@ -67,23 +67,35 @@ As a director, you don't code - you **orchestrate teams**. You manage **2-3 agen
 
 ### Recommended Multi-Service Architecture
 
-**Service 1: Chatbot API** (Agent Team A)
-- Tech: Flask/FastAPI backend with NLP
-- Port: 5001
-- Purpose: Conversational AI, FAQ handling, intent classification
-- Team: 1-2 backend agents
+**Service 1: Support Chatbot**
+- **Purpose:** Handle common customer questions automatically
+- **Key decisions:**
+  - Rule-based vs AI-powered responses
+  - What questions to automate vs escalate
+  - When to create a ticket vs self-service
+  - How to measure success (resolution rate, customer satisfaction)
+- **Integration needs:** Access booking data, create support tickets
+- **Team:** 1-2 agents
 
-**Service 2: Ticketing System API** (Agent Team B)
-- Tech: Flask/FastAPI backend
-- Port: 5002
-- Purpose: Ticket CRUD, categorization, routing, escalation
-- Team: 1-2 backend agents
+**Service 2: Ticketing System**
+- **Purpose:** Track, categorize, and route customer issues
+- **Key decisions:**
+  - How to categorize tickets (refund, change, complaint, etc.)
+  - What triggers escalation to senior agents
+  - How to prioritize (urgency, customer value, sentiment)
+  - What workflows can be automated
+- **Integration needs:** Receive tickets from chatbot, send notifications
+- **Team:** 1-2 agents
 
-**Service 3: Knowledge Base Dashboard** (Agent Team C)
-- Tech: React/Vue/vanilla JS frontend
-- Port: 3000
-- Purpose: Customer portal, agent dashboard, analytics
-- Team: 1-2 frontend agents
+**Service 3: Agent Dashboard & Analytics**
+- **Purpose:** Give support agents tools and visibility
+- **Key decisions:**
+  - What metrics matter most (resolution time, satisfaction, automation rate)
+  - What actions agents need quick access to
+  - How to visualize support performance
+  - What insights help improve the system
+- **Integration needs:** Display data from chatbot and ticketing system
+- **Team:** 1-2 agents
 
 **Why multiple services?**
 - ✅ Each agent team has focused responsibility
@@ -92,6 +104,8 @@ As a director, you don't code - you **orchestrate teams**. You manage **2-3 agen
 - ✅ Realistic microservices practice
 
 📚 **For detailed multi-service patterns:** See [MULTI-SERVICE-GUIDE.md](../MULTI-SERVICE-GUIDE.md)
+
+**Technical approach:** You'll work with your agent teams in Q1 to decide tech stacks, architecture patterns, and implementation details. Focus on WHAT each service does and WHY it matters - your agents will figure out HOW.
 
 ---
 
@@ -261,14 +275,14 @@ Priority 3: Handle edge cases (defer if time-limited)
 
 ### Role-Specific Tips
 
-**Keep chatbot separate from ticketing agents:**
-Conversational AI requires different thinking than CRUD operations. One agent focuses on NLP/intent while another handles ticket management.
+**Separate concerns by customer journey:**
+One team handles customer-facing interactions (chatbot), another handles agent workflows (ticketing), another handles analytics. Each team owns a different part of the experience.
 
-**Use simple keyword matching first:**
-Don't overcomplicate Q1 with complex NLP. Prompt agents with "Use keyword detection for FAQ matching" and add sophistication in Q2-Q3.
+**Start simple, add sophistication:**
+Q1 is about strategy and decisions. Q2+ is where you implement and refine. Don't overcomplicate early - build on solid foundations.
 
 **Demo-first thinking:**
-Structure your agents around what you'll show: "Agent 1 builds what customers type, Agent 2 builds what agents see, Agent 3 builds what executives track."
+Structure your teams around what you'll show: one team builds what customers see, another builds what agents use, another builds what executives track.
 
 **For prompts and examples:** See TUTORIAL.md sections:
 - "Prompt Engineering for Agents" (templates)
@@ -284,61 +298,62 @@ Structure your agents around what you'll show: "Agent 1 builds what customers ty
 ### Customer Service-Specific Challenges
 
 **"Chatbot gives wrong answers or doesn't understand questions"**
-- **Solution:** Start simple in Q1 - use keyword matching, not complex NLP
-- Tell agent: "Build FAQ matcher using keywords: 'refund' → refund policy, 'change' → booking changes"
-- Add fallback: "If confidence < 80%, create ticket instead of answering"
-- In Q2, add refinement agent: "Improve chatbot accuracy based on common misunderstood questions"
+- **Solution:** This is about designing your automation strategy, not implementation
+- Q1 decision: What questions should the bot handle? What's your fallback strategy?
+- Design principle: Better to escalate gracefully than give wrong answers
+- Work with agents to define confidence thresholds and escalation triggers
 
 **"Don't know how to build NLP classifier"**
-- **Solution:** Use simple heuristics first, not machine learning
-- Agent prompt: "Build keyword-based ticket classifier: if text contains ['refund', 'money back'] → category='refund'"
-- For Q2+: "Use simple confidence scoring based on keyword matches"
-- Alternative: "Call OpenAI API for intent classification" (if available)
+- **Solution:** This is a Q1 research question - work with your agents to explore options
+- Start simple: keyword matching can handle 80% of cases
+- Research with agents: what tools/approaches exist? What are tradeoffs?
+- Make a decision based on your context: time, complexity, accuracy needs
 
 **"Ticket routing logic is too complex"**
-- **Solution:** Start with basic priority rules
-- Agent prompt: "Auto-assign priority: High if contains ['urgent', 'angry', 'lawsuit'], Medium if contains ['change', 'help'], Low otherwise"
-- Use decision tree, not complex algorithms
-- Escalation agent Q3: "Add escalation triggers: negative sentiment OR VIP customer OR unresolved > 24hrs"
+- **Solution:** Define your routing strategy before implementation details
+- Q1 decision: What categories matter? What determines priority?
+- Start with clear business rules: What makes a ticket urgent? What needs senior attention?
+- Your agents will implement whatever logic you define - focus on the WHAT and WHY
 
 **"Hard to demo automation ROI"**
-- **Solution:** Generate realistic mock data showing impact
-- Agent prompt: "Create analytics showing: Before (100 tickets/day, 18 min avg resolution) vs After (chatbot handles 67%, 4.2 min avg resolution)"
-- Show cost savings: "$5/ticket before → $1.20/ticket after automation"
-- Visual charts make impact clear to investors
+- **Solution:** Think like an investor - what metrics matter?
+- Define your success metrics: resolution time, automation rate, cost per ticket, satisfaction
+- Design your analytics to tell the story: before vs after, cost savings, scale potential
+- Work with agents to visualize the impact - what would impress investors?
 
 **"Response quality varies too much"**
-- **Solution:** Use templates for common scenarios
-- Agent prompt: "Create response templates for: refund requests, booking changes, flight status, complaints"
-- Add tone guidelines: "Use empathetic language, acknowledge frustration, offer solutions"
-- QA agent in Q3: "Review responses for tone and completeness"
+- **Solution:** Define your quality standards and response strategy
+- Q1 decision: What tone should your support have? What's the customer experience?
+- Design templates for common scenarios - what should customers hear?
+- Build quality into your system design - how will you ensure consistency?
 
 ---
 
-## TECH STACK SUGGESTIONS
+## TECHNICAL DECISIONS YOU'LL MAKE
 
-### Option A: Simple & Fast (Recommended for Q1-Q2)
-- **Backend:** Flask (Python) or Express (Node.js)
-- **Chatbot:** Keyword matching or simple pattern matching
-- **Database:** SQLite for tickets
-- **Frontend:** Vanilla HTML/CSS/JavaScript
-- **Why:** Minimal setup, agents know these well
+In Q1, you and your agent teams will decide:
 
-### Option B: Modern Stack (If you're comfortable)
-- **Backend:** FastAPI or Express
-- **Chatbot:** OpenAI API or simple NLP library
-- **Database:** Postgres or SQLite
-- **Frontend:** React or Vue
-- **Why:** More realistic, better UX capabilities
+### Chatbot Approach
+- **Decision:** Rule-based keyword matching vs AI-powered NLP
+- **Tradeoffs:** Simple and predictable vs intelligent and flexible
+- **Consider:** What kinds of questions will customers ask? How much variability?
 
-### Option C: AI-Enhanced
-- **Backend:** Flask/FastAPI
-- **NLP:** OpenAI API for intent classification
-- **Database:** SQLite
-- **Frontend:** React
-- **Why:** Sophisticated chatbot with minimal NLP expertise
+### Automation Strategy
+- **Decision:** What to automate vs when to escalate to humans
+- **Tradeoffs:** Speed and scale vs quality and empathy
+- **Consider:** What's the cost of getting it wrong? Where is human judgment essential?
 
-**Pro tip:** Use whatever you know best. Learning a new framework + learning multi-agent = too much for 30 minutes.
+### Ticketing Logic
+- **Decision:** How to categorize and prioritize tickets
+- **Tradeoffs:** Simple rules vs sophisticated scoring
+- **Consider:** What matters most - speed, customer value, issue severity?
+
+### Analytics Focus
+- **Decision:** What metrics drive improvement
+- **Tradeoffs:** Easy to measure vs meaningful to business
+- **Consider:** What would convince investors this system scales?
+
+**Your Q1 goal:** Work with your agents to research options and make these architectural decisions. Document your choices and rationale. The tech stack details come later.
 
 ---
 
@@ -485,201 +500,75 @@ Good luck, Director. Every frustrated customer is counting on you to make things
 
 ---
 
-## ARCHIVED CONTENT (Old Multi-Agent Strategies)
+## EXAMPLE MULTI-AGENT STRATEGIES (Reference)
 
-The following sections contain the original detailed multi-agent strategy examples. While still valid approaches, the new format above provides a more structured quarter-by-quarter progression. These are preserved for reference.
+These examples show how to think about dividing work across agent teams. Focus on the strategic decisions and team structure, not the specific implementation details.
 
-### Strategy 1: Bot + Ticketing + Dashboard (Original Q1 Approach)
-**When to use:** Building complete support system
+### Strategy 1: Core Support System
+**Focus:** Building the foundation
 
-```
-Agent 1 (Chatbot Builder):
-"Build a customer support chatbot:
+**Team 1: Customer Experience**
+- Research common customer questions and pain points
+- Design chatbot conversation flows and self-service options
+- Define what should be automated vs escalated
+- Key decision: How do we balance automation with empathy?
 
-FAQ capabilities:
-- 'How do I check in?' → link to check-in page
-- 'How do I cancel?' → explain cancellation policy
-- 'Where is my confirmation?' → check booking status
-- 'How to change my flight?' → self-service instructions
+**Team 2: Operations**
+- Design ticket categorization and routing logic
+- Define escalation triggers and priority rules
+- Plan workflow automation opportunities
+- Key decision: How do we ensure tickets get to the right person quickly?
 
-Use simple keyword matching or LLM API if available.
-If question not understood → offer to create ticket.
-
-Build as chat interface (web UI) with Flask backend.
-Store conversation history."
-
-Agent 2 (Ticket System):
-"Build support ticket system:
-
-Database schema:
-- Tickets: ticket_id, customer_id, subject, description, status, priority, created_at
-- Messages: message_id, ticket_id, sender, content, timestamp
-
-API:
-- POST /tickets (create new)
-- GET /tickets/{id} (view ticket)
-- POST /tickets/{id}/messages (add reply)
-- PUT /tickets/{id}/status (update status)
-
-Include sample tickets for demo."
-
-Agent 3 (Agent Dashboard):
-"Build support agent dashboard using Agent 2's API:
-- Ticket list (filter by status, priority)
-- Ticket detail view with conversation
-- Quick actions (mark resolved, escalate)
-- Stats: open tickets, avg resolution time, today's volume
-
-Use simple HTML table + forms. Color-code by priority."
-```
-
-**Timeline:**
-- Min 0-10: Agent 1 builds chatbot
-- Min 10-20: Agent 2 builds ticketing
-- Min 20-25: Agent 3 builds dashboard
+**Team 3: Analytics**
+- Define success metrics and KPIs
+- Design dashboards for agents and executives
+- Plan how to measure and improve system performance
+- Key decision: What metrics prove this system delivers value?
 
 ---
 
-### Strategy 2: Smart Automation (Recommended for Q2)
-**When to use:** Adding intelligence to support
+### Strategy 2: Intelligence Layer
+**Focus:** Adding smart automation
 
-```
-Agent 1 (NLP Classifier):
-"Build ticket classification system:
+**Team 1: Classification & Routing**
+- Design ticket classification system (categories, priorities)
+- Define auto-routing logic based on issue type
+- Plan how to handle ambiguous cases
+- Key decision: What approach gives us accuracy without complexity?
 
-Categories:
-- Refund request
-- Booking change
-- Flight status question
-- Technical issue
-- Complaint
+**Team 2: Automation Engine**
+- Identify which issues can be fully automated
+- Design self-service workflows for common requests
+- Define when automation should hand off to humans
+- Key decision: Where is automation better than human agents?
 
-Use keyword detection or simple ML classifier.
-Auto-assign priority:
-- High: refund, complaint, urgent words
-- Medium: booking change
-- Low: informational
-
-Auto-route to appropriate queue.
-API: POST /classify (ticket text) → returns category, priority"
-
-Agent 2 (Self-Service Automation):
-"Build automated actions based on Agent 1's classification:
-
-If 'refund request' detected:
-- Auto-check eligibility (refundable fare?)
-- If eligible → process refund automatically
-- If not → explain policy, offer alternatives
-
-If 'booking change':
-- Show available change options
-- Calculate fee
-- Provide self-service change link
-
-If 'flight status':
-- Look up flight, return current status
-- No ticket needed
-
-Reduce ticket volume by 50% via automation."
-
-Agent 3 (Analytics):
-"Build support analytics dashboard:
-- Ticket volume over time (Chart.js)
-- Category breakdown (pie chart)
-- Resolution time distribution
-- Automation rate (% auto-resolved)
-- Customer satisfaction (mock ratings)
-
-Show ROI of automation."
-```
+**Team 3: Performance Tracking**
+- Design analytics to show automation ROI
+- Track resolution rates, customer satisfaction
+- Measure cost savings from automation
+- Key decision: How do we prove automation is working?
 
 ---
 
-### Strategy 3: Sentiment & Escalation (Recommended for Q3)
-**When to use:** Handling complex support scenarios
+### Strategy 3: Advanced Support
+**Focus:** Handling complex scenarios
 
-```
-Agent 1 (Sentiment Analyzer):
-"Build sentiment detection for support conversations:
+**Team 1: Sentiment & Escalation**
+- Design sentiment detection approach
+- Define escalation triggers (VIP, negative sentiment, legal issues)
+- Plan how to route urgent cases appropriately
+- Key decision: What warrants immediate senior attention?
 
-Analyze customer messages for:
-- Angry/frustrated: words like 'terrible', 'angry', 'lawsuit', caps
-- Neutral: normal questions
-- Happy: 'thank you', 'great', 'appreciate'
+**Team 2: Quality Assurance**
+- Design quality monitoring process
+- Define quality standards for responses
+- Plan how to identify and fix common issues
+- Key decision: How do we maintain high quality at scale?
 
-Score: -1 (angry) to +1 (happy)
-
-If negative sentiment + high-priority issue → auto-escalate
-API: POST /analyze-sentiment (text) → returns score, escalation_needed"
-
-Agent 2 (Escalation System):
-"Build smart escalation routing:
-
-Escalation triggers:
-- Negative sentiment
-- VIP customer (high lifetime value)
-- Legal keywords
-- Unresolved for > 24 hours
-- Customer requests manager
-
-Escalation actions:
-- Route to senior agent queue
-- Notify manager
-- Flag for urgent attention
-- Auto-apologize + offer compensation
-
-Create escalation workflow UI."
-
-Agent 3 (Quality Monitoring):
-"Build quality assurance system:
-- Random ticket sampling
-- Check: response time, resolution quality, tone
-- Score each interaction (1-10)
-- Identify training needs
-- Create QA dashboard
-
-Mock the QA process for demo."
-```
+**Team 3: Proactive Support**
+- Identify scenarios where we should reach out first
+- Design notification strategy (flight delays, check-in reminders)
+- Plan how to prevent issues before they escalate
+- Key decision: When is proactive outreach worth the cost?
 
 ---
-
-### Strategy 4: Proactive Support (Recommended for Q4)
-**When to use:** Preventing issues before they happen
-
-```
-Agent 1 (Issue Predictor):
-"Build proactive support detector:
-
-Monitor for issues:
-- Flight delayed → notify affected passengers
-- Booking without check-in 24hrs before → remind
-- Weather alert on route → warn customers
-- System error → reach out to affected users
-
-Create alert system that triggers notifications.
-API: POST /proactive-alert (scenario) → creates outreach"
-
-Agent 2 (Communication Engine):
-"Build multi-channel notification system:
-- Email templates (delay, cancellation, reminder)
-- SMS alerts
-- In-app notifications
-- Chatbot proactive messages
-
-Personalize based on:
-- Urgency of issue
-- Customer preference
-- Channel availability
-
-Generate sample notifications for demo."
-
-Agent 3 (Impact Dashboard):
-"Track proactive support effectiveness:
-- Issues prevented (vs reactive tickets created)
-- Customer satisfaction for proactive vs reactive
-- Notification open/click rates
-- Cost savings from prevention
-
-Create executive dashboard showing value."
-```
-

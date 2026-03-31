@@ -67,29 +67,41 @@ As a director, you don't code - you **orchestrate teams**. You manage **2-3 agen
 
 ### Recommended Multi-Service Architecture
 
-**Service 1: Search API** (Agent Team A)
-- Tech: Flask/FastAPI backend
-- Port: 5001
-- Purpose: Flight search, filtering, sorting
-- Team: 1-2 backend agents
+**Service 1: Search API**
+- **Purpose:** Flight search, filtering, and sorting - the first touchpoint in the customer journey
+- **Key Decisions:**
+  - How should customers specify search criteria? (dates, airports, passengers, preferences)
+  - What filtering and sorting options matter most to customers?
+  - Synchronous vs. asynchronous search for performance?
+  - How to handle no results gracefully?
+- **Integration Points:** Provides flight data to frontend UI, may consume inventory data from other departments
+- **Team:** 1-2 backend-focused agents
 
-**Service 2: Booking API** (Agent Team B)
-- Tech: Flask/FastAPI backend
-- Port: 5002
-- Purpose: Create bookings, payments, confirmations
-- Team: 1-2 backend agents
+**Service 2: Booking API**
+- **Purpose:** Convert customer intent into confirmed bookings - handle payments, reservations, confirmations
+- **Key Decisions:**
+  - What information do we require to complete a booking? (validation strategy)
+  - How to handle payment failures and booking conflicts?
+  - Should bookings be instant or require confirmation steps?
+  - What constitutes a successful booking vs. a pending one?
+- **Integration Points:** Receives selection from frontend, may interact with payment systems and inventory management
+- **Team:** 1-2 backend-focused agents
 
-**Service 3: Customer UI** (Agent Team C)
-- Tech: React/Vue/vanilla JS frontend
-- Port: 3000
-- Purpose: User interface, booking flow
-- Team: 1-2 frontend agents
+**Service 3: Customer UI**
+- **Purpose:** The customer-facing booking experience - from search to confirmation
+- **Key Decisions:**
+  - What does the customer journey look like? (number of steps, information hierarchy)
+  - How to balance simplicity vs. showing all necessary options?
+  - Mobile-first or desktop-first design approach?
+  - How to communicate errors and loading states clearly?
+- **Integration Points:** Orchestrates calls to Search API and Booking API, presents unified experience
+- **Team:** 1-2 frontend-focused agents
 
 **Why multiple services?**
-- ✅ Each agent team has focused responsibility
-- ✅ Services can be built in parallel
+- ✅ Each agent team has focused responsibility and clear ownership
+- ✅ Services can be built in parallel, accelerating delivery
 - ✅ Easy to demo incrementally (Service 1 in Q1, add Service 2 in Q2, etc.)
-- ✅ Realistic microservices practice
+- ✅ Realistic microservices practice - mirrors real-world architecture decisions
 
 📚 **For detailed multi-service patterns:** See [MULTI-SERVICE-GUIDE.md](../MULTI-SERVICE-GUIDE.md)
 
@@ -259,16 +271,19 @@ Priority 3: Handle edge cases (defer if time-limited)
 - See TUTORIAL.md "Pattern 4: Iterative Refinement" for examples
 
 
-### Role-Specific Tips
+### Director-Level Strategy Tips
 
-**Keep frontend separate from backend agents:**
-UI iteration is faster when one agent focuses purely on user experience while another handles data/logic.
+**Separate concerns between agent teams:**
+UI iteration is faster when one agent team focuses purely on user experience while another handles data and business logic. Think about clear boundaries of responsibility.
 
-**Use visual frameworks early:**
-Prompt agents with "Use Bootstrap/Tailwind" or "Make it look like Airbnb" rather than writing CSS from scratch. Saves time, looks better.
+**Set design direction early:**
+Give agents clear design references: "Make it look like modern SaaS booking sites" or "Reference Airbnb's search experience." Direction beats micromanagement.
 
 **Demo-first thinking:**
-Structure your agents around what you'll show: "Agent 1 builds what I'll type, Agent 2 builds what I'll click, Agent 3 builds what I'll see."
+Structure your agent teams around what you'll demonstrate: "What will I type? What will I click? What will the customer see?" Work backwards from the demo experience.
+
+**Focus on customer value, not technology:**
+Ask "Does this help customers book faster?" not "Should we use framework X?" Your agent teams can recommend technical solutions once they understand the business goals.
 
 **For prompts and examples:** See TUTORIAL.md sections:
 - "Prompt Engineering for Agents" (templates)
@@ -283,53 +298,67 @@ Structure your agents around what you'll show: "Agent 1 builds what I'll type, A
 
 ### Booking Portal-Specific Challenges
 
-**"Frontend can't call backend - CORS errors"**
-- **Solution:** Tell backend agent: "Enable CORS for localhost:3000"
-- Or use integration agent: "Fix CORS issues between these two services"
-- Quick fix: Add `flask-cors` or equivalent
+**"Frontend can't call backend - integration errors"**
+- **Solution:** Use integration agent to diagnose: "These two services need to communicate - fix the connection issues"
+- Common root cause: Cross-origin restrictions or mismatched data formats
+- Director mindset: "What's preventing these services from talking to each other?"
 
-**"UI looks terrible / like HTML from 1998"**
-- **Solution:** Be specific in prompts: "Use Tailwind CSS" or "Make it look like modern SaaS booking site"
-- Show examples: "Style similar to Airbnb search page"
-- Dedicate Agent 2 purely to polish: "Review this UI and make it beautiful"
+**"UI looks unprofessional or outdated"**
+- **Solution:** Be specific in prompts: "Make it look like a modern SaaS booking site" or "Style similar to Airbnb search page"
+- Dedicate an agent purely to polish: "Review this UI and elevate the visual design"
+- Director mindset: "Would I book a flight on this site? Why or why not?"
 
 **"Search works but booking breaks"**
-- **Solution:** Test each endpoint separately first with curl/Postman
-- Common issue: Frontend sending wrong data format to booking endpoint
-- Use integration agent to bridge: "Frontend sends X, backend expects Y, fix the mismatch"
+- **Solution:** Test each service independently before integration
+- Common issue: Data format mismatch between services
+- Use integration agent to bridge: "Frontend sends X, backend expects Y, make them compatible"
+- Director mindset: "What are the contracts between these services?"
 
-**"Mobile layout is broken"**
-- **Solution:** Add to prompt: "Make fully responsive, test on mobile viewport"
-- Or use refinement agent: "Make this mobile-responsive with proper breakpoints"
-- Quick win: "Use Bootstrap grid for responsiveness"
+**"Mobile experience is poor"**
+- **Solution:** Add to requirements: "This must work on mobile viewports - make it responsive"
+- Or use refinement agent: "Improve the mobile experience"
+- Director mindset: "60% of traffic is mobile - is this acceptable on a phone?"
 
-**"Demo works on my machine but looks different on screen share"**
-- **Solution:** Use simple, self-contained HTML files
-- Avoid localhost URLs that others can't access
-- Test your demo setup 2 minutes before presenting
+**"Demo fails during presentation"**
+- **Solution:** Test your demo flow 5 minutes before presenting
+- Have a backup plan (screenshots, recorded video)
+- Director mindset: "What are the critical paths that must work flawlessly?"
 
 ---
 
-## TECH STACK SUGGESTIONS
+## TECHNICAL APPROACH
 
-### Option A: Simple & Fast (Recommended for Q1-Q2)
-- **Backend:** Flask (Python) or Express (Node.js)
-- **Frontend:** Vanilla HTML/CSS/JavaScript
-- **Database:** SQLite or JSON files
-- **Why:** Minimal setup, agents know these well
+As a director, you'll work with your agent teams (PMs, architects, developers) to determine the technical approach. Here are the key decisions to consider:
 
-### Option B: Modern Stack (If you're comfortable)
-- **Backend:** FastAPI or Express
-- **Frontend:** React or Vue
-- **Database:** Postgres or SQLite
-- **Why:** More realistic, better UX capabilities
+### Key Technical Decisions
 
-### Option C: Full-Stack Framework
-- **Framework:** Next.js or Django
-- **Database:** Built-in SQLite
-- **Why:** Less coordination between frontend/backend
+**Backend Technology Choices:**
+- What language/framework will your team be most productive with?
+- How important is speed-to-market vs. long-term scalability?
+- Do you need real-time capabilities or is request/response sufficient?
 
-**Pro tip:** Use whatever you know best. Learning a new framework + learning multi-agent = too much for 30 minutes.
+**Frontend Strategy:**
+- Simple HTML/CSS for fast iteration vs. modern framework for rich interactions?
+- How important are animations, transitions, and polish?
+- Desktop-first, mobile-first, or simultaneous responsive design?
+
+**Data Management:**
+- File-based storage for simplicity vs. database for querying?
+- How much data persistence do you actually need for the demo?
+- Mock data vs. integration with other services?
+
+**Architecture Trade-offs:**
+- Monolithic for speed vs. microservices for realism?
+- REST APIs vs. other integration patterns?
+- How much abstraction vs. getting something working quickly?
+
+### Director-Level Guidance
+
+**For Q1-Q2:** Choose technologies your agent teams can build with quickly. The goal is a working demo, not architectural perfection.
+
+**For Q3-Q4:** Consider refactoring or enhancing based on what you learned. Now you have time to improve.
+
+**Pro tip:** Discuss technical choices with your agent teams (use them as architects/PMs in Q1). They'll help you evaluate options based on your specific goals.
 
 ---
 

@@ -67,23 +67,32 @@ As a director, you don't code - you **orchestrate teams**. You manage **2-3 agen
 
 ### Recommended Multi-Service Architecture
 
-**Service 1: Campaign Management API** (Agent Team A)
-- Tech: Flask/FastAPI backend
-- Port: 5001
-- Purpose: Email campaigns, segmentation, triggered sends
-- Team: 1-2 backend agents
+**Service 1: Campaign Management System**
+- **Purpose:** Create, schedule, and track marketing campaigns across channels (email, social, paid)
+- **Key Decisions:**
+  - Which campaign triggers to automate (abandoned cart, post-booking, re-engagement)
+  - How to segment customers (business travelers, budget seekers, frequent flyers)
+  - What metrics define campaign success (open rate, click-through, conversion)
+- **Integration:** Consumes customer data, sends to notification systems, provides campaign performance data
+- **Team:** 1-2 backend agents
 
-**Service 2: Analytics Tracking Service** (Agent Team B)
-- Tech: Flask/FastAPI backend
-- Port: 5002
-- Purpose: Event tracking, attribution, customer journey
-- Team: 1-2 backend agents
+**Service 2: Attribution & Analytics Engine**
+- **Purpose:** Track customer journeys and attribute bookings to marketing touchpoints
+- **Key Decisions:**
+  - Which attribution model to use (last-touch, first-touch, linear, time-decay)
+  - What events to track in the customer journey
+  - How to calculate CAC and ROI by channel
+- **Integration:** Receives events from all customer touchpoints, provides attribution data to dashboards
+- **Team:** 1-2 backend agents
 
-**Service 3: Landing Page A/B Test Dashboard** (Agent Team C)
-- Tech: React/Vue/vanilla JS frontend
-- Port: 3000
-- Purpose: Landing pages, A/B tests, analytics visualization
-- Team: 1-2 frontend agents
+**Service 3: Growth Experimentation Dashboard**
+- **Purpose:** Run A/B tests on landing pages, visualize marketing performance
+- **Key Decisions:**
+  - What to test (headlines, CTAs, pricing, imagery)
+  - How to split traffic and determine statistical significance
+  - Which growth metrics to visualize for stakeholders
+- **Integration:** Displays data from Campaign and Attribution services, serves optimized landing pages
+- **Team:** 1-2 frontend agents
 
 **Why multiple services?**
 - ✅ Each agent team has focused responsibility
@@ -92,6 +101,8 @@ As a director, you don't code - you **orchestrate teams**. You manage **2-3 agen
 - ✅ Realistic microservices practice
 
 📚 **For detailed multi-service patterns:** See [MULTI-SERVICE-GUIDE.md](../MULTI-SERVICE-GUIDE.md)
+
+**Technical Implementation:** You'll work with your agent teams in Q1 to decide the tech stack, APIs, and infrastructure. Focus first on WHAT each service does and WHY it matters to growth.
 
 ---
 
@@ -115,7 +126,7 @@ As a director, you don't code - you **orchestrate teams**. You manage **2-3 agen
 - **Product Manager:** Define growth strategy and campaign requirements
 - **Business Analyst:** Research attribution models and analytics approaches
 - **UX Designer:** Create landing page wireframes and campaign designs
-- **Technical Architect:** Design service architecture
+- **Technical Architect:** Design service architecture and make technical decisions
 
 **Example Prompt:**
 ```
@@ -129,6 +140,14 @@ Define our growth strategy:
 4. Key growth metrics
 
 Focus on metrics-driven growth and experimentation frameworks."
+
+"You are a Technical Architect. Based on our growth strategy, recommend:
+1. Tech stack for each service (Campaign, Analytics, Dashboard)
+2. Data storage approach for events and customer journeys
+3. API design between services
+4. Key technical trade-offs and decisions
+
+Consider demo timeline, team capabilities, and what investors need to see."
 ```
 
 **Demo:** Present your vision doc, campaign designs, or MVP. Explain your growth strategy and what you'll build in Q2.
@@ -150,15 +169,16 @@ Focus on metrics-driven growth and experimentation frameworks."
 - Impressive analytics UI showing growth metrics
 
 **Agent Roles to Use:**
-- **Backend Developer:** Build campaign/analytics APIs
+- **Backend Developer:** Build campaign/analytics APIs based on Q1 architecture decisions
 - **Frontend Developer:** Build polished dashboard UI
 - **QA Engineer:** Test the demo flow
 
-**Example Focus:**
+**Director Focus:**
 ```
 Priority 1: Show compelling growth metrics (investors love CAC/LTV)
 Priority 2: Demonstrate attribution working (search → results → book)
-Priority 3: Handle edge cases (defer if time-limited)
+Priority 3: Make strategic tech decisions with your agent teams
+Priority 4: Handle edge cases (defer if time-limited)
 ```
 
 **Demo:** Live demo of campaign system or analytics dashboard to "investors" (gamerunner + other directors).
@@ -310,27 +330,47 @@ Structure your agents around what you'll show: "Agent 1 builds campaigns, Agent 
 
 ---
 
-## TECH STACK SUGGESTIONS
+## TECHNICAL DECISIONS TO MAKE WITH YOUR TEAMS
 
-### Option A: Python Analytics Stack (Recommended for Q1-Q2)
-- **Backend:** Flask or FastAPI
-- **Analytics:** Pandas for data analysis
-- **Visualization:** Chart.js or Plotly
-- **Database:** SQLite or JSON files
-- **Why:** Python excels at analytics and data processing
+As a director, you'll make strategic technical decisions in Q1 with your agent teams. Here are the key choices:
 
-### Option B: JavaScript Full Stack (If you're comfortable)
-- **Backend:** Express.js
-- **Frontend:** React with Chart.js
-- **Database:** Postgres or SQLite
-- **Why:** JavaScript everywhere, easier frontend integration
+### Decision 1: Tech Stack Selection
+**What to decide:**
+- Backend framework for Campaign and Analytics services
+- Frontend framework for Dashboard
+- Data storage approach (database vs. files)
+- Charting/visualization library
 
-### Option C: Analytics Platform Approach
-- **Framework:** Use existing analytics libraries
-- **Focus:** Custom dashboards and attribution logic
-- **Why:** Focus on growth strategy, not building infrastructure from scratch
+**Questions to ask your Technical Architect agent:**
+- What stack lets us demo fastest?
+- What do we know best to avoid learning curve?
+- What will impress investors visually?
 
-**Pro tip:** Use whatever you know best. Learning a new framework + learning multi-agent = too much for 30 minutes.
+### Decision 2: Attribution Model
+**What to decide:**
+- Start with simple last-touch or go multi-touch?
+- How complex should customer journey tracking be?
+- What attribution logic is "good enough" for demo vs. production?
+
+**Trade-off:** Simple models demo faster, complex models impress more but risk incomplete implementation.
+
+### Decision 3: Campaign Automation Scope
+**What to decide:**
+- Which triggers to implement (abandoned cart, re-engagement, post-booking)?
+- Real-time sending vs. batch processing?
+- How sophisticated should segmentation be?
+
+**Trade-off:** More automation = more impressive, but each trigger adds complexity.
+
+### Decision 4: A/B Testing Depth
+**What to decide:**
+- Simple conversion comparison or statistical significance testing?
+- Manual variant creation or dynamic generation?
+- How many metrics to track per test?
+
+**Trade-off:** Basic A/B testing is fast to build, statistical rigor takes longer but looks more professional.
+
+**Pro tip:** Make these decisions in Q1 with your Technical Architect agent. Document them in your vision doc. Your agent teams will implement based on your strategic direction.
 
 ---
 
@@ -423,34 +463,42 @@ You can work completely independently with mock data, or optionally integrate:
 2. Plan your agent strategy: Which agents for which tasks?
 3. Start Agent 1 (Product Manager): Begin growth strategy research
 
-**Minutes 10-50:**
-Use agents for research and planning:
+**Minutes 10-40:**
+Use agents for research and strategic planning:
 - Agent 1: Research growth strategies and attribution models
 - Agent 2: Create campaign flows and landing page wireframes
-- Agent 3: Design service architecture for analytics
+- Agent 3 (Technical Architect): Design service architecture and recommend tech stack
+
+**Minutes 40-50:**
+Make key technical decisions with your teams:
+- Review tech stack recommendations and choose
+- Decide attribution model approach
+- Define campaign automation scope
+- Determine A/B testing depth
 
 **Last 10 minutes:**
-1. Compile vision document or polish MVP
+1. Compile vision document with technical decisions documented
 2. Practice your vision presentation (3 min)
-3. Prepare to explain your Q2-Q4 strategy
+3. Prepare to explain your Q2-Q4 strategy and rationale
 
 ### Quarter 2: Investor Demo Build (60 min)
 
 **First 5 minutes:**
-1. Review your Q1 vision
-2. Decide which 1-2 services to build
-3. Start Agent 1 (Backend): Build first service
+1. Review your Q1 vision and technical decisions
+2. Decide which 1-2 services to build first
+3. Brief Agent 1 (Backend) on Q1 architecture decisions and start build
 
 **Minutes 5-50:**
-Build your investor demo:
-- Agents build services based on Q1 architecture
-- Focus on compelling growth metrics
+Build your investor demo with clear direction:
+- Agents implement services based on Q1 tech stack and architecture decisions
+- Focus on compelling growth metrics (CAC/LTV that investors love)
+- Make tactical adjustments as needed
 - Test as you go
 
 **Last 10 minutes:**
 1. Integration and testing
 2. Practice your investor demo
-3. Prepare to answer investor questions about CAC/LTV
+3. Prepare to answer investor questions about CAC/LTV and growth strategy
 
 ### Quarter 3 & Beyond: Execute & Adapt
 
@@ -474,54 +522,32 @@ Build your investor demo:
 ### Legacy Strategy 1: Campaigns + Analytics + Pages (Recommended for Q1)
 **When to use:** Building complete marketing system
 
-```
-Agent 1 (Campaign Manager):
-"Build email campaign system:
+**Director's Approach:**
+1. **Define what each service needs to do** (not how to build it)
+2. **Make key decisions** with your teams about campaign triggers, attribution model, A/B testing scope
+3. **Brief agents** on the strategic direction and let them propose technical implementation
 
-Database:
-- Campaigns: campaign_id, name, subject, body, sent_at, segment
-- Recipients: email, user_id, campaign_id, opened, clicked, booked
-- Segments: segment_id, name, criteria (business_travelers, budget_seekers)
+**Service Responsibilities:**
 
-API:
-- POST /campaigns (create campaign)
-- POST /campaigns/{id}/send (send to segment)
-- GET /campaigns/{id}/stats (open rate, click rate, conversion)
+**Agent 1 (Campaign Manager):**
+- Purpose: Create and track marketing campaigns
+- Key decisions: Which segments to target, what triggers to automate, success metrics
+- What to track: Opens, clicks, conversions, ROI by campaign
+- Sample campaigns: Spring Sale, Business Travel, Budget Traveler
 
-Generate 3 sample campaigns with mock results."
+**Agent 2 (Landing Page Builder):**
+- Purpose: Serve optimized landing pages and run A/B tests
+- Key decisions: What to test (headlines, CTAs, imagery), traffic split methodology
+- What to track: Visits, bounce rate, conversions by variant
 
-Agent 2 (Landing Page Builder):
-"Build landing page system:
-
-Features:
-- Create landing pages with customizable content
-- Track visits, clicks, conversions
-- Different variants for A/B testing
-- Simple template system
-
-Create 3 landing page templates:
-- 'Spring Sale' - 20% off destinations
-- 'Business Travel' - premium features
-- 'Budget Traveler' - cheapest flights
-
-API:
-- GET /landing/{id} (serve page)
-- POST /landing/{id}/track (track events)"
-
-Agent 3 (Analytics Dashboard):
-"Build marketing analytics dashboard:
-- Campaign performance table (sent, opened, clicked, booked, ROI)
-- Landing page performance (views, bounce rate, conversion)
-- Funnel visualization (awareness → consideration → booking)
-- Channel attribution chart
-- Top performing campaigns
-
-Use Chart.js for visualizations."
-```
+**Agent 3 (Analytics Dashboard):**
+- Purpose: Visualize marketing performance for stakeholders
+- Key decisions: Which metrics matter most, how to present attribution
+- What to show: Campaign performance, funnel visualization, channel ROI
 
 **Timeline:**
-- Min 0-10: Agents 1 & 2 in parallel
-- Min 10-22: Agent 3 builds dashboard
+- Min 0-10: Brief Agents 1 & 2 on Q1 decisions, start parallel build
+- Min 10-22: Brief Agent 3, build dashboard with chosen visualization approach
 - Min 22-25: Test and demo
 
 ---
@@ -529,145 +555,93 @@ Use Chart.js for visualizations."
 ### Legacy Strategy 2: A/B Testing Framework (Recommended for Q2)
 **When to use:** Optimizing conversion
 
-```
-Agent 1 (A/B Test Engine):
-"Build A/B testing system:
+**Director's Approach:**
+1. **Decide A/B testing scope** with your team: Simple conversion comparison or full statistical analysis?
+2. **Define what to test**: Headlines, CTAs, pricing, imagery
+3. **Set success criteria**: What conversion lift justifies declaring a winner?
 
-For landing pages:
-- Variant A (control): Original design
-- Variant B (test): New headline/CTA/image
-- Random assignment (50/50 split)
-- Track conversions by variant
+**Service Responsibilities:**
 
-For emails:
-- Variant A: Subject line 1
-- Variant B: Subject line 2
-- Track open rate by variant
+**Agent 1 (A/B Test Engine):**
+- Purpose: Randomly assign visitors and track conversions by variant
+- Key decisions: Traffic split methodology (50/50, 90/10 for safety), when to stop a test
+- What to track: Conversions by variant, statistical confidence
 
-Statistical significance calculator.
-API: POST /experiments/create, GET /experiments/{id}/results"
+**Agent 2 (Variant Generator):**
+- Purpose: Create test variants for landing pages and emails
+- Key decisions: What hypotheses to test (value prop, urgency, social proof)
+- Example variants:
+  - Control: "Book Your Next Adventure" with beach hero
+  - Test: "Fly Anywhere for $99" with city skyline hero
 
-Agent 2 (Variant Generator):
-"Create landing page variants:
-
-Variant A (control):
-- Headline: 'Book Your Next Adventure'
-- CTA: 'Search Flights'
-- Hero image: Beach
-
-Variant B (test):
-- Headline: 'Fly Anywhere for $99'
-- CTA: 'Grab This Deal'
-- Hero image: City skyline
-
-Build both as actual HTML pages.
-Track which converts better."
-
-Agent 3 (Results Analyzer):
-"Analyze A/B test results:
-- Calculate conversion rate by variant
-- Determine statistical significance (p-value)
-- Estimate revenue impact of winner
-- Recommend: keep testing or declare winner
-
-Create results dashboard showing:
-- Variant performance comparison
-- Confidence interval
-- Recommendation"
-```
+**Agent 3 (Results Analyzer):**
+- Purpose: Determine winners and estimate impact
+- Key decisions: Statistical rigor level (basic comparison vs. p-values), recommendation thresholds
+- What to show: Conversion rates, confidence levels, revenue impact, recommendation
 
 ---
 
 ### Legacy Strategy 3: Attribution System (Recommended for Q3)
 **When to use:** Understanding what drives bookings
 
-```
-Agent 1 (Tracking System):
-"Build customer touchpoint tracking:
+**Director's Approach:**
+1. **Choose attribution model** with your team: Start simple (last-touch) or go multi-touch?
+2. **Define customer journey touchpoints**: What events matter? (ad view, click, search, booking)
+3. **Set ROI targets**: What CAC and channel ROI thresholds drive budget decisions?
 
-Track every marketing interaction:
-- User saw ad (channel: Google, Facebook, Email)
-- User clicked ad → landed on page
-- User searched flights
-- User booked flight
+**Service Responsibilities:**
 
-Store customer journey:
-- journey_id, user_id, touchpoints[], booking_id
+**Agent 1 (Tracking System):**
+- Purpose: Capture every marketing touchpoint in the customer journey
+- Key decisions: What events to track, how long to store journey data, privacy considerations
+- What to track: Ad views/clicks by channel, landing page visits, searches, bookings
 
-API: POST /track (record touchpoint), GET /journeys/{user_id}"
+**Agent 2 (Attribution Model):**
+- Purpose: Credit marketing channels for bookings
+- Key decisions: Which attribution model(s) to implement
+  - Last Touch: Simple, credit final touchpoint
+  - First Touch: Credit discovery channel
+  - Linear: Split credit equally
+  - Time Decay: Weight recent touchpoints more
+- Output: Attributed bookings and revenue per channel
 
-Agent 2 (Attribution Model):
-"Build attribution models:
-
-Model 1 - Last Touch:
-- 100% credit to last touchpoint before booking
-
-Model 2 - First Touch:
-- 100% credit to first touchpoint
-
-Model 3 - Linear:
-- Equal credit to all touchpoints
-
-Model 4 - Time Decay:
-- More recent touchpoints get more credit
-
-Calculate attributed bookings & revenue per channel.
-API: GET /attribution/{model} → returns channel performance"
-
-Agent 3 (ROI Dashboard):
-"Build marketing ROI dashboard:
-- Spend by channel (mock ad spend data)
-- Attributed bookings by channel
-- Revenue by channel
-- ROI calculation (revenue / spend)
-- CAC (customer acquisition cost) by channel
-
-Visualize: which channels are profitable?
-Show recommendations: increase spend on X, decrease on Y."
-```
+**Agent 3 (ROI Dashboard):**
+- Purpose: Show which channels are profitable
+- Key decisions: How to visualize ROI, what thresholds trigger recommendations
+- What to show: Spend vs. revenue by channel, CAC by channel, ROI calculations, budget recommendations
 
 ---
 
 ### Legacy Strategy 4: Growth Automation (Recommended for Q4)
 **When to use:** Scaling marketing operations
 
-```
-Agent 1 (Automated Campaigns):
-"Build triggered campaign system:
+**Director's Approach:**
+1. **Define automation triggers** with your team: Which customer behaviors should trigger campaigns?
+2. **Set personalization strategy**: How deep to go? (name-only vs. full behavioral personalization)
+3. **Establish performance thresholds**: What metrics trigger alerts or auto-pausing?
 
-Triggers:
-- User searched but didn't book → send 'Complete your booking' email
-- User booked → send 'Prepare for your trip' email series
-- 30 days after flight → send 'We miss you' re-engagement
-- Abandoned cart → send reminder with discount
+**Service Responsibilities:**
 
-Implement workflow engine.
-API: POST /triggers/{event} → queues campaign"
+**Agent 1 (Automated Campaigns):**
+- Purpose: Send triggered campaigns based on customer behavior
+- Key decisions: Which triggers to implement, timing strategy (immediate vs. delayed)
+- Trigger examples:
+  - Abandoned search: Send "Complete your booking" 2 hours later
+  - Post-booking: Send "Prepare for your trip" series
+  - Re-engagement: "We miss you" 30 days after flight
+  - Abandoned cart: Reminder with discount after 24 hours
 
-Agent 2 (Dynamic Content):
-"Build personalized content generator:
+**Agent 2 (Dynamic Content):**
+- Purpose: Personalize campaign content for each customer
+- Key decisions: Personalization depth (basic vs. advanced), data sources to use
+- What to personalize:
+  - Email: Name, searched destinations, relevant deals, behavioral recommendations
+  - Landing pages: Hero image/messaging by segment, destination relevance
 
-Email personalization:
-- Insert user name, searched destinations
-- Show relevant flight deals
-- Include personalized recommendations
-
-Landing page personalization:
-- Show different hero based on user segment
-- Display relevant destinations
-- Adjust messaging (business vs leisure)
-
-Use template engine with variable substitution."
-
-Agent 3 (Performance Monitor):
-"Build real-time campaign monitor:
-- Alert if campaign has low open rate (< 15%)
-- Alert if landing page has high bounce (> 70%)
-- Suggest optimizations automatically
-- Auto-pause underperforming campaigns
-
-Create monitoring dashboard with alerts."
-```
+**Agent 3 (Performance Monitor):**
+- Purpose: Alert on underperforming campaigns and suggest optimizations
+- Key decisions: Alert thresholds, auto-pause criteria, optimization recommendation logic
+- What to monitor: Open rates, bounce rates, conversion by campaign, channel performance
 
 ---
 
@@ -676,52 +650,32 @@ Create monitoring dashboard with alerts."
 📚 **Note:** These are preserved from the original version. For current best practices, see the "COMMON CHALLENGES & SOLUTIONS" section above.
 
 ### Challenge 1: "Don't have real user traffic"
-**Solution:**
-```
-Agent prompt: "Generate realistic mock traffic data:
-- 1000 visitors per day
-- Varying by channel (40% organic, 30% paid, 20% email, 10% social)
-- Realistic conversion funnel (100 visitors → 20 searches → 5 bookings)
-- Different performance by channel
-
-Create as time-series data for charts."
-```
+**Director's Decision:**
+- Decide on realistic traffic patterns with your team
+- Define conversion funnel expectations (visitors → searches → bookings)
+- Set channel mix that reflects real airline marketing (organic, paid, email, social)
+- Brief agent: "Generate mock data matching these patterns for demo"
 
 ### Challenge 2: "A/B testing seems complex"
-**Solution:**
-```
-Agent prompt: "Build simple A/B test:
-- Randomly assign visitors to A or B (50/50)
-- Track conversions for each
-- Calculate: conversion_rate = bookings / visitors
-- Show which variant performs better
-
-No statistics needed for basic demo. Just show the numbers."
-```
+**Director's Decision:**
+- Choose complexity level: Simple comparison or statistical significance?
+- For Q2 demo: Basic conversion rate comparison is usually sufficient
+- For Q3/Q4: Add statistical rigor if time permits
+- Brief agent on chosen approach and let them implement
 
 ### Challenge 3: "Landing pages look terrible"
-**Solution:**
-```
-Agent prompt: "Create beautiful landing page:
-- Use Bootstrap or Tailwind CSS
-- Include: hero image, headline, CTA button, benefits section
-- Make it responsive (mobile-friendly)
-- Add basic animations
-
-Model after successful travel site landing pages."
-```
+**Director's Decision:**
+- Set quality bar with your team: What does "professional" mean for this demo?
+- Decide whether to use a CSS framework (faster) or custom design (unique)
+- Define key elements: hero, headline, CTA, benefits, imagery
+- Brief agent with quality expectations and design references
 
 ### Challenge 4: "Attribution is confusing"
-**Solution:**
-```
-Agent prompt: "Implement simple last-touch attribution:
-- When user books, credit the most recent marketing touchpoint
-- Example: User saw Facebook ad → clicked email → booked
-  → Credit goes to: Email
-
-Track which channel gets credit for each booking.
-Sum bookings by channel. Simple."
-```
+**Director's Decision:**
+- Start with simplest model: Last-touch attribution
+- Define clearly: Last marketing touchpoint before booking gets 100% credit
+- Plan for future: Can add multi-touch models in Q3/Q4
+- Brief agent: "Implement last-touch only, make it crystal clear in the UI"
 
 
 ---
