@@ -76,3 +76,5 @@ I need you to do the following:
 
   - I want to add a PITCH.md that explains the motivation for creating this game. It is supposed to teach IC engineers to use ai agents in an advanced way. For eg. leveraging multiple agents, using agent personas to drive decisions and advance multi agent mechanics like subagents and agent teams.
     As a bonus it also gives them a glimpse into management - for constraint and pressure they operate under, how business decisions are made etc. Do you think my reasoning is correct?
+
+  - the random scenarios that the gamerunner can introduce should be such that they impact all 8 characters, and gives them something to do. 

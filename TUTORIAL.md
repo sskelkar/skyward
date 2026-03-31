@@ -19,8 +19,9 @@
 6. [Prompt Engineering](#prompt-engineering)
 7. [Context Management](#context-management)
 8. [Common Pitfalls & Solutions](#common-pitfalls--solutions)
-9. [Advanced Techniques](#advanced-techniques)
-10. [Quick Reference](#quick-reference)
+9. [Debugging Agent Outputs](#debugging-agent-outputs)
+10. [Advanced Techniques](#advanced-techniques)
+11. [Quick Reference](#quick-reference)
 
 ---
 
@@ -1049,6 +1050,629 @@ You: "Good! Now build the frontend that calls this API"
 - [ ] Does it match requirements?
 - [ ] Are there obvious bugs?
 - [ ] Ready for next agent?
+
+---
+
+## DEBUGGING AGENT OUTPUTS
+
+### Why This Section Matters
+
+Agents aren't perfect. They make mistakes, misunderstand requirements, and produce code that doesn't work. **This is normal.** The key is knowing how to debug efficiently and get back on track fast.
+
+This section teaches you:
+- How to diagnose what went wrong
+- Strategies to fix issues quickly
+- How to prevent common failures
+
+---
+
+### Common Types of Agent Failures
+
+#### Type 1: Code That Won't Run
+
+**Symptoms:**
+- Syntax errors (SyntaxError, IndentationError)
+- Import errors (ModuleNotFoundError, ImportError)
+- Runtime crashes immediately on start
+
+**Example:**
+```
+$ python app.py
+ModuleNotFoundError: No module named 'flask_cors'
+```
+
+**Common causes:**
+- Agent forgot to specify dependencies
+- Agent used wrong package name
+- Agent assumed library was installed
+
+---
+
+#### Type 2: Code That Runs But Produces Wrong Results
+
+**Symptoms:**
+- API returns empty array when should have data
+- Frontend displays nothing even though API works
+- Data saved to database but can't be retrieved
+
+**Example:**
+```
+GET /flights?origin=SFO&dest=LAX
+Returns: []  (expected flight results)
+```
+
+**Common causes:**
+- Logic errors in filtering/queries
+- Wrong database table or column names
+- Mismatched data formats between services
+
+---
+
+#### Type 3: Code That Partially Works
+
+**Symptoms:**
+- Search works but booking fails
+- Happy path works but error cases crash
+- Works on first try, fails on second
+
+**Example:**
+```
+First booking: Success!
+Second booking: Error: Seat already taken (logic bug)
+```
+
+**Common causes:**
+- Missing edge case handling
+- State management bugs
+- Incomplete implementation
+
+---
+
+#### Type 4: Integration Failures Between Services
+
+**Symptoms:**
+- Frontend can't call backend API
+- CORS errors in browser console
+- Services can't communicate (connection refused)
+
+**Example:**
+```
+Console: Access to fetch at 'http://localhost:5001' blocked by CORS policy
+```
+
+**Common causes:**
+- CORS not configured
+- Wrong ports or URLs
+- Services not running
+- Firewall blocking connections
+
+---
+
+#### Type 5: Performance Issues
+
+**Symptoms:**
+- API takes 10+ seconds to respond
+- UI freezes during operations
+- Database queries timeout
+
+**Example:**
+```
+GET /flights → 15 seconds (should be <1 second)
+```
+
+**Common causes:**
+- Missing database indexes
+- N+1 query problems
+- Loading too much data at once
+
+---
+
+### Systematic Debugging Approach
+
+#### Step 1: Read the Error Message Carefully
+
+**Don't panic. Read the actual error.**
+
+```
+Bad:  "It's broken! Fix it!"
+Good: "Getting error: ModuleNotFoundError: No module named 'flask_cors'
+       in backend/app.py line 3"
+```
+
+**What to look for:**
+- Error type (ImportError, TypeError, etc.)
+- File and line number
+- Actual vs expected behavior
+
+---
+
+#### Step 2: Isolate the Problem
+
+**Which agent? Which file? Which function?**
+
+**Questions to ask:**
+- Is it frontend or backend?
+- Does the backend API work when tested directly (curl/Postman)?
+- Does the issue happen with all inputs or specific ones?
+- When did it start working incorrectly?
+
+**Example isolation:**
+```
+You: "Test the backend API directly with curl to see if it works
+      without the frontend."
+
+[Test reveals API works fine]
+
+You: "OK, so the bug is in the frontend calling the API, not the API itself."
+```
+
+---
+
+#### Step 3: Test Components Independently
+
+**Don't test the whole system. Test one piece at a time.**
+
+**Backend test:**
+```bash
+curl http://localhost:5001/flights?origin=SFO&dest=LAX
+```
+
+**Frontend test:**
+```javascript
+console.log("API response:", response.data)
+```
+
+**Database test:**
+```bash
+sqlite3 flights.db "SELECT * FROM flights WHERE origin='SFO'"
+```
+
+---
+
+#### Step 4: Check Assumptions
+
+**Common assumptions that break:**
+
+❌ "The API is running" → Check with `ps aux | grep python`
+❌ "Port 5001 is available" → Check with `lsof -i :5001`
+❌ "Dependencies are installed" → Check with `pip list | grep flask`
+❌ "File paths are correct" → Check with `ls backend/app.py`
+❌ "Database has data" → Check with `sqlite3 db.db "SELECT COUNT(*) FROM flights"`
+
+**Always verify, never assume.**
+
+---
+
+### Recovery Strategies
+
+#### Strategy 1: Ask Same Agent to Fix (With Error Message)
+
+**When to use:**
+- Minor bugs (missing import, typo, small logic error)
+- Agent has full context of what they built
+- Fix is straightforward
+
+**Example:**
+```
+You: "The code has this error:
+
+     ModuleNotFoundError: No module named 'flask_cors'
+
+     Fix this error."
+
+Claude: [Same agent adds flask-cors to requirements.txt and installs it]
+        "Fixed! Added flask-cors==4.0.0 to requirements.txt"
+```
+
+**Pros:** Fast, maintains context
+**Cons:** If agent doesn't understand the bug, might fail again
+
+✅ **Use when:** Simple bugs, clear error messages
+
+---
+
+#### Strategy 2: Spawn Debug Specialist Agent
+
+**When to use:**
+- Complex bugs requiring investigation
+- Original agent tried to fix but failed
+- Need fresh perspective
+
+**Example:**
+```
+You: "Spawn a debugging specialist agent to investigate why
+      GET /flights returns empty array.
+
+      Context:
+      - Backend API running on port 5001
+      - Database has 10 flights in flights.db
+      - Query params: ?origin=SFO&dest=LAX
+
+      Here's the API code: [paste code]"
+
+Claude: [Debug Agent investigates]
+        "Found the issue! Line 47 uses 'destination' but the database
+         column is 'dest'. Changing query to match DB schema."
+
+        [Debug Agent fixes]
+        "Fixed! Now returns correct results."
+```
+
+**Pros:** Fresh perspective, focused investigation
+**Cons:** Takes longer, needs good context
+
+✅ **Use when:** Complex bugs, original agent stuck, need investigation
+
+---
+
+#### Strategy 3: Start Over With Better Prompt
+
+**When to use:**
+- Fundamental misunderstanding of requirements
+- Agent went in completely wrong direction
+- Faster to rebuild than fix
+
+**Example:**
+```
+Bad first attempt:
+You: "Build an API"
+Agent: [Builds REST API but you needed GraphQL]
+
+Recovery:
+You: "Actually, I need GraphQL not REST. Forget the REST API.
+
+     Build a new GraphQL API with:
+     - Schema for Flight type
+     - Query for searching flights
+     - Mutation for booking
+     - Apollo Server on port 5001"
+
+Claude: [New agent builds GraphQL API correctly]
+```
+
+**Pros:** Clean slate, correct from start
+**Cons:** Loses previous work (if any was salvageable)
+
+✅ **Use when:** Wrong architecture, fundamental mismatch, faster to restart
+
+---
+
+#### Decision Tree: Which Strategy?
+
+```
+Is it a simple error (import, typo, syntax)?
+├─ Yes → Strategy 1: Ask same agent to fix
+└─ No → Continue...
+
+Did original agent try to fix but fail?
+├─ Yes → Strategy 2: Spawn debug specialist
+└─ No → Continue...
+
+Is the agent's approach fundamentally wrong?
+├─ Yes → Strategy 3: Start over with better prompt
+└─ No → Strategy 2: Spawn debug specialist
+```
+
+---
+
+### Practical Examples
+
+#### Example 1: Import Error - Module Not Found
+
+**The Problem:**
+```
+$ python backend/app.py
+ModuleNotFoundError: No module named 'flask_cors'
+```
+
+**Your CLI Conversation:**
+```
+You: "Getting this error when running the backend:
+
+     ModuleNotFoundError: No module named 'flask_cors'
+
+     Fix it."
+
+Claude: "The flask-cors package isn't installed. I'll add it to
+         requirements.txt and install it.
+
+         [Adds flask-cors==4.0.0 to requirements.txt]
+         [Runs: pip install flask-cors]
+
+         Fixed! Try running python backend/app.py again."
+
+You: "Works now! Thanks."
+```
+
+**Time to fix:** 1 minute
+
+**Key lesson:** Simple errors → ask same agent, provide exact error message
+
+---
+
+#### Example 2: CORS Error - Frontend Can't Call API
+
+**The Problem:**
+```
+Browser Console:
+Access to fetch at 'http://localhost:5001/flights' from origin
+'http://localhost:3000' has been blocked by CORS policy
+```
+
+**Your CLI Conversation:**
+```
+You: "Frontend can't call the backend API. Getting CORS error:
+
+     Access to fetch at 'http://localhost:5001/flights' from origin
+     'http://localhost:3000' has been blocked by CORS policy
+
+     The backend agent forgot to enable CORS. Fix this."
+
+Claude: "I'll enable CORS in the Flask backend to allow requests from
+         localhost:3000.
+
+         [Updates backend/app.py]
+
+         Added:
+         from flask_cors import CORS
+         CORS(app, origins=['http://localhost:3000'])
+
+         Restart the backend and try again."
+
+You: "Perfect! Frontend can now call the API."
+```
+
+**Time to fix:** 2 minutes
+
+**Key lesson:** Integration bugs → be specific about which service needs fixing
+
+---
+
+#### Example 3: Code Runs But Returns Empty Results
+
+**The Problem:**
+```
+GET /flights?origin=SFO&dest=LAX
+Returns: []
+
+Expected: Array of flight objects
+```
+
+**Your CLI Conversation:**
+```
+You: "The API returns empty array when it should return flights.
+
+     Testing with: GET /flights?origin=SFO&dest=LAX
+     Returns: []
+
+     The database has 10 flights. Something is wrong with the query.
+
+     Spawn a debug specialist to investigate."
+
+Claude: [Spawns Debug Agent]
+
+        "Debug Agent investigating...
+
+         Found issue! The API code uses request.args.get('destination')
+         but the database column is named 'dest'.
+
+         Query fails because column name doesn't match.
+
+         Should I fix this by:
+         A) Change API to use 'dest' parameter, OR
+         B) Rename database column to 'destination'?"
+
+You: "Option A - change API to use 'dest' parameter"
+
+Claude: [Debug Agent fixes]
+
+        "Fixed! Changed line 23 from:
+         dest = request.args.get('destination')
+         to:
+         dest = request.args.get('dest')
+
+         Now returns correct results:
+         GET /flights?origin=SFO&dest=LAX
+         Returns: [{id: 1, origin: 'SFO', dest: 'LAX', price: 199}, ...]"
+```
+
+**Time to fix:** 5 minutes
+
+**Key lesson:** Empty results → spawn debug specialist, provide context about what data exists
+
+---
+
+### Prevention Techniques
+
+#### Prevention 1: Test As You Go
+
+**Don't wait until everything is built to test.**
+
+**Bad approach:**
+```
+Build backend → Build frontend → Build integration → Test everything
+[Find 5 bugs across all layers]
+```
+
+**Good approach:**
+```
+Build backend → Test backend immediately
+Build frontend → Test frontend immediately
+Integrate → Test integration
+```
+
+**CLI Example:**
+```
+You: "Build the Flask API for flight search"
+[Agent builds API]
+
+You: "Before moving to frontend, test this API with curl to make
+      sure it works"
+[Agent tests, finds and fixes bug]
+
+You: "Good! Now build the frontend"
+```
+
+✅ **Catch bugs early, when context is fresh**
+
+---
+
+#### Prevention 2: Be Specific About Dependencies
+
+**Vague request:**
+```
+You: "Build a Flask API"
+```
+Agent might forget: CORS, database library, input validation library
+
+**Specific request:**
+```
+You: "Build a Flask API with:
+      - flask and flask-cors for web server
+      - sqlite3 for database
+      - Create requirements.txt with all dependencies
+      - Test that all imports work"
+```
+
+✅ **Specify dependencies upfront**
+
+---
+
+#### Prevention 3: Include Error Handling in Initial Request
+
+**Without error handling:**
+```
+You: "Build POST /bookings endpoint"
+Agent builds happy path only → crashes on bad input
+```
+
+**With error handling:**
+```
+You: "Build POST /bookings endpoint with:
+      - Validate passenger_name is not empty
+      - Validate email format
+      - Validate flight_id exists in database
+      - Return 400 error with message for invalid inputs
+      - Return 404 if flight not found
+      - Return 409 if flight is full"
+```
+
+✅ **Request error handling from the start**
+
+---
+
+#### Prevention 4: Ask Agents to Explain Approach First
+
+**Without explanation:**
+```
+You: "Build booking system"
+Agent builds → wrong architecture → rebuild
+```
+
+**With explanation:**
+```
+You: "Before building, explain your approach:
+      - What endpoints will you create?
+      - What database schema?
+      - What libraries will you use?"
+
+Claude: "I'll create:
+         - POST /bookings endpoint
+         - bookings table with: id, flight_id, passenger_name, email
+         - Use Flask, SQLite, flask-cors
+         - Return booking_id and confirmation_code"
+
+You: "Good! One change: also store booking timestamp. Now build it."
+
+Claude: [Builds with correct approach]
+```
+
+✅ **Review approach before implementation**
+
+---
+
+### Quick Debugging Checklist
+
+When something breaks, check:
+
+**For Backend Issues:**
+- [ ] Is the server running? (`ps aux | grep python`)
+- [ ] Is it on the right port? (`lsof -i :5001`)
+- [ ] Are dependencies installed? (`pip list`)
+- [ ] Does the API respond to curl? (`curl localhost:5001/flights`)
+- [ ] Does the database have data? (`sqlite3 db.db "SELECT * FROM flights"`)
+
+**For Frontend Issues:**
+- [ ] Is the dev server running? (`ps aux | grep node`)
+- [ ] Are there errors in browser console? (Open DevTools)
+- [ ] Is it calling the right API URL? (Check Network tab)
+- [ ] Are environment variables set? (`echo $REACT_APP_API_URL`)
+
+**For Integration Issues:**
+- [ ] Is CORS enabled on backend?
+- [ ] Are ports correct on both sides?
+- [ ] Are both services running simultaneously?
+- [ ] Are data formats compatible? (JSON structure matches?)
+
+---
+
+### Debugging Best Practices
+
+1. **Always include the full error message**
+   ```
+   Bad:  "It's not working"
+   Good: "Getting error: TypeError: Cannot read property 'map' of undefined
+          in SearchResults.js line 42"
+   ```
+
+2. **Test one layer at a time**
+   ```
+   Database → Backend API → Frontend → Integration
+   ```
+
+3. **Keep error messages visible**
+   ```
+   Don't just say "fixed it" - show what was wrong and what changed
+   ```
+
+4. **Document what worked**
+   ```
+   When you fix a tricky bug, ask: "What was the root cause and how
+   can I prevent this next time?"
+   ```
+
+5. **Use debug specialists for complex issues**
+   ```
+   If same agent fails twice to fix → spawn debug specialist
+   ```
+
+---
+
+### When Debugging Takes Too Long
+
+⚠️ **If you've spent 10+ minutes debugging and still stuck:**
+
+**Option 1: Ask Claude for help**
+```
+You: "I've been debugging this CORS issue for 10 minutes.
+      Can you spawn a specialist to investigate what I'm missing?"
+```
+
+**Option 2: Start fresh**
+```
+You: "This approach isn't working. Let's start over.
+      Build a simpler version that just focuses on getting
+      the API call working first."
+```
+
+**Option 3: Simplify scope**
+```
+You: "Remove the complex filtering logic for now.
+      Just make it return all flights. We'll add filtering
+      once basic retrieval works."
+```
+
+🚩 **Red flag:** If debugging takes longer than building would take → start over
 
 ---
 
