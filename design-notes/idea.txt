@@ -64,3 +64,6 @@ I need you to do the following:
     Q5-Q6: we are already live, but we must survive in a competitive market. the gamerunner gives some directions or constraints
 
   - during the course of the game, the director needs to give adequate context or prompt to their agent-teams, just like a real director gives targets to the teams in their org.
+
+
+  - let's make the game shorter. first two quarters of 45-60min each and Q3, Q4 of 30 mins. Let's cut Q5,Q6. Q3 will be when the gamerunner may bring some randomness and Q4 is the finale with the product launch.

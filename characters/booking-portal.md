@@ -207,35 +207,6 @@ Priority 3: Handle edge cases (defer if time-limited)
 
 ---
 
-### Quarter 5: Survive & Adapt (30 min)
-**Focus:** Quick response to market conditions (dice-driven scenario)
-
-**Possible Scenarios:**
-- Crisis: "Bug causing failed bookings - fix it!"
-- Opportunity: "Partner wants API integration - build it!"
-- Competition: "Competitor has express checkout - match it!"
-
-**Your Objectives:**
-- Respond to gamerunner's dice roll scenario
-- Build or fix quickly
-- Demonstrate adaptability
-
-**Demo:** Show how you handled the crisis/opportunity.
-
----
-
-### Quarter 6: Final Challenge (30 min)
-**Focus:** One more scenario, final improvements
-
-**Possible Scenarios:**
-- Innovation: "Add AI trip planning assistant"
-- Premium: "Launch business class booking tier"
-- Scale: "Traffic 10x - optimize performance"
-
-**Demo:** Final feature showcase and retrospective.
-
----
-
 ## VISUAL DEMO EXAMPLES
 
 **What "Good" Looks Like:**
@@ -287,12 +258,6 @@ Priority 3: Handle edge cases (defer if time-limited)
 - **Why:** Build on existing work, incremental improvement
 - See TUTORIAL.md "Pattern 4: Iterative Refinement" for examples
 
-**Q5+ (Complex features):** **Specialist Roles** 🎯
-- Frontend Agent: Owns all UI/UX work across quarters
-- Backend Agent: Owns all API work across quarters
-- Testing Agent: Validates and finds issues
-- **Why:** Context retention, domain expertise
-- See TUTORIAL.md "Pattern 3: Specialist Roles" for details
 
 ### Role-Specific Tips
 
@@ -396,16 +361,6 @@ Structure your agents around what you'll show: "Agent 1 builds what I'll type, A
 - Professional polish
 - **Success = production-ready booking portal, ready to launch!**
 
-### Q5: Survive Competition (30 min)
-- Quick response to dice-driven scenario
-- Crisis management or opportunity capture
-- **Success = adapted quickly, maintained quality**
-
-### Q6: Final Challenge (30 min)
-- One more scenario response
-- Final improvements or innovation
-- **Success = strong finish, learned multi-agent orchestration**
-
 ---
 
 ## INTEGRATION POINTS (OPTIONAL)
@@ -493,7 +448,7 @@ Build your investor demo:
 2. Practice your investor demo
 3. Prepare to answer investor questions
 
-### Quarters 3-6: Execute & Adapt
+### Quarter 3 & Beyond: Execute & Adapt
 
 **Each quarter:**
 1. Listen to gamerunner scenario

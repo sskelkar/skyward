@@ -1,11 +1,13 @@
 # DIRECTOR'S GUIDE
 ## Managing Your Organization with Claude Agent Teams
 
-**Purpose:** Learn how to think and operate as a director managing multiple agent teams building microservices.
+**Purpose:** Learn to think and operate as a director managing multiple agent teams building microservices.
 
 **Audience:** Engineers (junior to senior) learning to manage teams rather than code themselves
 
-**Read this before:** Starting your first quarter as a director
+**Prerequisites:** Read TUTORIAL.md first for multi-agent mechanics. This guide focuses on the director mindset and strategy.
+
+**Complements:** TUTORIAL.md (covers agent mechanics), this guide (covers director role)
 
 ---
 
@@ -13,11 +15,11 @@
 
 1. [Thinking Like a Director](#thinking-like-a-director)
 2. [Using Agents for Research & Planning](#using-agents-for-research--planning)
-3. [Roles in Your Organization](#roles-in-your-organization)
-4. [Organizing Your Agent Teams](#organizing-your-agent-teams)
-5. [Delegation Best Practices](#delegation-best-practices)
-6. [Common Director Mistakes](#common-director-mistakes)
-7. [Quick Reference](#quick-reference)
+3. [Delegation Principles](#delegation-principles)
+4. [Common Director Mistakes](#common-director-mistakes)
+5. [Quick Reference](#quick-reference)
+
+> **Note:** For detailed agent roles, prompt patterns, and multi-agent coordination techniques, see TUTORIAL.md
 
 ---
 
@@ -500,830 +502,288 @@ Q2 Plan:
 
 ---
 
-## ROLES IN YOUR ORGANIZATION
-
-In a real company, your department would have specialists. As a director with Claude agents, you can assign agents to these roles:
-
-### 1. Product Manager (PM)
-
-**What they do:** Define requirements, prioritize features, write specifications
-
-**When to use:**
-- Beginning of complex quarters
-- When you're unsure what to build
-- When requirements are ambiguous
-
-**Agent prompt example:**
-```
-"You are a product manager for a flight booking portal.
-
-Define requirements for a seat selection feature:
-- User stories (as a customer, I want to...)
-- Acceptance criteria (how do we know it's done?)
-- Edge cases to handle
-- Success metrics
-
-Deliverable: Product requirements document"
-```
-
-**Output you'll get:**
-- Clear feature definition
-- Requirements you can hand to dev teams
-- Edge cases to test
-
----
-
-### 2. Backend Developer
-
-**What they do:** Build APIs, databases, business logic, data processing
-
-**When to use:**
-- Building services, APIs, data models
-- Most quarters - every service needs a backend
-
-**Agent prompt example:**
-```
-"You are a backend developer.
-
-Build a Flask API for flight search with:
-- GET /flights?origin={}&dest={}&date={}
-- SQLite database with flights table
-- Include 10 mock flights
-- Run on port 5001
-- Add basic error handling
-
-Deliverable: Python file I can run with 'python app.py'"
-```
-
-**Output you'll get:**
-- Working API service
-- Database schema
-- Runnable code
-
----
-
-### 3. Frontend Developer
-
-**What they do:** Build UIs, user interactions, visual components
-
-**When to use:**
-- Building web pages, forms, dashboards
-- Any customer-facing or admin interface
-
-**Agent prompt example:**
-```
-"You are a frontend developer.
-
-Build a flight search interface with:
-- Search form (origin, destination, date inputs)
-- Results display (grid of flight cards)
-- Book button for each flight
-- Modern, responsive design
-- Calls API at http://localhost:5001/flights
-
-Tech: React or vanilla JavaScript
-Deliverable: HTML/JS I can open in a browser"
-```
-
-**Output you'll get:**
-- Working UI
-- Styled interface
-- JavaScript to call APIs
-
----
-
-### 4. QA Engineer
-
-**What they do:** Test features, find bugs, validate quality, write test cases
-
-**When to use:**
-- After building features, before demos
-- When you want to find issues before users do
-- Last 5-10 minutes of a quarter
-
-**Agent prompt example:**
-```
-"You are a QA engineer testing a flight booking API.
-
-Test this code:
-[paste your API code]
-
-Find and report:
-- 5 bugs or edge cases that break the API
-- 3 missing input validations
-- 2 error handling issues
-- 1 performance problem
-
-For each issue:
-- Describe the problem
-- Show how to reproduce it
-- Suggest severity (critical/major/minor)"
-```
-
-**Output you'll get:**
-- List of bugs you missed
-- Test cases to verify
-- Prioritized issues to fix
-
----
-
-### 5. Business Analyst
-
-**What they do:** Analyze requirements, define data flows, create specifications
-
-**When to use:**
-- Complex features with unclear requirements
-- Need to understand business logic
-- Before building, to clarify what to build
-
-**Agent prompt example:**
-```
-"You are a business analyst for airline booking systems.
-
-Define the complete booking flow:
-- Step-by-step process from search to confirmation
-- Data required at each step
-- Business rules (cancellations, refunds, seat changes)
-- Integration points with other systems (inventory, payment)
-- Error scenarios and how to handle them
-
-Deliverable: Business process document with flowchart"
-```
-
-**Output you'll get:**
-- Detailed process flows
-- Data requirements
-- Business rules clarified
-
----
-
-### 6. DevOps Engineer
-
-**What they do:** Setup infrastructure, deployment, Docker, scripts, automation
-
-**When to use:**
-- Need to run multiple services together
-- Want to automate startup/teardown
-- Deploying or packaging services
-
-**Agent prompt example:**
-```
-"You are a DevOps engineer.
-
-Create a docker-compose.yml to run these services:
-- Search API on port 5001
-- Booking API on port 5002
-- Frontend on port 3000
-
-Make it so I can:
-- Start all services with 'docker-compose up'
-- Stop all with 'docker-compose down'
-- See logs from all services
-
-Deliverable: docker-compose.yml and README with instructions"
-```
-
-**Output you'll get:**
-- Docker configuration
-- Scripts to run everything
-- Instructions
-
----
-
-### 7. UX Designer
-
-**What they do:** Design user flows, wireframes, improve user experience
-
-**When to use:**
-- Planning UI before building
-- Improving existing interfaces
-- Making things more user-friendly
-
-**Agent prompt example:**
-```
-"You are a UX designer.
-
-Review this flight booking interface:
-[paste code or describe current UI]
-
-Suggest improvements for:
-- User flow (is it intuitive?)
-- Visual design (modern and professional?)
-- Accessibility (screen readers, keyboard navigation)
-- Mobile responsiveness
-
-Deliverable:
-- 3 high-priority UX improvements with mockups
-- Before/after comparison"
-```
-
-**Output you'll get:**
-- UX recommendations
-- Design suggestions
-- Accessibility fixes
-
----
-
-### 8. Technical Writer
-
-**What they do:** Write documentation, API docs, user guides
-
-**When to use:**
-- Need to document APIs for integration
-- Preparing for demos
-- Other teams need to use your services
-
-**Agent prompt example:**
-```
-"You are a technical writer.
-
-Document this booking API:
-[paste API code]
-
-Create:
-- API reference (all endpoints, parameters, responses)
-- Quick start guide (how to run it)
-- Example requests with curl
-- Error codes and meanings
-
-Deliverable: README.md with complete API documentation"
-```
-
-**Output you'll get:**
-- Professional documentation
-- Examples for integration
-- User guides
-
----
-
-## ORGANIZING YOUR AGENT TEAMS
-
-### Scenario 1: Building a New Feature (Q1)
-
-**Use case:** Starting from scratch
-
-**Team structure:**
-```
-Agent 1 (Product Manager):
-"Define requirements for flight search feature"
-↓
-Agent 2 (Backend Dev):
-"Build search API based on these requirements: [paste PM output]"
-↓
-Agent 3 (Frontend Dev):
-"Build search UI calling this API: [paste API details]"
-↓
-Agent 4 (QA):
-"Test the complete search flow, find bugs"
-```
-
-**Timeline for 60-minute quarter:**
-- 0-10 min: PM defines requirements (you review)
-- 10-30 min: Backend and Frontend in parallel
-- 30-50 min: QA tests, devs fix bugs
-- 50-60 min: Final testing and demo prep
-
----
-
-### Scenario 2: Improving Existing Feature (Q2-Q3)
-
-**Use case:** Building on previous work
-
-**Team structure:**
-```
-Agent 1 (Business Analyst):
-"Analyze current booking flow, suggest improvements"
-↓
-Agent 2 (Frontend Dev):
-"Implement these improvements: [paste BA suggestions]"
-↓
-Agent 3 (UX Designer):
-"Review and polish the improved interface"
-```
-
-**Timeline for 60-minute quarter:**
-- 0-15 min: BA analyzes and suggests
-- 15-45 min: Frontend implements
-- 45-60 min: UX reviews and polishes
-
----
-
-### Scenario 3: Quick Iteration (30-minute quarter)
-
-**Use case:** Fast turnaround, time pressure
-
-**Team structure:**
-```
-Agent 1 (Backend Dev):    ⎫
-"Build API..."            ⎬ Parallel!
-Agent 2 (Frontend Dev):   ⎭
-"Build UI..."
-
-[You integrate manually]
-```
-
-**Timeline for 30-minute quarter:**
-- 0-20 min: Both agents work in parallel
-- 20-25 min: You integrate and test
-- 25-30 min: Demo prep
-
----
-
-### Scenario 4: Polish and Prepare for Demo
-
-**Use case:** End of quarter, need quality
-
-**Team structure:**
-```
-Agent 1 (QA):
-"Test everything, create comprehensive bug list"
-↓
-Agent 2 (Backend + Frontend Dev):
-"Fix all critical bugs: [paste bug list]"
-↓
-Agent 3 (Technical Writer):
-"Document API for demo, create demo script"
-```
-
-**Timeline for 30-minute quarter:**
-- 0-10 min: QA finds all issues
-- 10-25 min: Devs fix issues
-- 25-30 min: Final test and demo prep
-
----
-
-### Choosing Team Size
-
-**2 agents:**
-- Simple features
-- Time pressure (< 30 min)
-- Pattern: Build + Test, or Backend + Frontend
-
-**3 agents (most common):**
-- Standard features
-- 30-60 minute quarters
-- Pattern: Backend + Frontend + Integration/QA
-
-**4 agents:**
-- Complex features
-- 60+ minute quarters
-- Pattern: PM + Backend + Frontend + QA
-
-**5+ agents:**
-- Rarely needed
-- Risk of coordination overhead
-- Only for very complex multi-service builds
-
----
-
-## DELEGATION BEST PRACTICES
-
-### 1. Match Agents to Roles, Not Just Tasks
-
-**❌ Don't:**
-```
-Agent 1: "Build everything for the booking feature"
-```
-
-**✅ Do:**
-```
-Agent 1 (Backend Dev): "Build booking API"
-Agent 2 (Frontend Dev): "Build booking UI"
-Agent 3 (QA): "Test booking flow"
-```
-
-**Why:** Specialization produces better results, clearer ownership, easier to debug.
-
----
-
-### 2. Start with a PM Agent for Complex Features
-
-**When requirements are unclear:**
-
-**Step 1 - PM Agent:**
-```
-"You are a product manager.
-Define requirements for seat selection feature:
-- User stories
-- Acceptance criteria
-- Data requirements"
-```
-
-**Step 2 - Review PM output:**
-- Does this make sense?
-- Is it achievable in this quarter?
-- Any missing pieces?
-
-**Step 3 - Hand requirements to dev agents:**
-```
-"Agent 2 (Backend): Build seat selection API based on these requirements:
-[paste PM output]"
-```
-
-**Why:** Prevents building the wrong thing. 10 minutes of planning saves 30 minutes of rework.
-
----
-
-### 3. Always End with a QA Agent Before Demos
-
-**Never demo without testing.**
-
-**Last 5-10 minutes of every quarter:**
-```
-"Agent (QA): Test this complete system:
-[paste or describe what you built]
-
-Find:
-- Bugs that would embarrass us in demo
-- Edge cases that crash the system
-- Missing validations
-
-Focus on critical issues only, we have 5 minutes."
-```
-
-**Then fix critical issues before demo.**
-
-**Why:** Better to find bugs yourself than during demo. Shows professionalism.
-
----
-
-### 4. Use Specialists, Not Generalists
-
-**❌ Don't:**
-```
-"Agent 1, build the API and UI and tests and documentation"
-```
-
-**✅ Do:**
-```
-Agent 1 (Backend): "Build API"
-Agent 2 (QA): "Write tests"
-Agent 3 (Tech Writer): "Create documentation"
-```
-
-**Why:** Agents produce better output when given focused, specialized tasks.
-
----
-
-### 5. Trust Your Teams, But Verify
-
-**Trust:**
-- Agents are generally capable
-- Let them figure out implementation
-- Don't micromanage every line of code
-
-**But verify:**
-- Always test agent output yourself
-- Run the code, don't just read it
-- Test edge cases
+## DELEGATION PRINCIPLES
+
+**For detailed agent roles and prompt templates, see TUTORIAL.md. This section focuses on director-level delegation strategy.**
+
+### Core Principles
+
+**1. Match Agents to Roles**
+- Assign specialized roles (Backend, Frontend, QA) not generic tasks
+- Specialization produces better results and clearer ownership
+- See TUTORIAL.md for detailed role descriptions and prompt examples
+
+**2. Start with Planning for Complex Features**
+- Use PM or BA agents to define requirements before building
+- 10 minutes of planning saves 30 minutes of rework
+- Review planning output before delegating to dev agents
+
+**3. Always End with QA Before Demos**
+- Reserve last 5-10 minutes of every quarter for testing
+- Find bugs yourself before the demo
+- Fix critical issues, defer minor ones
+
+**4. Trust Teams, But Verify**
+- Let agents determine HOW to implement
+- You define WHAT needs to be built and WHY
+- Test outputs yourself (run code, test happy path + 2-3 edge cases)
 - Verify integration between services
 
-**Process:**
-1. Agent delivers code
-2. You run it locally
-3. You test the happy path
-4. You test 2-3 edge cases
-5. If it works → move on
-6. If it breaks → give agent error, ask to fix
-
----
-
-### 6. Timebox Your Decisions
-
-**Directors decide quickly and adapt.**
-
-**❌ Don't:**
-- Spend 10 minutes debating Flask vs. FastAPI
-- Spend 15 minutes choosing the perfect CSS framework
-- Spend 20 minutes optimizing before anything works
-
-**✅ Do:**
-- Pick Flask (you know it) → move on
-- Pick Bootstrap (it's fast) → move on
-- Make it work first, optimize if time permits
-
-**Timebox rule:**
+**5. Timebox Decisions**
 - Architecture decisions: 2 minutes max
-- Tech stack decisions: 1 minute max
-- "Should I fix this bug?" decisions: 30 seconds max
+- Tech stack choices: 1 minute max
+- Bug fix priority: 30 seconds max
+- In a 30-minute quarter, every minute matters
 
-**Why:** In a 30-minute quarter, every minute matters. Decide, move, adapt if needed.
+**6. Focus on Outcomes, Not Process**
+- Care about working software, not implementation details
+- Ask "Does it work?" not "Did you code it my way?"
+- Review results, not how agents got there
 
----
-
-### 7. Focus on Outcomes, Not Process
-
-**You don't care HOW agents build it, you care THAT it works.**
-
-**❌ Don't ask:**
-- "Did you use the exact algorithm I described?"
-- "Did you structure the code the way I would?"
-- "Did you use the same variable names I prefer?"
-
-**✅ Do ask:**
-- "Does it return correct flight data?"
-- "Can I demo this successfully?"
-- "Does it integrate with the other service?"
-
-**Let agents figure out implementation details.**
-
-**Your job:** Define WHAT and WHY, let agents figure out HOW.
-
----
-
-### 8. Delegate the Grunt Work
-
-**Everything that doesn't require your judgment can be delegated:**
-
-| Task | Who Does It |
-|------|-------------|
-| Debugging error messages | QA finds it, Backend fixes it |
-| Writing tests | QA agent |
-| Improving CSS styling | Frontend or UX agent |
-| Writing documentation | Technical Writer agent |
-| Setting up Docker | DevOps agent |
-| Finding edge cases | QA agent |
+**7. Delegate Grunt Work**
+- Bug finding → QA agent
+- Test writing → QA agent
+- Documentation → Technical Writer agent
+- CSS polish → Frontend/UX agent
+- Docker setup → DevOps agent
 
 **You focus on:**
-- What to build (strategy)
-- Does it meet requirements? (review)
-- How do services integrate? (architecture)
-- Are we ready to demo? (quality gate)
+- Strategy (what to build)
+- Review (does it meet requirements?)
+- Architecture (how services integrate)
+- Quality gates (ready to demo?)
 
 ---
 
 ## COMMON DIRECTOR MISTAKES
 
-### Mistake 1: Too Many Agents
+**Note:** For general multi-agent pitfalls (context loss, conflicting outputs, etc.), see TUTORIAL.md. This section focuses on mistakes specific to the director role.
+
+### Mistake 1: Coding Instead of Directing
 
 **Symptom:**
-- Managing 5+ agents simultaneously
-- Spending more time coordinating than building
-- Agents producing conflicting outputs
+- You're writing code yourself
+- Agents sitting idle while you debug
+- Mixing director and engineer roles
 
 **Why it happens:**
-- Thinking more agents = faster
-- Not accounting for coordination overhead
+- Old habits from being an engineer
+- "It's faster if I just do it myself"
+- Not trusting agents with implementation
 
 **Solution:**
-- Stick to 2-3 agents for 30-min quarters
-- Stick to 3-4 agents for 60-min quarters
-- More than 4 agents → you're over-complicating
+- If you catch yourself coding, STOP
+- Delegate the coding to an agent
+- Your job: define requirements, review output, make decisions
+- Only touch code for final integration or critical debugging
 
 **Example:**
 ```
-❌ 6 agents: API, Database, Frontend, Tests, Docs, Integration
-✅ 3 agents: Backend (API+DB), Frontend, QA (Tests+Docs)
+❌ Director behavior:
+[Opens VS Code, writes API endpoint, debugs for 15 minutes]
+
+✅ Director behavior:
+"Agent 3, this endpoint is returning 500 errors. Here's the error log.
+Fix it and test the endpoint."
 ```
 
 ---
 
-### Mistake 2: Not Testing Before Demos
+### Mistake 2: Micromanaging Implementation
 
 **Symptom:**
-- Code looks good in agent output
-- Demo fails because code doesn't actually run
-- Embarrassing moment during presentation
-
-**Why it happens:**
-- Assuming agent output works
-- Time pressure, skip testing
-- Trust without verification
-
-**Solution:**
-- Always reserve last 5 minutes for testing
-- Run the code yourself
-- Test the demo flow
-- Have a backup plan if something breaks
-
-**Process:**
-```
-Minutes 0-25: Build
-Minutes 25-28: Test everything yourself
-Minutes 28-30: Fix critical issues or prepare backup
-```
-
----
-
-### Mistake 3: Micromanaging Agents
-
-**Symptom:**
-- Writing 500-word prompts with every implementation detail
-- Telling agents exactly what code to write line-by-line
-- Spending more time writing prompts than agents spend coding
+- Writing detailed line-by-line instructions
+- Telling agents exactly how to code
+- 500-word prompts with implementation details
 
 **Why it happens:**
 - Fear of agents doing it wrong
+- Perfectionism
 - Not trusting agent capabilities
-- Trying to maintain control
 
 **Solution:**
-- Give objectives, not instructions
-- Trust agents to figure out implementation
+- Give objectives and requirements, not instructions
+- Let agents figure out HOW
 - Review output, not process
 
 **Example:**
 ```
 ❌ Micromanaging:
-"Create a variable called flightList on line 5. Loop through it
-starting at index 0. For each element, check if the origin matches..."
+"Import Flask on line 1. Create app variable on line 2.
+Define search_flights function on line 5..."
 
-✅ Delegating:
-"Build a function that filters flights by origin and destination.
-Return matching flights as JSON."
+✅ Directing:
+"Build a Flask API with GET /flights endpoint.
+Return JSON array of flights filtered by origin and destination."
 ```
 
 ---
 
-### Mistake 4: Building Before Planning
+### Mistake 3: Building Before Planning (Director Anti-Pattern)
 
 **Symptom:**
-- Start coding immediately
-- Halfway through, realize you're building the wrong thing
-- Waste time backtracking
+- Jump straight to coding in Q1
+- Halfway through quarter, realize wrong approach
+- No clear architecture, services don't integrate
 
 **Why it happens:**
-- Time pressure → skip planning
-- Eager to see results
-- Misunderstand requirements
+- Time pressure feels urgent
+- Want to see immediate results
+- Undervalue planning phase
 
 **Solution:**
-- First 5 minutes: Plan (what services? what agents?)
-- Next 5 minutes: Agent 1 (PM or BA) clarifies requirements
-- Then: Start building
+- Q1 is for PLANNING, not building (usually)
+- Spend 40-50 minutes on research, architecture, requirements
+- Build simple MVP only if time permits
+- Enter Q2 with clear vision and architecture
 
 **Example:**
 ```
-✅ Good flow:
-0-5 min: You plan architecture (3 services, which agents)
-5-10 min: PM agent defines requirements
-10-15 min: Review requirements, adjust plan if needed
-15-60 min: Build with confidence
+❌ Bad Q1:
+0-60 min: Build services frantically, unclear requirements
+[Enter Q2 confused about architecture]
 
-❌ Bad flow:
-0-30 min: Build frantically
-30 min: Realize you built search but demo needs booking
-30-60 min: Scramble to rebuild
+✅ Good Q1:
+0-20 min: Research agent analyzes domain
+20-40 min: Architect agent designs 3-service architecture
+40-55 min: PM agent defines Q2-Q4 roadmap
+55-60 min: Polish vision document
+[Enter Q2 with clear plan]
 ```
 
 ---
 
-### Mistake 5: Sequential When You Could Parallelize
+### Mistake 4: Not Adapting Strategy
 
 **Symptom:**
-- Agents waiting idle
-- Backend finishes in 10 minutes, then frontend starts
-- 60-minute quarter feels slow
-
-**Why it happens:**
-- Default to sequential thinking
-- Not recognizing independent work
-- Over-specifying dependencies
-
-**Solution:**
-- Ask: "Do these agents REALLY need to wait for each other?"
-- Parallelize whenever possible
-- Use API contracts instead of actual code
-
-**Example:**
-```
-❌ Sequential (60 minutes):
-Agent 1: Build API (20 min) → Wait →
-Agent 2: Build UI (20 min) → Wait →
-Agent 3: Test (20 min)
-
-✅ Parallel (25 minutes):
-Agent 1: Build API (20 min) ⎫
-Agent 2: Build UI (20 min) ⎬ Parallel!
-                            ⎭
-Agent 3: Test both (5 min)
-```
-
----
-
-### Mistake 6: Ignoring Integration Until the End
-
-**Symptom:**
-- 3 services built separately
-- Demo time: They don't talk to each other
-- Scramble to make them work together
-
-**Why it happens:**
-- Focus on building, forget integration
-- Assume "it'll just work"
-- No integration agent assigned
-
-**Solution:**
-- Reserve time for integration (5-10 min minimum)
-- Test services together before demo
-- Use integration agent to connect them
-
-**Process:**
-```
-Minutes 0-20: Build services
-Minutes 20-25: Integration agent connects them
-Minutes 25-28: Test end-to-end flow
-Minutes 28-30: Demo prep
-```
-
----
-
-### Mistake 7: Not Adapting When Things Go Wrong
-
-**Symptom:**
-- Agent produces broken code
-- Spend 15 minutes trying to fix the same issue
+- Agent stuck on same problem for 15 minutes
+- Keep trying same broken approach
 - Run out of time, demo fails
 
 **Why it happens:**
-- Stubbornness ("I can fix this")
-- Sunk cost fallacy ("I already spent 10 minutes")
-- Not willing to pivot
+- Stubbornness, sunk cost fallacy
+- Not willing to pivot or simplify
+- Attachment to original plan
 
 **Solution:**
-- Timebox debugging: 5 minutes max
-- If still broken → pivot strategy
-- Simplify scope or switch approach
+- Timebox attempts: 5 minutes max on any single issue
+- If broken after 5 min → change strategy
+- Simplify scope, defer to next quarter, or switch approach
 
 **Decision tree:**
 ```
-Agent produces code → Test it
+Agent output broken?
+├─ Try to fix (5 min max)
+├─ Still broken? → PIVOT
+│   ├─ Simplify feature
+│   ├─ Use mock data
+│   ├─ Build simpler version
+│   └─ Defer to next quarter
+└─ Fixed? → Move on
+```
 
-Works? → Great, move on
-Broken? → Give error to agent, ask to fix
+---
 
-Fixed? → Great, move on
-Still broken after 5 min? → PIVOT
+### Mistake 5: Treating All 4 Quarters the Same
 
-Pivot options:
-- Simplify the feature
-- Use mock data instead
-- Build simpler version
-- Defer to next quarter
+**Symptom:**
+- Same approach in Q1 as Q4
+- Not escalating scope across quarters
+- Missing opportunity to build incrementally
+
+**Why it happens:**
+- Not understanding quarter progression
+- Treating each quarter as independent
+- No long-term vision
+
+**Solution:**
+- Q1: Research, planning, architecture (build vision)
+- Q2: Build core MVP (investor demo ready)
+- Q3-Q4: Add features, polish, scale
+- Each quarter builds on previous quarters
+
+**Example:**
+```
+✅ Good progression:
+Q1: Vision doc, architecture, wireframes
+Q2: Basic search + booking (demo to investors)
+Q3: Add payments, seat selection
+Q4: Polish UX, performance, launch prep
+
+❌ Bad progression:
+Q1: Build search
+Q2: Rebuild search differently
+Q3: Build booking from scratch
+Q4: Scramble to integrate everything
 ```
 
 ---
 
 ## QUICK REFERENCE
 
-### Role Selection Cheat Sheet
+### Director Mindset Cheat Sheet
 
-**Need to define what to build?** → PM or Business Analyst
-**Need to build an API?** → Backend Developer
-**Need to build a UI?** → Frontend Developer
-**Need to test and find bugs?** → QA Engineer
-**Need to improve UX?** → UX Designer
-**Need to run multiple services?** → DevOps Engineer
-**Need documentation?** → Technical Writer
+| Engineer Thinks | Director Thinks |
+|-----------------|-----------------|
+| "I'll build the API" | "Agent Team A will build the API" |
+| "How do I code this?" | "What outcome do I need?" |
+| "Let me debug this" | "QA team, find bugs. Dev team, fix them" |
+| "This needs to be perfect" | "This needs to ship, we can improve later" |
+| "I need to understand every line" | "I need to understand the architecture" |
 
-### Team Size Guidelines
+### Quarter Strategy Guide
 
-| Quarter Length | Number of Agents | Typical Roles |
-|----------------|------------------|---------------|
-| 30 minutes | 2-3 agents | Backend + Frontend + Integration |
-| 60 minutes | 3-4 agents | PM + Backend + Frontend + QA |
-| Complex feature | 4 agents | PM + Backend + Frontend + QA |
-| Simple iteration | 2 agents | Dev + QA |
+**Q1 (Research & Planning):**
+- Focus: Vision, architecture, requirements
+- Agents: Researcher, PM, BA, Technical Architect, UX Designer
+- Deliverable: Vision doc, wireframes, architecture design
+- Success: Clear plan for Q2-Q4
 
-### Time Allocation Guide
+**Q2 (Core MVP):**
+- Focus: Build working demo for investors
+- Agents: Backend, Frontend, QA
+- Deliverable: Basic search + booking flow
+- Success: End-to-end demo of core functionality
 
-**30-minute quarter:**
-- 0-2 min: Plan strategy
-- 2-22 min: Agents build
-- 22-25 min: Integration
-- 25-28 min: Testing
-- 28-30 min: Demo prep
+**Q3-Q4 (Enhancement & Polish):**
+- Focus: Add features, improve UX, scale
+- Agents: Backend, Frontend, UX, DevOps, QA
+- Deliverable: Production-ready system
+- Success: Polished, feature-complete product
 
-**60-minute quarter:**
-- 0-5 min: Plan strategy
-- 5-15 min: PM/BA define requirements
-- 15-50 min: Agents build (parallel when possible)
-- 50-55 min: Integration
-- 55-58 min: Testing
-- 58-60 min: Demo prep
+### Director Decision Framework
 
-### Director's Pre-Quarter Checklist
+**When planning:**
+- What's the minimum viable demo?
+- How many services? (2-3 recommended)
+- Which agents? What roles?
+- What can be deferred?
 
-Before starting a quarter, ask yourself:
+**When delegating:**
+- Define WHAT and WHY, not HOW
+- Match agents to specialized roles
+- Can agents work in parallel?
+- Reserve time for integration and testing
 
-- [ ] What does success look like for this quarter?
-- [ ] What's the minimum viable demo?
-- [ ] How many services will I build? (2-3 recommended)
-- [ ] Which agents do I need? (List roles)
-- [ ] Can any agents work in parallel?
-- [ ] What's my integration strategy?
-- [ ] What can I defer to next quarter?
+**When reviewing:**
+- Does it run?
+- Does it meet requirements?
+- Ready to demo or needs revision?
+- Integration issues?
+
+**When adapting:**
+- If stuck for 5 minutes → pivot
+- Simplify scope, use mocks, or defer
+- Decide fast, adapt as needed
 
 ### Director's Pre-Demo Checklist
 
-Before demoing, verify:
-
-- [ ] All services actually run (tested yourself)
+- [ ] All services run (tested yourself)
 - [ ] Happy path works end-to-end
-- [ ] You've tested the exact flow you'll demo
+- [ ] You've practiced the demo flow
 - [ ] You can explain your multi-agent strategy
-- [ ] You have a backup plan if something breaks
-- [ ] You know which agents built which services
+- [ ] Backup plan if something breaks
+- [ ] Know which agents built which services
 
 ---
 
@@ -1331,9 +791,9 @@ Before demoing, verify:
 
 **Being a director is different from being an engineer.**
 
-**Engineers build. Directors orchestrate.**
+Engineers build. Directors orchestrate.
 
-Your success isn't measured by lines of code you write - it's measured by:
+Your success is measured by:
 - Working software your teams deliver
 - Quality of demos you present
 - Effectiveness of your delegation
@@ -1344,4 +804,10 @@ Your success isn't measured by lines of code you write - it's measured by:
 
 That's what directors do.
 
-Good luck! 🚀
+**Next Steps:**
+1. Read TUTORIAL.md for multi-agent mechanics and patterns
+2. Start with Q1 research and planning (don't rush to code)
+3. Practice delegating instead of coding
+4. Review this guide between quarters to stay in director mindset
+
+Good luck!

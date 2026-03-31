@@ -3,7 +3,7 @@
 
 **Format:** Collaborative learning workshop
 **Players:** 4-6 backend engineers
-**Duration:** Full day (7 hours with lunch break)
+**Duration:** Half day (6 hours with lunch break, 10am-4pm)
 **Core Goal:** Learn multi-agent orchestration by building an airline startup
 
 📋 **For Facilitators:** See [GAMERUNNER.md](GAMERUNNER.md) for detailed facilitation guide, scoring rubrics, and randomness mechanics.
@@ -12,11 +12,11 @@
 
 ## GAME PREMISE
 
-You are directors of engineering at **SkywardAI**, a new airline startup racing to launch in 2 years. Each director runs an independent department and builds systems using a team of Claude agents working together.
+You are directors of engineering at **SkywardAI**, a new airline startup racing to launch in 1 year. Each director runs an independent department and builds systems using a team of Claude agents working together.
 
 **The Learning Goal:** Master multi-agent orchestration - learning to coordinate multiple Claude agents, divide work effectively, and build working software faster than you could alone. Each director builds 2-3 microservices using specialized agent teams.
 
-**The Challenge:** Every 30 minutes, demonstrate working software running locally on your laptop. After Year 1 (4 quarters), the company launches. Year 2 brings scenarios and crises to keep things interesting.
+**The Challenge:** Across 4 quarters, demonstrate working software running locally on your laptop. Start with research and vision (Q1), build for investors (Q2), navigate market chaos (Q3), and launch to the world (Q4).
 
 **The Constraint:** Everything runs locally - no cloud deployment, no hosting, just your laptop and Claude agents.
 
@@ -218,21 +218,21 @@ You're the real-time information master - the single source of truth for flight 
 
 ## GAME STRUCTURE
 
-### Full Day Timeline
+### Half-Day Timeline (10am-4pm)
 
-**Morning: Planning & Building**
-- 09:00-09:30 | **Tutorial**: Multi-agent basics and Claude features
-- 09:30-10:30 | **Q1 - Research & Vision** (60 min): Strategy, research, planning
-- 10:30-11:30 | **Q2 - Investor Demo Build** (60 min): Build something impressive
-- 11:30-12:00 | **Investor Demo**: Present to investors (gamerunner judges)
-- 12:00-13:00 | **LUNCH**
+**Morning: Vision & Building**
+- 10:00-10:30 | **Tutorial**: Multi-agent basics and Claude features
+- 10:30-11:30 | **Q1 - Research & Vision** (60 min): Strategy, research, planning
+- 11:30-12:30 | **Q2 - Investor Demo Build** (60 min): Build something impressive
+- 12:30-13:00 | **Investor Demo**: Present to investors (gamerunner judges)
 
-**Afternoon: Launch & Survive**
-- 13:00-14:00 | **Q3 - Integration & Features** (60 min): Connect systems, add features
-- 14:00-15:00 | **Q4 - Launch Sprint** (60 min): Final polish, go live! 🎉
-- 15:00-15:30 | **Q5 - Crisis Response** (30 min): Dice-driven challenge
-- 15:30-16:00 | **Q6 - Final Challenge** (30 min): Last scenario
-- 16:00-16:30 | **Performance Review**: VP promotion announcement
+**Lunch Break**
+- 13:00-14:00 | **LUNCH**
+
+**Afternoon: Market Chaos & Launch**
+- 14:00-14:45 | **Q3 - Chaos Quarter** (45 min): Dice-driven market challenge
+- 14:45-15:30 | **Q4 - Launch Sprint** (45 min): Final polish, go live! 🎉
+- 15:30-16:00 | **Performance Review**: VP promotion announcement
 
 ---
 
@@ -295,94 +295,60 @@ You're the real-time information master - the single source of truth for flight 
 
 ---
 
-#### Q3: Integration & Features (60 min)
-**Focus:** Add features, integrate with other departments, handle chaos
+#### Q3: Chaos Quarter (45 min) - DICE DRIVEN
+**Focus:** Rapid response to market chaos/opportunity
 
-**What Directors Do:**
-- Add 2-3 significant features
-- Improve error handling and edge cases
-- Optional: Integrate with other directors' services
-- Respond to gamerunner scenario (may introduce chaos here)
+**What Happens:**
+- Gamerunner rolls die to determine scenario (see table below)
+- Directors must respond quickly under pressure
+- Build new features, fix critical issues, or seize opportunities
 
-**Possible Scenarios:**
-- "Competitor launched better UI - differentiate!"
-- "Mobile traffic is 70% - make it responsive!"
-- "Accessibility audit - fix compliance issues!"
+**Possible Scenarios (roll 1d6):**
+1. **Critical Bug** - Production issue causing failures, must fix immediately
+2. **Competitor Attack** - Rival launched better feature, must differentiate
+3. **Regulatory Audit** - Compliance issue to fix (accessibility, GDPR)
+4. **Viral Traffic Spike** - Must handle 10x scale, optimize performance
+5. **Budget Crisis** - Must reduce costs, optimize efficiency
+6. **Partnership Opportunity** - Major partner wants integration, build API
 
 **Deliverable:**
-- Enhanced system with new features
-- More robust error handling
-- Better UX polish
+- Quick fix or feature responding to scenario
+- Evidence of problem-solving under pressure
+- Working response to crisis
 
-**Demo:** Show new features and how you handled scenario (if introduced)
+**Demo:** Show how you handled the chaos (what you built, how it solves the problem)
 
 ---
 
-#### Q4: Launch Sprint (60 min)
-**Focus:** Final polish, production-ready, company launches!
+#### Q4: Launch Sprint (45 min)
+**Focus:** Final polish, production-ready, COMPANY LAUNCHES! 🎉
 
 **What Directors Do:**
-- Complete end-to-end flows
-- Handle edge cases and errors
-- Mobile-responsive design
-- Loading states and user feedback
-- Final UX polish
+- Complete end-to-end customer/user flows
+- Handle edge cases and error states
+- Add loading states and user feedback
+- Final UX polish and responsiveness
+- Ensure demo-ready for launch presentation
 
 **Deliverable:**
 - Production-ready system
-- Complete customer/user journey works
-- Professional appearance
+- Complete customer journey works end-to-end
+- Professional appearance worthy of launch day
 
 **Demo:** Full end-to-end flow demonstration
-**Milestone:** Company officially launches! 🎉
-
----
-
-#### Q5: Crisis Response (30 min)
-**Focus:** Quick response to market conditions (dice-driven)
-
-**What Happens:**
-- Gamerunner rolls die to determine scenario
-- Directors must respond quickly
-- Build new features or fix critical issues
-
-**Possible Scenarios (dice roll):**
-1. Critical Bug - production issue causing failures
-2. Competitor Attack - must match competitor feature
-3. Regulatory Audit - compliance issue to fix
-4. Viral Traffic Spike - must handle scale
-5. Budget Crisis - must reduce costs
-6. Partnership Opportunity - build integration
-
-**Deliverable:** Quick fix or feature responding to scenario
-
-**Demo:** Show how you handled the crisis/opportunity
-
----
-
-#### Q6: Final Challenge (30 min)
-**Focus:** One more dice-driven scenario, final improvements
-
-**What Happens:**
-- Another dice roll for final scenario
-- Last chance to improve systems
-- Final feature showcase
-
-**Deliverable:** Final feature or improvement
-
-**Demo:** Showcase and retrospective
+**Milestone:** SkywardAI officially launches to the world! 🚀
 
 ---
 
 #### Performance Review (30 min)
 **What Happens:**
 - Gamerunner calculates final scores
-- Announces VP promotion winner
+- Announces VP of Engineering promotion winner
 - Team retrospective and celebration
 
 **Scoring Based On:**
-- Delivery scores (Q1-Q6 demos)
-- Tech debt score
+- Delivery scores (Q1-Q4 demos)
+- Tech debt score (code quality assessment)
 - API cost efficiency
 - Collaboration bonus
 
@@ -396,7 +362,7 @@ See GAMERUNNER.md for detailed scoring rubrics.
 
 ### How Each Quarter Works
 
-**Note:** Q1 (Research & Vision) works differently from Q2-Q6 (Building). See below for both.
+**Note:** Q1 (Research & Vision) works differently from Q2-Q4 (Building). See below for both.
 
 ---
 
@@ -443,7 +409,7 @@ Minutes 50-55: Compile vision doc, prepare presentation
 
 ---
 
-### Q2-Q6 Turn Structure (Building)
+### Q2-Q4 Turn Structure (Building)
 
 **1. Scenario Introduction (3-5 min)**
 The gamerunner announces the quarter's challenge and goals.
@@ -529,7 +495,7 @@ Each director demonstrates their working software. Show what you built!
 
 ## MULTI-AGENT LEARNING OBJECTIVES
 
-By the end of 8 quarters, directors should be able to:
+By the end of 4 quarters, directors should be able to:
 
 ### Core Skills
 1. **Divide & Conquer** - Break large tasks into agent-sized chunks
@@ -676,7 +642,6 @@ If integrating, agree on JSON schemas:
 - **Q1-Q2:** Work independently, mock all external services
 - **Q3:** Agree on API contracts, continue with mocks
 - **Q4:** Optional real integration for "Launch Day" demo
-- **Q5-Q8:** Real integration if beneficial for scenarios
 
 ### Independence Principle
 
@@ -858,7 +823,7 @@ Tests lead implementation:
 
 ### On Game Day
 1. **Tutorial (30 min)** - Learn multi-agent basics with live examples
-2. **Build! (6 quarters)** - Orchestrate agents to build your department
+2. **Build! (4 quarters)** - Orchestrate agents to build your department
 3. **Demo each quarter** - Show your working software
 4. **Compete for VP** - Best metrics get promoted at the end
 
@@ -881,4 +846,4 @@ Tests lead implementation:
 
 *"The best way to learn multi-agent orchestration is to orchestrate multiple agents building something real."*
 
-**Terminal Velocity** | Full-day workshop | 4-6 players | Learn multi-agent Claude workflows by building an airline startup
+**Skyward** | Half-day workshop | 4-6 players | Learn multi-agent Claude workflows by building an airline startup

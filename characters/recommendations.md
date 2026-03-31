@@ -210,35 +210,6 @@ Priority 3: Metrics showing business impact (conversion lift, revenue)
 
 ---
 
-### Quarter 5: Survive & Adapt (30 min)
-**Focus:** Quick response to market conditions (dice-driven scenario)
-
-**Possible Scenarios:**
-- Crisis: "Recommendation quality dropped - users complaining!"
-- Opportunity: "Partner wants recommendation API - build it!"
-- Competition: "Competitor has ChatGPT travel advisor - match it!"
-
-**Your Objectives:**
-- Respond to gamerunner's dice roll scenario
-- Build or fix quickly
-- Demonstrate adaptability
-
-**Demo:** Show how you handled the crisis/opportunity.
-
----
-
-### Quarter 6: Final Challenge (30 min)
-**Focus:** One more scenario, final improvements
-
-**Possible Scenarios:**
-- Innovation: "Add multi-item recommendations (flight + hotel + car)"
-- Premium: "Launch AI trip planning assistant"
-- Scale: "Recommendation latency too high - optimize!"
-
-**Demo:** Final feature showcase and retrospective.
-
----
-
 ## VISUAL DEMO EXAMPLES
 
 **What "Good" Looks Like:**
@@ -290,12 +261,6 @@ Priority 3: Metrics showing business impact (conversion lift, revenue)
 - **Why:** Build on existing work, incremental improvement
 - See TUTORIAL.md "Pattern 4: Iterative Refinement" for examples
 
-**Q5+ (Complex features):** **Specialist Roles** 🎯
-- ML Agent: Owns all recommendation algorithms across quarters
-- Data Agent: Owns all user profiling and tracking across quarters
-- Analytics Agent: Validates quality and finds optimization opportunities
-- **Why:** Context retention, domain expertise
-- See TUTORIAL.md "Pattern 3: Specialist Roles" for details
 
 ### Role-Specific Tips
 
@@ -402,16 +367,6 @@ Structure agents around what you'll show: "Agent 1 builds user segmentation I'll
 - Professional analytics dashboard
 - **Success = production-ready recommendation platform, ready to launch!**
 
-### Q5: Survive Competition (30 min)
-- Quick response to dice-driven scenario
-- Crisis management or opportunity capture
-- **Success = adapted quickly, maintained quality**
-
-### Q6: Final Challenge (30 min)
-- One more scenario response
-- Final improvements or innovation
-- **Success = strong finish, learned multi-agent orchestration**
-
 ---
 
 ## INTEGRATION POINTS (OPTIONAL)
@@ -501,7 +456,7 @@ Build your investor demo:
 2. Practice your investor demo
 3. Prepare to answer investor questions about ML approach
 
-### Quarters 3-6: Execute & Adapt
+### Quarter 3 & Beyond: Execute & Adapt
 
 **Each quarter:**
 1. Listen to gamerunner scenario

@@ -212,35 +212,6 @@ Priority 3: Handle edge cases (defer if time-limited)
 
 ---
 
-### Quarter 5: Survive & Adapt (30 min)
-**Focus:** Quick response to market conditions (dice-driven scenario)
-
-**Possible Scenarios:**
-- Crisis: "Data feed down - need fallback system!"
-- Opportunity: "Airport wants our status API - build integration!"
-- Competition: "Competitor has predictive delays - match it!"
-
-**Your Objectives:**
-- Respond to gamerunner's dice roll scenario
-- Build or fix quickly
-- Demonstrate adaptability
-
-**Demo:** Show how you handled the crisis/opportunity.
-
----
-
-### Quarter 6: Final Challenge (30 min)
-**Focus:** One more scenario, final improvements
-
-**Possible Scenarios:**
-- Innovation: "Add AI-powered delay prediction"
-- Premium: "Build VIP passenger tracking dashboard"
-- Scale: "Airport operations center wants your platform"
-
-**Demo:** Final feature showcase and retrospective.
-
----
-
 ## VISUAL DEMO EXAMPLES
 
 **What "Good" Looks Like:**
@@ -292,12 +263,6 @@ Priority 3: Handle edge cases (defer if time-limited)
 - **Why:** Build on existing work, incremental improvement
 - See TUTORIAL.md "Pattern 4: Iterative Refinement" for examples
 
-**Q5+ (Complex features):** **Specialist Roles** 🎯
-- Real-Time Agent: Owns all WebSocket/SSE work across quarters
-- Data Agent: Owns all status tracking and analytics work
-- UI Agent: Owns all dashboard and visualization work
-- **Why:** Context retention, domain expertise in real-time systems
-- See TUTORIAL.md "Pattern 3: Specialist Roles" for details
 
 ### Role-Specific Tips
 
@@ -613,16 +578,6 @@ Let users track friends/family flights."
 - Professional operations dashboard
 - **Success = production-ready tracking platform, ready to launch!**
 
-### Q5: Survive Competition (30 min)
-- Quick response to dice-driven scenario
-- Crisis management (data feed down, mass delays)
-- **Success = adapted quickly, maintained data accuracy**
-
-### Q6: Final Challenge (30 min)
-- One more scenario response
-- Final improvements or innovation
-- **Success = strong finish, mastered real-time multi-agent systems**
-
 ---
 
 ## INTEGRATION POINTS (OPTIONAL)
@@ -711,7 +666,7 @@ Build your investor demo:
 2. Practice your investor demo
 3. Prepare to show live status updates
 
-### Quarters 3-6: Execute & Adapt
+### Quarter 3 & Beyond: Execute & Adapt
 
 **Each quarter:**
 1. Listen to gamerunner scenario

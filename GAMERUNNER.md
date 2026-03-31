@@ -1,845 +1,763 @@
 # GAMERUNNER GUIDE
-## Terminal Velocity: Running a Multi-Agent Coding Workshop
+## Skyward: Running a Silicon Valley Startup Simulator
 
-This guide contains everything you need to facilitate Terminal Velocity - scoring rubrics, dice mechanics, evaluation criteria, and facilitation tips.
+**Welcome, Gamerunner.** You're about to guide six engineers through the chaotic, hilarious, and occasionally terrifying world of building SkywardAI - a tech startup that's either going to disrupt the airline industry or become a cautionary tale on TechCrunch.
+
+Think less "epic fantasy quest" and more "Silicon Valley TV show meets The Office." You're not running a D&D campaign - you're simulating startup life: the all-hands meetings, the investor pitch pressure, the 2am production incidents, the existential dread when a competitor launches your exact feature.
+
+This guide will help you create an engaging, educational, and entertainingly realistic startup experience.
 
 ---
 
 ## TABLE OF CONTENTS
 
-1. [Pre-Game Setup](#pre-game-setup)
-2. [Timeline & Structure](#timeline--structure)
-3. [Turn-by-Turn Facilitation](#turn-by-turn-facilitation)
-4. [Scoring & Evaluation](#scoring--evaluation)
-5. [Randomness & Dice Mechanics](#randomness--dice-mechanics)
-6. [Performance Review](#performance-review)
-7. [Troubleshooting](#troubleshooting)
-8. [Materials Checklist](#materials-checklist)
+1. [The Story You're Telling](#the-story-youre-telling)
+2. [Pre-Game Preparation](#pre-game-preparation)
+3. [Campaign Timeline](#campaign-timeline)
+4. [Quarter-by-Quarter Narration](#quarter-by-quarter-narration)
+5. [Scoring the Journey](#scoring-the-journey)
+6. [The Dice of Fate](#the-dice-of-fate)
+7. [The Final Reckoning](#the-final-reckoning)
+8. [Troubleshooting Your Campaign](#troubleshooting-your-campaign)
+9. [Materials & Resources](#materials--resources)
 
 ---
 
-## PRE-GAME SETUP
+## THE STORY YOU'RE TELLING
 
-### 1 Week Before Workshop
+### The Narrative Arc
 
-**Send to participants:**
-- [ ] Character sheets (characters/ directory)
-- [ ] GAME.md overview
-- [ ] Tech requirements (Claude access, laptop with dev environment)
-- [ ] Pre-reading: MULTI-SERVICE-GUIDE.md
+You are narrating the **1-year journey of SkywardAI** - a scrappy airline tech startup racing to disrupt an industry. Your six players aren't just engineers writing code - they are **department directors** fighting for success, promotion, and glory.
 
-**Prepare materials:**
-- [ ] Print character sheets (1 per role)
-- [ ] Print scoring sheets (track metrics per director)
-- [ ] Prepare dice (1d6 for randomness)
-- [ ] Set up demo timer/clock (visible to all)
-- [ ] Prepare whiteboard/screen for company timeline
-- [ ] Test screen sharing setup for demos
+**Act I: The Vision (Q1-Q2)**
+- The company is born
+- Directors must prove themselves to investors
+- Tension builds toward the high-stakes Investor Demo
 
-### 30 Minutes Before Workshop
+**Act II: The Crucible (Q3-Q4)**
+- Q3 brings dice-driven chaos and disaster
+- Q4 is the launch sprint where systems go live to the world
+- Directors must survive crisis and deliver a production-ready platform
 
-**Environment Setup:**
-- [ ] Assign seating (directors at separate tables/areas)
-- [ ] Verify everyone has Claude access
-- [ ] Test screen sharing for demos
-- [ ] Display company timeline on whiteboard
-- [ ] Prepare music playlist for build time (optional)
+**Epilogue: The Ascension (Performance Review)**
+- One director becomes VP of Engineering
+- All others are celebrated as Senior Directors
+- The tale concludes with lessons learned
 
-### Tutorial Session (30 minutes before game starts)
+### Your Role as Narrator
 
-Run a hands-on Claude tutorial:
+You're not just a facilitator - you're **every NPC in their startup simulation**:
 
-**Part 1: Basic Agent Use (10 min)**
+- **The CEO** - caffeinated, optimistic, slightly unhinged ("We're going to be a unicorn!")
+- **The Investors** - skeptical VCs who've seen it all ("So... how is this different from Expedia?")
+- **The Customers** - real people tweeting complaints at 2am
+- **The Competition** - MegaAir, the Evil Empire with infinite resources
+- **The Market** - chaos incarnate, throwing random events via dice
+
+Channel your inner Silicon Valley character. Be witty, fast-paced, and occasionally absurd. Startups are dramatic enough without pretending you're Gandalf.
+
+---
+
+## PRE-GAME PREPARATION
+
+### One Week Before: Setting the Stage
+
+Send your participants everything they need to survive startup life.
+
+**Email to participants:**
+- [ ] Character sheets - their department and role (characters/ directory)
+- [ ] GAME.md - the rules and structure
+- [ ] Tech requirements - laptop, Claude access, dev environment
+- [ ] TUTORIAL.md - multi-agent orchestration guide
+
+**Your materials:**
+- [ ] Print character sheets (one per director - make them look like offer letters)
+- [ ] Scoring spreadsheet (track the leaderboard)
+- [ ] A d6 die (bonus points if it's branded with your company logo)
+- [ ] Visible countdown timer (nothing says "startup" like artificial urgency)
+- [ ] Whiteboard for company timeline
+- [ ] Screen sharing setup for demos
+
+### 30 Minutes Before: Setup
+
+**Create the startup atmosphere:**
+- Assign seats - each director gets their own workspace (separate areas if possible)
+- Verify everyone can access Claude Code CLI
+- Display the SkywardAI timeline on a shared screen/whiteboard
+- Optional: Play lo-fi coding music during build phases
+- Optional: Have snacks and energy drinks available (it's a startup, after all)
+
+### The Tutorial: Onboarding Your Directors (30 minutes)
+
+Before the chaos begins, teach them how to actually use Claude agents. This is their superpower for the day.
+
+**Kick it off:**
+
+> "Alright, Directors. Welcome to SkywardAI. You each run a department, but here's the thing - you're not writing code today. You're managing a team of Claude agents who write code for you. Think of it like being a tech lead who can instantly hire specialists.
+>
+> Let me show you how this works..."
+
+**Part 1: Your First Agent (10 min)**
+
+Show them a simple example:
 ```
-Demo Prompt: "Build a simple Flask API with one endpoint
-that returns 'Hello from SkywardAI'. Run on port 5000."
+"Build a simple Flask API with one endpoint that returns
+'Hello from SkywardAI'. Run on port 5000."
+```
+
+Demonstrate:
+- How to speak clearly to your agents
+- How to refine their work ("Now add error handling")
+- How to test what they've created
+
+**Part 2: Coordinating Multiple Agents (10 min)**
+
+> "But true power comes from commanding multiple agents at once. Watch as I summon two in parallel..."
 
 Show:
-- How to phrase clear prompts
-- How to iterate ("Now add error handling")
-- How to test agent output
+```
+Agent 1: "Build a database schema for flights..."
+Agent 2: "Build a frontend form..."
 ```
 
-**Part 2: Multi-Agent Basics (10 min)**
-```
-Demo: Start 2 agents in parallel
+Teach:
+- When to run agents in parallel vs in sequence
+- How to weave their outputs together
+- The art of giving each agent clear purpose
 
-Agent 1: "Build a simple database schema for flights..."
-Agent 2: "Build a simple frontend form..."
+**Part 3: Avoiding the Pitfalls (10 min)**
 
-Show:
-- Managing multiple conversations
-- When to use parallel vs sequential
-- How to integrate outputs
-```
+Warn them of common dangers:
+- Vague instructions lead to vague results
+- Never demo without testing first
+- Track your agents or lose your way
+- Understand what you're building, don't just copy-paste
 
-**Part 3: Common Pitfalls (10 min)**
-- Vague prompts → vague results
-- Not testing before demo
-- Losing track of which agent is which
-- Copy-pasting without understanding
-
-**Practice Round (Optional):**
-Give everyone 5 minutes to build "Hello World" API with agents
+**Optional Practice Round:**
+Give them 5 minutes to summon their first agent: "Build a Hello World API"
 
 ---
 
-## TIMELINE & STRUCTURE
+## CAMPAIGN TIMELINE
 
-### Full Day Format (7 hours total)
+### The Full Epic (6 Hours: 10am-4pm)
 
 ```
-09:00 - 09:30  Tutorial (Claude basics)
-09:30 - 10:30  Q1: Foundation (60 min)
-10:30 - 11:30  Q2: Features (60 min)
-11:30 - 12:00  Investor Demo & Feedback (30 min)
+10:00 - 10:30  Tutorial: Learning the Magic
+10:30 - 11:30  Q1: The Vision - Planning the Dream (60 min)
+11:30 - 12:30  Q2: The Prototype - Building for Investors (60 min)
+12:30 - 13:00  The Investor Gauntlet - Judgment Day
 
-12:00 - 13:00  LUNCH BREAK
+13:00 - 14:00  ═══ THE FEAST (Lunch Break) ═══
 
-13:00 - 14:00  Q3: Integration (60 min)
-14:00 - 15:00  Q4: Launch Prep (60 min)
-15:00 - 15:30  Q5: Crisis (30 min, dice roll)
-15:30 - 16:00  Q6: Chaos (30 min, dice roll)
-16:00 - 16:30  Performance Review & VP Promotion
+14:00 - 14:45  Q3: The Chaos Quarter - DICE DRIVEN CRISIS (45 min)
+14:45 - 15:30  Q4: The Launch Sprint - Going Live (45 min)
+15:30 - 16:00  The Reckoning - Scores Revealed, VP Crowned
 ```
-
-### Quarter Time Allocations
-
-**Q1 (60 minutes) - Research & Vision:**
-- 5 min: Introduction (explain Q1 is planning, not coding)
-- 50 min: Research and planning with agents
-- 5 min: Vision presentation (30 sec per director)
-
-**Q2 (60 minutes) - Investor Demo Build:**
-- 5 min: Scenario introduction
-- 50 min: Build with agents
-- 5 min: Quick progress check
-
-**Investor Demo (30 minutes after Q2):**
-- 2 min: Setup and instructions
-- 18 min: Presentations (3 min each × 6 directors)
-- 10 min: Investor feedback and scoring
-
-**Q3-Q4 (60 minutes each):**
-- 5 min: Scenario introduction
-- 45 min: Build with agents
-- 10 min: Demo & feedback (1-2 min per director)
-
-**Q5-Q6 (30 minutes each):**
-- 2 min: Dice roll + scenario reveal
-- 23 min: Emergency response with agents
-- 5 min: Demo & assessment
 
 ---
 
-## TURN-BY-TURN FACILITATION
+## QUARTER-BY-QUARTER NARRATION
 
-### Quarter 1: Research & Vision (60 min)
+### Quarter 1: The Vision (60 minutes)
 
-**Objective:** Directors plan their strategy, NOT build working code yet
+**The Opening Scene**
 
-**IMPORTANT:** Q1 is about research, planning, and vision. Directors should use agents for strategic work (research, requirements, wireframes, architecture), not coding. Some may choose to build a simple MVP, but most should focus on planning.
+Get everyone's attention. Then:
 
-**Scenario Intro (5 min):**
-> "Welcome to SkywardAI, directors. Before we build, we need to plan. You have 60 minutes to research, strategize, and create a vision for your department.
+> "Alright, Directors. Welcome to Day 1 at SkywardAI.
 >
-> Your deliverable options:
-> - Vision document with architecture and wireframes
-> - Detailed wireframes and user flows
-> - Simple MVP prototype (if you want to code)
+> It's January. This company is literally a Figma mockup and a pitch deck. You six were hired yesterday - congrats on joining a pre-seed startup, hope you like ramen. The CEO just Slacked you all:
 >
-> In Q2, you'll build for investors based on this vision. Use this time wisely to plan your approach."
+> **'Vision docs due in 60 minutes. Investors want to see strategy before they'll even consider a term sheet.'**
+>
+> She wants to know: What are you building? How will it work? Why won't this be the 47th failed airline startup?
+>
+> You've got options:
+> - Strategic vision doc with architecture diagrams
+> - Wireframes and user flows showing the product
+> - Quick MVP to prove the concept isn't vaporware
+>
+> Fair warning: whatever you plan now, you'll have to build in Q2. Don't overpromise.
+>
+> Clock starts... now."
 
-**Key Messages:**
-- "Don't rush to code - use agents to research and plan"
-- "Think about 2-3 services you'll build in Q2-Q4"
-- "Create wireframes, architecture diagrams, vision docs"
-- "If you build an MVP, keep it VERY simple"
+**During the Vision Phase (50 minutes)**
 
-**During Planning Time (50 min):**
-- Circulate and check: Are they using the right agents? (PM, BA, UX, Architect)
-- Watch for: Jumping to coding too early
-- Encourage: "Use a Business Analyst agent to define requirements first"
-- Remind at 30 min, 15 min, 5 min marks
-- Look for: Vision docs forming, wireframes being created
+Walk among them like a DM checking on a party split across different rooms. Observe their strategies:
 
-**Vision Presentations (5 min total):**
-- Each director: 30 seconds to present their vision
-- Show wireframes, architecture, or MVP
-- Explain strategy for Q2-Q4
-- **No scoring in Q1** - just feedback and encouragement
-- Feedback: "Clear vision!" / "Good architecture!" / "Solid plan for Q2"
+- Are they rushing to code? Remind them: *"The CEO asked for vision, not implementation. Use your planning agents - Business Analysts, UX Designers, Architects."*
+- Are they unclear? Guide them: *"Picture your department six months from now. What services exist? What do customers experience?"*
+- Call out time like a ticking clock: "30 minutes remain... 15 minutes... 5 minutes until the CEO arrives..."
 
-**Common Issues Q1:**
-- Rushing to code instead of planning
-  - Fix: "Use Q1 to plan, Q2 to build"
-- Not using research/planning agents
-  - Fix: "Try a PM agent to define your vision first"
-- Unclear deliverables
-  - Fix: "Show us a vision doc or wireframes"
+**The Vision Presentations (5 minutes)**
 
-**What Success Looks Like Q1:**
-- Director has clear plan for their 2-3 services
-- Wireframes or architecture diagrams created
-- Vision for Q2-Q4 is articulated
-- They understand which agents to use for building in Q2
+> "Time! The CEO strides into the room, coffee in hand, eyes sharp. She points to each of you in turn. 30 seconds. Show me your vision."
+
+Each director presents. React as the CEO:
+- Impressed: *"Fascinating. I like where your head is."*
+- Curious: *"Interesting choice. Can you deliver on that?"*
+- Concerned: *"That's ambitious. Very ambitious."*
+
+**No scoring in Q1** - just set the tone. Close with:
+
+> "Visions accepted. Now comes the hard part - building them. We have investors arriving in Q2. Don't let me down."
 
 ---
 
-### Quarter 2: Investor Demo Build (60 min)
+### Quarter 2: The Prototype (60 minutes)
 
-**Objective:** Build something impressive to show investors in 30 minutes
+**The Investor Summons**
 
-**IMPORTANT:** This is the first major build quarter. Directors should execute on their Q1 vision and build 1-2 working services that demo well.
-
-**Scenario Intro (5 min):**
-> "Investors are coming in 60 minutes. They need to see working systems, not plans. Build 1-2 services from your Q1 vision that demonstrate real value. Make it look good - investors care about polish.
+> "It's April. Three months have passed since your visions were approved.
+>
+> This morning, the CEO burst through the door with news: Investors are coming. Not next month. Not next week.
+>
+> **Today. In 60 minutes.**
+>
+> They need to see working systems. Real code. Professional demos. Not sketches. Not promises. They want to invest $10 million in SkywardAI, but only if we prove we can build.
+>
+> This is your crucible, Directors. Build something that makes them believe.
 >
 > Focus on:
-> - Working core functionality
-> - Professional appearance
-> - Clear value proposition
-> - Impressive demo"
+> - One or two services that actually work
+> - Polish that impresses
+> - A demo that tells a story
+> - Something they'll remember
+>
+> Clock's ticking. Make it count."
 
-**Key Messages:**
-- "Execute on your Q1 plan"
-- "Build what investors want to see"
-- "Polish matters - make it look production-ready"
-- "Core flow working > many features broken"
+**During the Build (50 minutes)**
 
-**During Build Time (50 min):**
-- Directors should be using Backend/Frontend dev agents now
-- Watch for: Over-complicating, trying to build too much
-- Encourage: "Focus on one impressive flow that works"
-- Remind at 30 min, 15 min, 5 min marks
-- Check: Are they testing their demo flow?
+The energy should feel urgent. Walk around with visible tension:
 
-**Progress Check (5 min):**
-- Quick 30-second check-ins (not full demos)
-- "What are you demoing to investors?"
-- "Does your core flow work?"
-- **No scoring yet** - that happens in Investor Demo
+- "How's it going, Director? Will you be ready?"
+- "The investors just confirmed - they're on their way."
+- When you see good progress: *"Excellent. That's going to impress them."*
+- When you see struggle: *"Need help? Don't be afraid to ask your peers."*
 
-**Common Issues Q2:**
-- Building too many features, nothing works
-  - Fix: "Pick your best feature, make it perfect"
-- Not testing before investor demo
-  - Fix: "Test your demo flow NOW"
-- Ignoring Q1 vision, starting from scratch
-  - Fix: "Use your Q1 architecture as a guide"
+Call time at intervals: "40 minutes... 25 minutes... 10 MINUTES LEFT..."
 
-**What Success Looks Like Q2:**
-- 1-2 services are working
-- Core user flow is demoable
-- UI looks professional
-- Director is confident about investor demo
+**Progress Check (5 minutes)**
 
-**Next:** Investor Demo (see section below)
+> "Investors are in the lobby. Quick - everyone show me where you're at. 30 seconds each. What am I about to see?"
+
+Quick check-ins. Reassure or raise stakes as needed.
 
 ---
 
-### Investor Demo (30 min at end of Q2)
+### The Investor Gauntlet (30 minutes)
 
-**This is the mid-game climax - make it dramatic!**
+**THIS IS YOUR ACT I CLIMAX. Make it dramatic.**
 
-**Setup (2 min):**
-> "The investors are here. Each director will present their department's progress. You have 3 minutes each. Impress them, or our funding disappears."
+**The Setup (2 minutes)**
 
-**Presentations (18 min = 3 min × 6 directors):**
-Each director presents:
-1. What they built (demo)
-2. Key features
-3. Tech approach (multi-agent strategy used)
+Dim the lights slightly. Change your demeanor. You are now the Lead Investor.
 
-**Investor Deliberation (5 min):**
-- You (as investors) evaluate using rubric below
-- Calculate scores
-- Prepare feedback
+> "Good afternoon, Directors. I'm Alexandra Chen, Managing Partner at Altitude Ventures. My colleagues and I have 30 minutes. We're deciding whether to invest $10 million in SkywardAI.
+>
+> Each of you will present your department's progress. You have 3 minutes. Impress us, and we fund your future. Fail us, and... well, let's not think about that.
+>
+> We're evaluating four things: Does it work? Does it matter? Can you present it? Did you innovate?
+>
+> Director of Flight Search & Booking... you're first."
 
-**Feedback (5 min):**
-- Announce scores publicly
-- Provide narrative feedback per director
-- Set expectations for Year 2
+**The Presentations (18 minutes: 3 min × 6)**
 
-**→ LUNCH BREAK**
+Be a tough but fair investor:
+- Interrupt with probing questions: *"How does that handle edge cases?"*
+- React visibly to good demos: *"Impressive."*
+- Raise eyebrows at bugs: *"And if I tried to book a flight without a date?"*
+- Take notes dramatically
 
----
+**The Deliberation (5 minutes)**
 
-### Quarter 3: Integration (60 min)
+> "Excuse us for a moment."
 
-**Scenario Intro (5 min):**
-> "Post-lunch, refreshed. The investors want to see this become a real company. Your systems need to work together. Build at least one integration point with another director's service."
+Step aside. Calculate scores using the rubric. Return with gravitas.
 
-**During Build Time (45 min):**
-- Encourage (but don't force) real API integration
-- Mock integration is acceptable
-- Watch for: networking issues, CORS, port conflicts
+**The Verdict (5 minutes)**
 
-**Demo (10 min):**
-- 1-2 min per director
-- Show integration points
-- Track delivery score
+> "Directors... we've made our decision.
+>
+> [Announce scores one by one]
+>
+> Director of [Department], your work was [feedback]. Score: [X/10].
+>
+> [Continue for all six]
+>
+> We're investing. $10 million, wired today. But understand this: Year 2 expectations are higher. Much higher. Don't waste our money.
+>
+> Now go get lunch. You've earned it."
 
----
-
-### Quarter 4: Launch Prep (60 min)
-
-**Scenario Intro (5 min):**
-> "Launch day is in 60 minutes. Polish your systems. This is the last chance before we go live. Make it production-ready."
-
-**During Build Time (45 min):**
-- Directors focus on polish, bug fixes, UX improvements
-- Encourage: error handling, edge cases, visual refinement
-
-**Demo (10 min):**
-- Full 2 min per director
-- This is the "launch demo" - make it ceremonial
-- **Track delivery score**
-- **Announce: Company has launched!** 🎉
-
-**Transition:**
-> "Congratulations, SkywardAI is live! But the real challenges are just beginning..."
+**→ THE FEAST (Lunch Break)**
 
 ---
 
-### Quarter 5: Crisis (30 min - DICE DRIVEN)
+### Quarter 3: The Chaos Quarter (45 minutes)
 
-**Dice Roll (2 min):**
-- Roll 1d6 publicly
-- Announce crisis from table below
-- Directors react in real-time
+**The Random Disaster Generator**
 
-**Crisis Response (23 min):**
-- Directors scramble to address crisis
-- This should feel urgent, chaotic
-- Play ticking clock sound (optional)
+Pull out your d6. Hold it up.
 
-**Assessment (5 min):**
-- Quick demo: did they solve it?
-- **Track delivery score** (penalty if unresolved)
+> "Hope you enjoyed lunch, Directors. Because we're about to simulate what every startup inevitably experiences: something going catastrophically wrong.
+>
+> It's July. SkywardAI has been live for 3 months. Customers are actually using your stuff. Revenue is happening. You're thinking maybe you'll make it.
+>
+> And then...
+>
+> *[dramatic pause]*
+>
+> ...the universe reminds you that startups are chaos engines. Let's see what breaks today."
+
+**Roll the die in front of everyone. Read the result with appropriate startup panic energy.**
+
+**Roll 1: CRITICAL BUG**
+
+> "3 AM. Your phone explodes with alerts. A critical bug in the [roll randomly for department] system caused a cascading failure. Every. Single. Booking. From the past hour. Corrupted.
+>
+> Twitter is melting down. #SkywardAIFail is trending. The CEO is on a red-eye flight home and she's calling every 5 minutes demanding updates.
+>
+> 45 minutes. Fix it. Or we're finished."
+
+**Roll 2: COMPETITOR ATTACK**
+
+> "Breaking news alert on your phone. MegaAir - our biggest competitor - just launched [invent a feature]. TechCrunch's headline: 'SkywardAI Already Falling Behind.'
+>
+> The CEO's text: 'Find me in the office. NOW.'
+>
+> 45 minutes to respond. Ship something better, or explain to the board why we're losing."
+
+**Roll 3: REGULATORY AUDIT**
+
+> "Letter in the mail. Government seal. 'Department of Transportation - Data Privacy Audit Notice.'
+>
+> Translation: Government lawyers are arriving in 45 minutes to inspect our GDPR compliance and accessibility features. If we fail? $500,000 fine and front-page news.
+>
+> Move. NOW."
+
+**Roll 4: INFLUENCER MELTDOWN**
+
+> "Slack notification. Then another. Then fifty more.
+>
+> @TechReviewerGuru (5M followers) just posted: 'THREAD: My NIGHTMARE experience with @SkywardAI. This so-called "tech-forward" airline is a dumpster fire. 1/47'
+>
+> They're live-streaming. On Twitch. Showing every bug. Every error message. Every broken feature. Chat is already making memes.
+>
+> 45 minutes to ship fixes, apologize publicly, or pivot to damage control before this becomes a Harvard Business School case study on what NOT to do."
+
+**Roll 5: ACQUI-HIRE RAID**
+
+> "Your phone buzzes. It's your best backend engineer: 'Hey, can we talk? MegaAir just offered me 2x salary, equity, and a Director title. They're making offers to the whole team.'
+>
+> Then another engineer messages. Then another.
+>
+> MegaAir isn't trying to compete with you. They're trying to hire away your entire engineering org. If you lose 3+ engineers, the company is toast.
+>
+> 45 minutes. Build something so impressive that your team remembers why they joined a scrappy startup instead of Big Corporate. Or watch your company dissolve."
+
+**Roll 6: PARTNERSHIP OPPORTUNITY**
+
+> "Call from Expedia. They want to integrate with SkywardAI. If we can provide a working API that connects [roll for 2 random departments] within 45 minutes, we get a $2M partnership deal.
+>
+> Clock's ticking. This is your moonshot."
+
+**The Scramble (38 minutes)**
+
+Let them work. Add urgency every 8-10 minutes:
+- "30 minutes left and Twitter is still angry..."
+- "20 minutes... the CEO is asking for an update..."
+- "10 MINUTES... this is it..."
+
+**The Aftermath (5 minutes)**
+
+Quick demos. Judge harshly but fairly. Apply scoring based on how they handled the crisis.
 
 ---
 
-### Quarter 6: Final Chaos (30 min - DICE DRIVEN)
+### Quarter 4: The Launch Sprint (45 minutes)
 
-**Dice Roll (2 min):**
-- Roll 1d6 again
-- Announce second crisis
-- Emphasize: "This is your last quarter to prove yourselves"
+**The Launch Announcement**
 
-**Final Push (23 min):**
-- Directors give it their all
-- Watch for: creative solutions, collaboration
+> "October. Launch day.
+>
+> The CEO bursts into the all-hands Zoom looking like she's had four espressos and zero sleep:
+>
+> 'Okay people, this is it. In 45 minutes, we're flipping the switch. Real users. Real money. Real Hacker News comments tearing apart our product.
+>
+> You've got 45 minutes for final polish. Fix anything that would embarrass us on launch day. Make error messages that don't say "Error: undefined at line 47". Add loading states so people don't think it's broken. Handle edge cases. Make it look like adults built this.
+>
+> In 45 minutes, we either become a real company or a "What Happened to..." blog post. Ship it.'
+>
+> This is launch day, Directors. Time to find out if you built something people actually want."
 
-**Final Demo (5 min):**
-- Last chance to impress
-- **Track delivery score**
+**During Launch Prep (38 minutes)**
+
+The energy should shift from building to refining:
+- "Test your error handling!"
+- "What happens if someone enters garbage data?"
+- "Does it look professional?"
+- "Have you practiced your launch demo?"
+
+Call time at intervals: "30 minutes... 20 minutes... 10 MINUTES... 5 MINUTES..."
+
+**The Launch Demo (5 minutes)**
+
+Make this ceremonial. Quick demos from each director.
+
+After all demos:
+
+> "Okay. It's 11:59pm.
+>
+> The CEO takes a deep breath, hovers over the 'Deploy to Production' button, and... clicks it.
+>
+> SkywardAI is LIVE.
+>
+> *[pause for effect]*
+>
+> 🎉 First booking just came through. Someone in Portland just bought a ticket to Seattle.
+> 💰 Revenue: $347.
+>
+> You did it. You built a real company in one year. From Figma mockups to actual customers giving you actual money. From six random engineers to a team that can ship under pressure.
+>
+> Board meeting in 30 minutes. Time to see who becomes VP."
 
 ---
 
-### Performance Review (30 min)
+## SCORING THE JOURNEY
 
-**Calculate Final Scores (10 min):**
-- Use formula from scoring section
-- Tally: Delivery + Tech Debt + API Cost + Collaboration
+### Tracking Each Director's Path
 
-**Awards Ceremony (10 min):**
-- Announce scores one by one (build suspense)
-- Give feedback per director
-- Special awards: Most Innovative, Most Efficient, Best Team Player
+You're not just counting points - you're measuring a hero's journey across 1 year.
 
-**VP Promotion Announcement (5 min):**
-> "The board has made their decision. The new VP of Engineering is... [winner]!"
+### Delivery Score: The Chronicle of Shipping
 
-**Retrospective (5 min):**
-- What did you learn about multi-agent orchestration?
-- What would you do differently?
-- Will you use this at work?
+After each demo (Q1-Q4), award 0-3 points based on what you witness:
 
----
+**3 Points: Legendary**
+- The demo flows perfectly
+- Features that make you think "damn, that's clever"
+- Edge cases handled
+- Clearly polished with care
 
-## SCORING & EVALUATION
+**2 Points: Solid**
+- Core functionality works
+- Happy path succeeds
+- Some rough edges, but acceptable
+- Meets the quarter's challenge
 
-### Delivery Score (Tracked Each Quarter)
-
-**After each demo, rate 1-3:**
-
-**3 Points: Exceptional**
-- Demo works flawlessly
-- Impressive features or UX
-- Handles edge cases
-- Innovation evident
-- Clearly spent time polishing
-
-**2 Points: Good**
-- Demo works for happy path
-- Core functionality present
-- Some rough edges acceptable
-- Meets requirements
-
-**1 Point: Needs Work**
+**1 Point: Struggling**
 - Partially working
-- Significant bugs or missing features
+- Significant bugs or missing pieces
 - Minimal progress since last quarter
-- Doesn't meet scenario goals
+- Didn't meet the scenario requirements
 
-**0 Points: Not Demo-able**
+**0 Points: Broken**
 - Nothing works
 - No visible progress
-- (Rare - provide heavy support before this happens)
+- (Very rare - support them before it gets here)
 
-**Cumulative Delivery Score = Sum of all quarters (max 18 points if all 6 demos are exceptional)**
+**Total Delivery Score = Sum across all 4 quarters (max 12)**
 
----
+### Investor Demo Rubric (Q2 Special Evaluation)
 
-### Investor Demo Rubric (Q2 Mid-Game Evaluation)
+This is your Act I climax. Score each director on 4 dimensions:
 
-**Score each director on 4 dimensions (10 points total):**
-
-**1. Technical Quality (3 points)**
-- 3: Works perfectly, handles edge cases, robust
-- 2: Works for happy path, minor bugs acceptable
+**Technical Quality (3 points)**
+- 3: Works perfectly, robust, handles edge cases
+- 2: Works for happy path, minor bugs okay
 - 1: Partially working, significant issues
-- 0: Broken or not functional
+- 0: Broken or non-functional
 
-**2. Business Value (3 points)**
-- 3: Addresses core customer need, impressive features, clear value prop
-- 2: Basic functionality, meets requirements, useful
+**Business Value (3 points)**
+- 3: Addresses real customer pain, impressive features, clear value
+- 2: Basic functionality, useful, meets requirements
 - 1: Minimal features, unclear value
 - 0: No clear business value
 
-**3. Presentation (2 points)**
-- 2: Clear, confident, tells a compelling story, good demo flow
+**Presentation (2 points)**
+- 2: Tells a compelling story, confident, smooth demo
 - 1: Functional but dry, unclear explanation
-- 0: Confusing, disorganized, or broken demo
+- 0: Confusing, disorganized, broken demo
 
-**4. Innovation (2 points)**
+**Innovation (2 points)**
 - 2: Creative solution, surprising feature, technical sophistication
-- 1: Solid but predictable, follows obvious patterns
+- 1: Solid but predictable
 - 0: Generic, no originality
 
-**Total: /10 points per director**
+**Total: /10 points**
 
-**Narrative Feedback Templates:**
+**As the Investor, give dramatic feedback:**
 
 **8-10 points:**
-> "Exceptional work, [Director]. The investors are very impressed with [specific feature]. We're doubling down on your department."
+> "Exceptional, Director [Name]. We're particularly impressed with [specific thing]. Consider this department a priority investment area."
 
 **5-7 points:**
-> "Good progress, [Director]. We see potential in [aspect], but we expected more [missing element]. Show us stronger results in Year 2."
+> "Good work, Director [Name]. We see potential in [aspect], but we expected stronger [missing element]. Year 2 needs to be better."
 
 **3-4 points:**
-> "We have concerns about [department]. The [specific issue] needs immediate attention. Can you turn this around?"
+> "We have serious concerns about [Department]. The [issue] is a red flag. Can you turn this around, or do we need to make changes?"
 
 **0-2 points:**
-> "This is unacceptable, [Director]. [Specific problem] must be resolved or we'll need to make changes."
+> "Director [Name]... this is unacceptable. [Specific problem] must be resolved immediately or we'll need to have a very different conversation."
 
----
+### Tech Debt: The Weight of Shortcuts
 
-### Tech Debt Scoring
+At game's end, evaluate each codebase for technical debt.
 
-**Measure at end of game (after Q6):**
-
-**Method: Agent Code Review**
-
-For each director, use Claude to review their codebase:
-
+**Use a Code Review Agent:**
 ```
-Prompt: "Review this codebase for technical debt.
-Evaluate on a 0-10 scale where:
-- 0-3: High debt (no tests, hardcoded values, no error handling, poor structure)
-- 4-7: Moderate debt (some tests, basic structure, some shortcuts taken)
-- 8-10: Low debt (comprehensive tests, clean code, production-ready, well-documented)
+"Review this codebase for technical debt. Score 0-10 where:
+- 8-10: Production-ready (tests, clean code, documentation, error handling)
+- 4-7: Moderate debt (some tests, basic structure, some shortcuts)
+- 0-3: High debt (no tests, hardcoded values, no error handling, messy)
 
-Code: [paste all services here]
-
-Provide:
-1. Overall score (0-10)
-2. Specific debt issues found
-3. What would need fixing for production
-"
+Provide: Overall score and specific issues."
 ```
 
-**Quick Manual Checklist (if agent review not feasible):**
-```
-No tests? +3 debt
-Hardcoded secrets/config? +2 debt
-No error handling? +2 debt
-Code duplication? +2 debt
-No documentation? +1 debt
-Poor naming/structure? +1 debt
-Security issues? +3 debt
+**Or quick manual checklist:**
+- No tests? +3 debt
+- Hardcoded secrets? +2 debt
+- No error handling? +2 debt
+- Duplicated code? +2 debt
+- No documentation? +1 debt
+- Poor structure? +1 debt
+- Security issues? +3 debt
 
-Total Debt Score = Sum of penalties (max ~15)
-```
+**Tech Debt Score = 15 - actual_debt_points** (so low debt = high score)
 
-**Tech Debt Final Score = 15 - actual_debt**
-(So low debt = high score)
+### API Cost: The Resource Management
 
----
+Track Claude API usage per director:
 
-### API Cost Tracking
+**Typical spending:**
+- Efficient: $10-20 (strategic agent use)
+- Average: $25-40 (solid work)
+- Expensive: $50+ (agent overuse)
 
-**Track Claude API usage per director:**
+**Cost Score:**
+- ≤ $20: **10 points** (Masterful efficiency)
+- $21-40: **7 points** (Good resource management)
+- $41-60: **4 points** (Overspending)
+- > $60: **1 point** (Wasteful)
 
-**Method 1: Manual Logging**
-- Directors self-report estimated agent conversations
-- Estimate: $0.50 per complex agent task
-- Track on scoring sheet
+### Collaboration: The Fellowship
 
-**Method 2: Actual API Costs (if using API keys)**
-- Check actual costs via Anthropic console
-- Attribute to directors based on logged conversations
+Award points for working together:
 
-**Typical Costs:**
-- Efficient: $10-20 for full game
-- Average: $25-40 for full game
-- Expensive: $50+ for full game
-
-**Cost Score Calculation:**
-```
-If cost <= $20: Cost Score = 10
-If cost $21-40: Cost Score = 7
-If cost $41-60: Cost Score = 4
-If cost > $60: Cost Score = 1
-```
-
----
-
-### Collaboration Bonus
-
-**Award points for collaborative behavior:**
-
-**+5 points:** Helped 2+ directors significantly (spent >10 min debugging their issues, shared code/patterns)
-
-**+3 points:** Helped 1 director or shared valuable insights in group discussions
-
+**+5 points:** Helped 2+ directors significantly (>10 min each helping debug, sharing patterns)
+**+3 points:** Helped 1 director substantially or shared valuable insights
 **+1 point:** Good team player, responsive to questions
+**0 points:** Worked alone (not penalized, just not rewarded)
+**-2 points:** Actively harmful (refused help, blamed others, toxic)
 
-**0 points:** Worked in isolation, didn't collaborate
-
-**-2 points:** Negative behavior (refused to help, blamed others, etc.)
-
-**Track during game:** Note when directors help each other
-
----
-
-### Final Score Formula
+### The Final Calculation
 
 ```
 FINAL SCORE =
-  (Delivery Score)
-  + (Tech Debt Score)
-  + (Cost Score)
-  + (Collaboration Bonus)
+  Delivery (max 12)
+  + Tech Debt (max 15)
+  + API Cost (max 10)
+  + Collaboration (max 5)
 
-Maximum possible: 18 + 15 + 10 + 5 = 48 points
+Maximum possible: 42 points
 ```
-
-**Example:**
-
-**Director A:**
-- Delivery: Q1(2) + Q2(3) + Q3(2) + Q4(3) + Q5(2) + Q6(3) = 15
-- Tech Debt: 12 (moderate, some shortcuts)
-- Cost: 7 ($35 spent)
-- Collaboration: +5 (helped 2 directors)
-- **TOTAL: 39 points**
-
-**Director B:**
-- Delivery: 2 + 2 + 2 + 2 + 1 + 2 = 11
-- Tech Debt: 14 (low debt, very clean)
-- Cost: 10 ($18 spent - very efficient)
-- Collaboration: +3 (helped 1 director)
-- **TOTAL: 38 points**
-
-**Director A wins!** (prioritized delivery over perfection)
 
 ---
 
-## RANDOMNESS & DICE MECHANICS
+## THE DICE OF FATE
 
-### Crisis Table (Q5-Q6)
+### The Crisis Table (Q3 Only)
 
-**At start of Q5 and Q6, roll 1d6:**
+At the start of Q3, roll 1d6 publicly. The die determines which crisis strikes the company during the Chaos Quarter.
 
-**Roll: 1 - CRITICAL BUG**
-```
-Scenario: "PRODUCTION OUTAGE! A critical bug in [random department's]
-system caused a cascading failure. All customer bookings from the
-past hour are corrupted.
+**As Gamerunner, adapt these to what directors actually built.** If the Booking director built an amazing system, maybe their system fails in the crisis. Make it personal and dramatic.
 
-Challenge: Emergency hotfix required within 30 minutes.
-Penalty: -2 delivery score if not resolved
-Opportunity: +1 delivery score if you help fix it (even if not your bug)
-"
-```
+### Optional: Chaos Modifiers
 
-**Roll: 2 - COMPETITOR ATTACK**
-```
-Scenario: "MegaAir just launched [specific feature] that we promised
-for next quarter. Tech press is saying we're behind.
+For extra drama, add random events:
 
-Challenge: Ship a competitive feature NOW, or pivot to something better.
-Penalty: -1 delivery score if you ignore this
-Opportunity: +2 delivery score if you ship something innovative that leapfrogs them
-"
-```
+**Good Fortune (advantage):**
+- "Your intern just committed perfect code" → +5 min extra time
+- "Competitor's site went down" → Crisis pressure reduced
+- "CEO surprise visit" → Chance for bonus point
 
-**Roll: 3 - REGULATORY AUDIT**
-```
-Scenario: "Government regulators announced a surprise audit on data
-privacy and accessibility. We have 30 minutes to demonstrate compliance
-or face a $500K fine and PR disaster.
-
-Challenge: Implement basic GDPR/accessibility features
-Penalty: -2 delivery score for non-compliance
-Opportunity: +1 collaboration bonus if departments work together on compliance
-"
-```
-
-**Roll: 4 - VIRAL TRAFFIC SPIKE**
-```
-Scenario: "A celebrity with 10M followers just tweeted 'Finally, an
-airline that doesn't suck!' linking to our site. Traffic is 50x normal.
-Systems are buckling.
-
-Challenge: Implement caching, optimization, or graceful degradation
-Penalty: -1 delivery score if systems crash visibly
-Opportunity: +2 delivery score if you handle it elegantly
-"
-```
-
-**Roll: 5 - BUDGET CRISIS**
-```
-Scenario: "VC funding round fell through. Emergency cost-cutting measures.
-Your API budget for this quarter is CUT IN HALF.
-
-Challenge: Build with 50% fewer agent tasks (or spend your own allocation)
-Penalty: -3 cost score if you exceed budget anyway
-Opportunity: +2 cost score if you deliver well under budget
-"
-```
-
-**Roll: 6 - PARTNERSHIP OPPORTUNITY**
-```
-Scenario: "Expedia wants to integrate with us! If we can provide
-a working API that [2 random departments] integrate with within 30 minutes,
-we get a $2M partnership deal.
-
-Challenge: Cross-department real-time integration required
-Penalty: None (this is pure upside)
-Opportunity: +3 collaboration bonus if successful, +2 delivery score each
-"
-```
-
-**Gamerunner Note:** Adapt scenarios to what directors have actually built. Make it personal and specific.
+**Ill Fortune (disadvantage):**
+- "Laptop crashed" → Lose first 5 minutes
+- "Claude API slowdown" → Agents work 2x slower
+- "Coffee machine broken" → Just for flavor/laughs
 
 ---
 
-### Chaos Modifiers (Optional)
+## THE FINAL RECKONING
 
-For extra drama in Q5-Q6, add random modifiers:
+### The Performance Review (30 minutes)
 
-**Advantage Rolls (good luck):**
-- "Your intern just pushed perfect code" → +5 min extra time
-- "Competitor's site went down" → Ignore competitor pressure
-- "Investor surprise visit" → +1 bonus point if demo impresses
+**This is your epilogue. Make it count.**
 
-**Disadvantage Rolls (bad luck):**
-- "Your laptop crashed" → Lose first 5 minutes recovering
-- "Claude API slowdown" → Agents respond 2x slower
-- "Coffee machine broken" → -1 morale (just for flavor)
+**Phase 1: The Calculation (10 min)**
 
----
+Display scores on the board transparently. Show the formula. Let them see everything.
 
-## PERFORMANCE REVIEW
+**Phase 2: Individual Judgment (15 min)**
 
-### Conducting the Review (30 min at end)
+Go through each director. Use this template, but speak it dramatically:
 
-**Phase 1: Score Calculation (10 min)**
-- Tally all scores on whiteboard/screen
-- Show formula transparently
-- Directors can see everyone's breakdown
+> "[Director Name], Director of [Department]...
+>
+> Your journey began 1 year ago with a vision. Let's see how that vision became reality.
+>
+> **Delivery:** [X/12 points]. You consistently [pattern]. Your finest hour was Q[Y] when you [achievement]. [Observation about struggles or triumphs]
+>
+> **Technical Debt:** [X/15 points]. [Code quality observation - did they take shortcuts or build it right?]
+>
+> **Resource Efficiency:** [X/10 points]. You spent [amount] on API costs, showing [efficiency observation].
+>
+> **Collaboration:** [bonus]. [Teamwork observation]
+>
+> **Total Score: [XX/42 points]**
+>
+> What you did well: [2-3 specific things]
+> What to improve: [1-2 areas]
+>
+> Thank you for your service to SkywardAI."
 
-**Phase 2: Individual Feedback (15 min)**
+**Phase 3: The Ascension (5 min)**
 
-Go through each director one by one:
+Build maximum suspense:
 
-**Feedback Template:**
-```
-"[Director Name], Director of [Department]:
+> "Directors... the board has deliberated on your futures.
+>
+> This was not an easy decision. All of you have shown excellence. All of you will be promoted to Senior Director effective immediately.
+>
+> But there can be only one VP of Engineering.
+>
+> [Pause]
+>
+> In third place, with [X] points: Director [Name]. Well done.
+>
+> [Pause]
+>
+> In second place, with [Y] points: Director [Name]. Outstanding work.
+>
+> [Long pause. Let tension build.]
+>
+> And your new VP of Engineering...
+>
+> With [Z] points...
+>
+> Director [Winner's Name] of [Department]!
+>
+> [Applause]
+>
+> Congratulations, VP [Name]. You demonstrated [key strength that set them apart].
+>
+> To everyone else: you are all Senior Directors of SkywardAI. You built a company from nothing. That's no small feat.
+>
+> Well done, all of you."
 
-Your delivery score was [X/18]. You consistently [pattern observed].
-Your best quarter was Q[Y] when you [specific achievement].
+**Phase 4: The Reflection (Optional 5-10 min)**
 
-Your tech debt score was [X/15]. [Specific code quality observation].
+Bring them out of the story gently:
 
-Your cost efficiency was [X/10]. You spent [amount] on API costs,
-which shows [efficiency/over-use].
-
-Collaboration: [observation about teamwork]
-
-Your total score: [XX/48]
-
-What you did well: [2-3 specific things]
-What to improve: [1-2 specific things]
-"
-```
-
-**Phase 3: VP Announcement (5 min)**
-
-Build suspense:
-```
-"The board has deliberated. This was a close race.
-
-In third place with [X] points: [Director C]
-In second place with [X] points: [Director B]
-
-And your new VP of Engineering, with [X] points: [Director A]!
-
-Congratulations, [Director A]. You demonstrated [key strength].
-Everyone else: outstanding work. You're all promoted to Senior Directors.
-"
-```
-
-**Phase 4: Group Reflection (Optional 10 min)**
-- Most surprising multi-agent technique learned?
-- What would you do differently knowing what you know now?
-- Will you use multi-agent patterns at work?
-
----
-
-## TROUBLESHOOTING
-
-### Common Issues & Solutions
-
-**Issue: Directors not using multiple agents**
-**Solution:** In Q2, explicitly require: "Use at least 2 agents in parallel this quarter"
-
-**Issue: Demos consistently fail (nothing works)**
-**Solution:**
-- Pause at 20-min mark, check in with each director
-- Help debug, don't let them flounder
-- Reduce scope aggressively
-
-**Issue: One director way behind others**
-**Solution:**
-- Pair them with a faster director as "mentor"
-- Give them simpler scope for current quarter
-- Offer extra help during build time
-
-**Issue: Integration breaks everything (Q3)**
-**Solution:**
-- Make integration optional, not required
-- Suggest mocking instead of real API calls
-- Provide simple integration example
-
-**Issue: Dice rolls feel unfair**
-**Solution:**
-- Emphasize: randomness is learning opportunity
-- Allow directors to negotiate crisis response
-- Offer "re-roll" token once per game
-
-**Issue: Running out of time**
-**Solution:**
-- Cut Q5-Q6 to 20 minutes each if needed
-- Skip or shorten performance review
-- Priority: ensure Q1-Q4 have full time
-
-**Issue: Someone's Claude API access fails**
-**Solution:**
-- Have backup: pair programming with working director
-- Use alternative account
-- Worst case: pivot their demo to "planning" rather than building
-
-**Issue: Competitive tension becomes toxic**
-**Solution:**
-- Remind: everyone is on same team (company success)
-- Emphasize: all directors get promoted, only one to VP
-- Celebrate collaborative moments publicly
+- What multi-agent technique surprised you most?
+- What would you do differently if you ran this campaign again?
+- Will you use these patterns in your real work?
+- What was your favorite moment?
 
 ---
 
-## FACILITATION BEST PRACTICES
+## TROUBLESHOOTING YOUR CAMPAIGN
+
+### When Directors Struggle
+
+**Not using multiple agents:**
+Solution: "Directors, I'm requiring at least 2 agents in parallel this quarter. Show me coordination."
+
+**Demos consistently fail:**
+Solution: Pause at 20-minute mark. "Progress check - show me what you've got." Help debug. Reduce scope aggressively if needed.
+
+**One director far behind:**
+Solution: Pair them with a faster director as "mentor." Give simpler scope. Provide extra support during build time.
+
+**Integration chaos (Q3):**
+Solution: Make it optional. "Real integration is worth bonus points. Mocked integration is acceptable."
+
+**Dice rolls feel unfair:**
+Solution: "Directors, the real world is random. This tests your adaptability." Offer one re-roll token per game.
+
+**Running out of time:**
+Solution: Reduce Q3-Q4 to 30-40 min each if desperate. Never cut Q1-Q2 or Investor Demo.
+
+**Claude access fails:**
+Solution: Pair programming with working director. Use backup account. Last resort: pivot to planning instead of building.
+
+**Toxic competition:**
+Solution: "Remember - all of you get promoted. Only the top score becomes VP. You're competing for a promotion, not your job."
 
 ### Energy Management
 
 **Keep energy high:**
-- Play music during build time
-- Celebrate milestones loudly (launch, investor demo success)
-- Use dramatic language for scenarios
-- Physical movement (stand, walk around) between quarters
+- Play music during build time (instrumental, energizing)
+- Celebrate milestones loudly (launch, successful demos)
+- Use dramatic voices for NPCs (CEO, investors, customers)
+- Physical movement between quarters
 
 **Manage stress:**
-- Humor when things break ("Welcome to software engineering!")
-- Normalize failure (agents produce bugs, that's realistic)
-- Provide snacks/caffeine
-- Enforce lunch break
+- Humor when things break: "Welcome to engineering!"
+- Normalize failure: "Bugs are realistic!"
+- Provide snacks and caffeine
+- Actually enforce the lunch break
 
 ### Narrative Techniques
 
-**Make scenarios feel real:**
-- Use NPC voices: CEO, investors, angry customers
-- Create urgency: "The CEO is on the phone, she sounds stressed..."
-- Personalize: "A customer named Sarah just tweeted that..."
+**Make it feel like a real startup:**
+- Use actual startup communication: Slack messages, Zoom calls, investor emails
+- Create urgency through realistic scenarios: "TechCrunch just asked for comment on the outage..."
+- Personalize with details: "Customer @angry_flyer just tweeted at you with 4,000 RTs..."
+- Show consequences: "Your NPS score dropped 20 points..."
 
-**Build story arc:**
-- Q1-Q2: Hopeful startup energy
-- Investor Demo: First big test
-- Q3-Q4: Growing confidence
-- Q5-Q6: Chaos and resilience
-- Review: Recognition and celebration
-
-### Engagement Tactics
-
-**Prevent checking out:**
-- Call on specific directors during discussions
-- Highlight interesting agent techniques publicly
-- Create peer pressure (positive): "Wow, [Director X] just used 3 parallel agents!"
-
-**Encourage collaboration:**
-- When someone asks for help: "Great question, [Director Y], can you help?"
-- Reward it: "I saw [Director X] help [Director Y] - that's +3 collaboration points"
-
-**Handle competition healthily:**
-- Frame as professional growth, not elimination
-- "You're competing for a promotion, not your job"
-- Celebrate runners-up: "Silver and bronze medalists are still olympians"
+**Startup Story Arc:**
+- Q1-Q2: Naive optimism ("We're going to disrupt everything!")
+- Investor Demo: High-stakes pressure (funding or death)
+- Q3: Crisis mode (welcome to reality)
+- Q4: Scrappy survival (ship or die)
+- Review: Who gets promoted (tech startup meritocracy... sort of)
 
 ---
 
-## MATERIALS CHECKLIST
+## MATERIALS & RESOURCES
 
 ### Required Materials
 
 **Physical:**
-- [ ] Character sheets (printed, 1 per role)
+- [ ] Character sheets (printed, one per role)
 - [ ] Scoring sheets (tracking spreadsheet or paper)
-- [ ] 1d6 die
-- [ ] Timer/clock (visible to all)
-- [ ] Whiteboard or large screen for timeline/scores
-- [ ] Name tags or table cards (Director titles)
+- [ ] One beautiful d6 die (make it special - this is the Die of Fate)
+- [ ] Visible timer/clock
+- [ ] Whiteboard or screen for timeline and scores
+- [ ] Name tents: "Director of [Department]"
 
 **Digital:**
-- [ ] GAME.md (shared with participants)
+- [ ] GAME.md (shared beforehand)
 - [ ] Character sheets (characters/ directory)
-- [ ] MULTI-SERVICE-GUIDE.md (reference)
-- [ ] Scoring spreadsheet (template below)
+- [ ] TUTORIAL.md (reference material)
+- [ ] Scoring spreadsheet
 
-**Optional:**
+**Optional but Recommended:**
 - [ ] Music playlist for build time
-- [ ] Printed crisis cards (instead of rolling dice)
-- [ ] Awards/certificates for winners
-- [ ] Claude API monitoring dashboard
+- [ ] Printed crisis cards (instead of rolling)
+- [ ] Victory certificates or awards
+- [ ] Snacks and beverages
 
-### Scoring Spreadsheet Template
+### Scoring Spreadsheet
 
 ```
-Director | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Delivery | Inv Demo | Tech Debt | Cost | Collab | TOTAL
----------|----|----|----|----|----|----|----------|----------|-----------|------|--------|------
-Alice    | 2  | 3  | 2  | 3  | 2  | 3  |    15    |    8     |    12     |  7   |   +5   |  47
-Bob      | 2  | 2  | 3  | 2  | 2  | 2  |    13    |    7     |    14     |  10  |   +3   |  47
-Carol    | 3  | 2  | 2  | 2  | 1  | 3  |    13    |    6     |    11     |  7   |   +1   |  38
+Director      | Q1 | Q2 | Q3 | Q4 | Delivery | Tech Debt | Cost | Collab | TOTAL
+--------------|----|----|----|----|----------|-----------|------|--------|-------
+Alice (Search)| 2  | 3  | 2  | 3  |    10    |    12     |  7   |   +5   |  34
+Bob (Booking) | 2  | 2  | 3  | 2  |     9    |    14     |  10  |   +3   |  36
+Carol (Recs)  | 3  | 2  | 2  | 3  |    10    |    11     |  7   |   +1   |  29
 ...
 ```
 
@@ -850,21 +768,21 @@ Carol    | 3  | 2  | 2  | 2  | 1  | 3  |    13    |    6     |    11     |  7   
 ### If Running Behind
 
 **Cut from:**
-- Individual feedback in performance review (do group only)
-- Q5-Q6 (reduce to 20 min each)
-- Tutorial (assume people know Claude basics)
+- Individual feedback in review (group only)
+- Tutorial (if they know Claude)
+- Q3-Q4 (reduce slightly if desperate)
 
 **Never cut:**
-- Q1-Q2 (learning foundation)
-- Investor demo (key milestone)
-- Lunch break (people need it)
-- Q4 launch (emotional high point)
+- Q1-Q2 (foundation)
+- Investor Demo (climax)
+- Lunch (people need it)
+- Q4 Launch (emotional high)
 
-### If Ahead of Schedule
+### If Running Ahead
 
 **Add:**
-- Longer retrospectives per quarter
-- Extended investor demo Q&A
+- Extended retrospectives per quarter
+- Longer investor Q&A
 - Group code review session
 - Advanced multi-agent workshop
 
@@ -872,39 +790,44 @@ Carol    | 3  | 2  | 2  | 2  | 1  | 3  |    13    |    6     |    11     |  7   
 
 ## POST-GAME FOLLOW-UP
 
-**Immediately After:**
-- [ ] Send scores and feedback to all participants
-- [ ] Share final code repositories
-- [ ] Collect feedback survey
-- [ ] Exchange contact info (for continued learning)
+**Immediately after:**
+- Send scores and detailed feedback
+- Share code repositories
+- Collect feedback survey
+- Exchange contacts for continued learning
 
-**1 Week Later:**
-- [ ] Check-in email: "Have you used multi-agent patterns at work?"
-- [ ] Share aggregated learnings
-- [ ] Offer office hours for questions
+**One week later:**
+- "Have you used multi-agent patterns at work yet?"
+- Share aggregated learnings
+- Offer office hours
 
-**1 Month Later:**
-- [ ] Follow-up survey on skill retention
-- [ ] Share success stories
-- [ ] Iterate on game design based on feedback
-
----
-
-## SUCCESS METRICS (FOR YOU AS GAMERUNNER)
-
-**Did it work?**
-- [ ] All directors shipped working software by Q4
-- [ ] Participants tried multi-agent patterns (not just single agent)
-- [ ] Energy stayed high throughout (no mass checkout)
-- [ ] Competitive element felt healthy (not toxic)
-- [ ] Post-survey: 80%+ would recommend to colleagues
-
-**What to improve?**
-- Track: which quarters ran long?
-- Track: where did directors get stuck?
-- Track: which crises worked well vs fell flat?
-- Track: scoring clarity (did it make sense to participants?)
+**One month later:**
+- Skill retention survey
+- Share success stories
+- Iterate on game design
 
 ---
 
-**Good luck, Gamerunner! You're teaching engineers a skill that will shape the future of software development. Make it memorable.** 🎯✈️
+## YOUR SUCCESS METRICS
+
+**Did you succeed as Gamerunner?**
+- [ ] All directors shipped working software by Q4 launch
+- [ ] Everyone tried multi-agent patterns (not just single agent)
+- [ ] Energy stayed high throughout the 4 quarters
+- [ ] Competition felt healthy (not toxic)
+- [ ] Post-survey: 80%+ would recommend
+
+**Track for improvement:**
+- Which quarters ran long?
+- Where did directors get stuck?
+- Which crises landed well vs fell flat?
+- Was scoring clear to participants?
+
+---
+
+**Go forth, Gamerunner. You're not just teaching a workshop - you're giving them a compressed startup experience they'll reference for years. Make it memorable, make it fun, and maybe throw in a few "synergy" and "disruption" buzzwords for authenticity.**
+
+🎲✈️🚀
+
+*"Move fast and orchestrate agents." - SkywardAI motto*
+

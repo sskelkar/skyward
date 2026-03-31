@@ -207,35 +207,6 @@ Priority 3: Handle edge cases (defer if time-limited)
 
 ---
 
-### Quarter 5: Survive & Adapt (30 min)
-**Focus:** Quick response to market conditions (dice-driven scenario)
-
-**Possible Scenarios:**
-- Crisis: "Mass cancellations - handle inventory updates!"
-- Opportunity: "Partner airline wants inventory sharing!"
-- Competition: "Competitor has real-time sync - match it!"
-
-**Your Objectives:**
-- Respond to gamerunner's dice roll scenario
-- Build or fix quickly
-- Demonstrate operational resilience
-
-**Demo:** Show how you handled the crisis/opportunity.
-
----
-
-### Quarter 6: Final Challenge (30 min)
-**Focus:** One more scenario, final improvements
-
-**Possible Scenarios:**
-- Innovation: "Add AI-powered schedule optimization"
-- Premium: "Launch premium cabin inventory tier"
-- Scale: "Traffic 10x - optimize database"
-
-**Demo:** Final feature showcase and retrospective.
-
----
-
 ## VISUAL DEMO EXAMPLES
 
 **What "Good" Looks Like:**
@@ -288,12 +259,6 @@ Priority 3: Handle edge cases (defer if time-limited)
 - **Why:** Inventory accuracy is mission-critical, can't afford bugs
 - See TUTORIAL.md "Pattern 5: Test-First Development" for examples
 
-**Q5+ (Complex operations):** **Specialist Roles** 🎯
-- Database Agent: Owns schema, queries, optimization across quarters
-- Backend Agent: Owns API logic, business rules across quarters
-- Ops Agent: Owns monitoring, integrity checks, reporting
-- **Why:** Context retention, domain expertise in critical systems
-- See TUTORIAL.md "Pattern 3: Specialist Roles" for details
 
 ### Role-Specific Tips
 
@@ -401,16 +366,6 @@ Operations teams live in dashboards. Invest agent time in clear inventory visual
 - Operational dashboards
 - **Success = production-ready inventory system, ready to launch!**
 
-### Q5: Survive Competition (30 min)
-- Quick response to dice-driven scenario
-- Crisis management or opportunity capture
-- **Success = adapted quickly, maintained data integrity**
-
-### Q6: Final Challenge (30 min)
-- One more scenario response
-- Final improvements or innovation
-- **Success = strong finish, bulletproof inventory system**
-
 ---
 
 ## INTEGRATION POINTS (OPTIONAL)
@@ -495,7 +450,7 @@ Build your investor demo:
 2. Practice your investor demo
 3. Prepare to answer investor questions
 
-### Quarters 3-6: Execute & Adapt
+### Quarter 3 & Beyond: Execute & Adapt
 
 **Each quarter:**
 1. Listen to gamerunner scenario

@@ -206,35 +206,6 @@ Priority 3: Real-time optimization demo
 
 ---
 
-### Quarter 5: Survive & Adapt (30 min)
-**Focus:** Quick response to market conditions (dice-driven scenario)
-
-**Possible Scenarios:**
-- Crisis: "Price war - competitor cut prices 30%!"
-- Opportunity: "New premium route - set pricing strategy!"
-- Competition: "Dynamic bundling pricing needed!"
-
-**Your Objectives:**
-- Respond to gamerunner's dice roll scenario
-- Adjust or build quickly
-- Demonstrate adaptability
-
-**Demo:** Show how you handled the crisis/opportunity.
-
----
-
-### Quarter 6: Final Challenge (30 min)
-**Focus:** One more scenario, final improvements
-
-**Possible Scenarios:**
-- Innovation: "AI-powered yield management system"
-- Expansion: "International pricing with currency conversion"
-- Scale: "Handle 10x pricing requests - optimize performance"
-
-**Demo:** Final feature showcase and retrospective.
-
----
-
 ## VISUAL DEMO EXAMPLES
 
 **What "Good" Looks Like:**
@@ -286,12 +257,6 @@ Priority 3: Real-time optimization demo
 - **Why:** Build on existing work, incremental improvement
 - See TUTORIAL.md "Pattern 4: Iterative Refinement" for examples
 
-**Q5+ (Complex analytics):** **Specialist Roles** 🎯
-- Data Science Agent: Owns all pricing algorithms and ML models
-- Backend Agent: Owns all API development and optimization
-- Analytics Agent: Owns all dashboards and visualizations
-- **Why:** Context retention, domain expertise
-- See TUTORIAL.md "Pattern 3: Specialist Roles" for details
 
 ### Role-Specific Tips
 
@@ -402,16 +367,6 @@ Structure your agents around what you'll show: "Agent 1 builds the pricing brain
 - Executive dashboard polish
 - **Success = production-ready revenue optimization system!**
 
-### Q5: Survive Competition (30 min)
-- Quick response to dice-driven scenario
-- Crisis management or opportunity capture
-- **Success = adapted quickly, maintained optimization quality**
-
-### Q6: Final Challenge (30 min)
-- One more scenario response
-- Final improvements or innovation
-- **Success = strong finish, learned multi-agent orchestration**
-
 ---
 
 ## INTEGRATION POINTS (OPTIONAL)
@@ -498,7 +453,7 @@ Build your investor demo:
 2. Practice your investor demo
 3. Prepare to answer investor questions
 
-### Quarters 3-6: Execute & Adapt
+### Quarter 3 & Beyond: Execute & Adapt
 
 **Each quarter:**
 1. Listen to gamerunner scenario
