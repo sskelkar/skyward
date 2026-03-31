@@ -107,6 +107,24 @@ Think of yourself as a conductor, not a passive observer.
 
 Now that you understand **why** multiple agents are useful and **what** they are, let's cover **how** to actually spawn and coordinate them in Claude Code.
 
+### How Claude Code CLI Works
+
+**Important context:** When you use Claude Code CLI, you're already talking to Claude in a conversation. You don't need to write code or API calls to spawn agents - you just **ask Claude to spawn agents** using natural language, and Claude will use the Agent tool internally.
+
+**Example:**
+```
+You (in CLI): "I need to build a flight booking app. Spawn two agents in parallel:
+               one for the Flask API and one for the React UI."
+
+Claude: "I'll spawn two agents to work on this in parallel."
+        [Claude uses Agent tool internally]
+        [Agent 1 works on Flask API]
+        [Agent 2 works on React UI]
+        "Both agents have completed. Here are the results..."
+```
+
+**Key insight:** You don't invoke the Agent tool yourself - **you ask Claude to coordinate agents**, and Claude handles the tool calls.
+
 ### Three Ways to Work with Multiple Agents
 
 Claude Code supports three approaches to multi-agent workflows:
@@ -299,6 +317,236 @@ QA Agent: [Tests new flow]
 
 ---
 
+### How to Actually Spawn Agents in Claude Code CLI
+
+**Method 1: Just Ask Claude to Spawn Agents**
+
+The simplest approach - describe what you want and let Claude coordinate.
+
+**Example conversation:**
+```
+You: "Build a flight booking system with separate backend and frontend services.
+      Use two agents working in parallel."
+
+Claude: "I'll spawn two agents to work on this in parallel:
+         - Agent 1: Backend API developer (Flask, port 5001)
+         - Agent 2: Frontend developer (React, port 3000)
+
+         Let me start both agents now."
+
+         [Claude internally calls Agent tool twice]
+
+         [After agents complete]
+
+Claude: "Both agents have completed their work. Here's what they built:
+
+         **Agent 1 (Backend):** Created a Flask API with flight search endpoint...
+         **Agent 2 (Frontend):** Created a React app with search form...
+
+         Would you like me to test the integration?"
+```
+
+**What's happening behind the scenes:**
+- Claude receives your request
+- Claude decides to use the Agent tool
+- Claude formulates prompts for each agent
+- Claude spawns agents (parallel or sequential)
+- Claude reviews outputs and reports back to you
+
+---
+
+**Method 2: Give Claude Explicit Instructions**
+
+For more control, tell Claude exactly how to structure the agents.
+
+**Example conversation:**
+```
+You: "Spawn three agents sequentially:
+
+      Agent 1: Design a database schema for flight bookings with flights,
+               bookings, and payments tables.
+
+      Agent 2: Using Agent 1's schema, build a Flask API on port 5001
+               with CRUD endpoints.
+
+      Agent 3: Build a React admin dashboard that calls Agent 2's API."
+
+Claude: "I'll execute this as a sequential pipeline. Starting with Agent 1..."
+
+         [Spawns Agent 1]
+
+Claude: "Agent 1 has completed the schema. Here's what they designed:
+         [shows schema]
+
+         Now spawning Agent 2 to build the API using this schema..."
+
+         [Spawns Agent 2 with schema context]
+
+Claude: "Agent 2 has built the API. Now spawning Agent 3 for the dashboard..."
+
+         [Spawns Agent 3 with API context]
+
+Claude: "All three agents completed. Here's the integrated result..."
+```
+
+**Benefits of explicit instructions:**
+- You control the sequence (parallel vs sequential)
+- You specify what context to pass between agents
+- You can request specific technologies or approaches
+
+---
+
+**Method 3: Ask Claude to Plan First, Then Execute**
+
+For complex projects, have Claude plan the agent strategy before spawning.
+
+**Example conversation:**
+```
+You: "I need to build a flight booking system with search, booking, and
+      payment features. What's the best multi-agent strategy?"
+
+Claude: "Here's my recommended approach:
+
+         **Phase 1 - Parallel (20 min):**
+         - Agent 1: Build Search API (port 5001)
+         - Agent 2: Build Booking API (port 5002)
+
+         **Phase 2 - Sequential (15 min):**
+         - Agent 3: Build unified frontend calling both APIs (port 3000)
+         - Agent 4: Write integration tests
+
+         This maximizes parallelism while ensuring clean integration.
+         Should I proceed with this plan?"
+
+You: "Yes, proceed."
+
+Claude: "Starting Phase 1 with Agent 1 and Agent 2 in parallel..."
+         [Executes the plan]
+```
+
+---
+
+**Method 4: Spawn Background Agents for Long Tasks**
+
+For tasks that take several minutes, ask Claude to run them in the background.
+
+**Example conversation:**
+```
+You: "Generate a realistic flight database with 1000 flights. Run this in
+      the background while I work on the frontend."
+
+Claude: "I'll spawn an agent to generate the database in the background.
+         You can continue working, and I'll notify you when it's complete."
+
+         [Spawns background agent]
+
+Claude: "Background agent started. What would you like to work on in the meantime?"
+
+You: "Build the React frontend for flight search."
+
+Claude: "I'll spawn a frontend agent now..."
+
+         [Later, background agent completes]
+
+Claude: "The database generation agent has finished. The flights.db file
+         is ready with 1000 flights across 50 airports."
+```
+
+---
+
+### Using Agent Teams in Claude Code CLI
+
+**Agent Teams are created and managed through natural conversation.**
+
+#### Creating a Team
+
+**Example conversation:**
+```
+You: "Create an agent team for building a flight booking system.
+      The team should have:
+      - Backend specialist (Flask, databases)
+      - Frontend specialist (React, UI/UX)
+      - QA specialist (testing, quality)
+
+      Make this a persistent team for the whole project."
+
+Claude: "I've created a team called 'flight-booking-team' with three specialists:
+         - Backend Agent (backend-dev)
+         - Frontend Agent (frontend-dev)
+         - QA Agent (qa-specialist)
+
+         This team will persist across our conversation and coordinate with each other.
+         What should the team work on first?"
+```
+
+#### Working with the Team
+
+**Example conversation:**
+```
+You: "Team: Build a flight search feature with backend API and frontend."
+
+Backend Agent: "I'll create a Flask API with GET /flights endpoint on port 5001..."
+               [builds API]
+
+Frontend Agent: "I see the backend is creating the API. I'll build a React UI
+                 that calls localhost:5001/flights..."
+                [builds UI]
+
+QA Agent: "I'll review both implementations for bugs and integration issues..."
+          [reviews]
+
+Claude: "The team has completed the flight search feature. Here's a summary:
+         - Backend: Flask API on port 5001 ✓
+         - Frontend: React app on port 3000 ✓
+         - QA: 2 minor issues found and fixed ✓"
+
+You: "Team: Now add booking functionality."
+
+[Team continues, building on their previous work]
+```
+
+#### Team Benefits
+
+**Why use teams:**
+- Agents remember their previous work (persistent context)
+- Agents can ask each other questions
+- Simulates real organizational structure
+- Great for multi-quarter projects (Q1-Q6)
+
+**When NOT to use teams:**
+- One-off tasks (sub-agents are simpler)
+- You're new to multi-agent (start with sub-agents first)
+- Simple 2-agent parallel work
+
+#### Team Commands
+
+**Create team:**
+```
+You: "Create a team with [list roles]"
+```
+
+**Address the team:**
+```
+You: "Team: [task description]"
+```
+
+**Address specific team member:**
+```
+You: "Backend Agent: Add a new endpoint for flight details"
+```
+
+**Check team status:**
+```
+You: "What has the team built so far?"
+```
+
+**Disband team (optional):**
+```
+You: "Disband the flight-booking-team"
+```
+
+---
+
 ### Decision Tree: Which Approach to Use?
 
 ```
@@ -315,216 +563,488 @@ Do you have 2-5 agents working on a single task?
 └─ No (just 1-2 simple agents) → Use Multiple Tabs (Option 1)
 ```
 
-### Practical Agent Tool Examples
+### Practical CLI Examples: What It Actually Looks Like
 
 #### Example 1: Parallel Execution
 
 **Scenario:** Build backend and frontend simultaneously.
 
+**Your message in Claude Code CLI:**
 ```
-Main orchestrator spawns two agents in parallel:
+Build a flight booking app with:
+- Flask API on port 5001 with GET /flights endpoint
+- React UI on port 3000 that calls the API
 
-Agent 1:
-{
-  "description": "Build search API",
-  "prompt": "You are a backend developer. Build a Flask API for flight search.
+Spawn two agents in parallel for this.
+```
 
-             Endpoint: GET /flights?origin={code}&dest={code}&date={date}
-             Response: [{id, origin, dest, departure, arrival, price, seats}]
+**Claude's response:**
+```
+I'll spawn two agents to work on this in parallel.
 
-             Requirements:
-             - SQLite database with flights table
-             - 10 mock flights (SFO, LAX, NYC, ORD, SEA)
-             - CORS enabled for localhost:3000
-             - Run on port 5001
+[Agent 1: Build search API]
+Building Flask API with flight search endpoint on port 5001...
 
-             Deliverable: Complete app.py that runs with 'python app.py'"
-}
+[Agent 2: Build search UI]
+Building React UI with search form on port 3000...
 
-Agent 2:
-{
-  "description": "Build search UI",
-  "prompt": "You are a frontend developer. Build a flight search interface.
+[Both agents working simultaneously...]
 
-             Features:
-             - Search form (origin, destination, date inputs)
-             - Results table showing flights
-             - Clean, professional styling
-             - Call API at http://localhost:5001/flights
+---
 
-             Requirements:
-             - Vanilla HTML/CSS/JS (no build step)
-             - Loading states while fetching
-             - Error handling
-             - Run on port 3000
+Agent 1 (Backend) completed:
+✓ Created Flask API with GET /flights endpoint
+✓ SQLite database with 10 mock flights
+✓ CORS enabled for localhost:3000
+✓ Running on port 5001
 
-             Deliverable: Complete index.html that opens in browser"
-}
+Files created:
+- backend/app.py
+- backend/flights.db
 
-[Both agents run simultaneously - massive time savings!]
+---
+
+Agent 2 (Frontend) completed:
+✓ Created React app with search form
+✓ Displays flight results in a table
+✓ Calls http://localhost:5001/flights
+✓ Includes loading states and error handling
+✓ Running on port 3000
+
+Files created:
+- frontend/index.html
+- frontend/app.js
+- frontend/styles.css
+
+---
+
+Both agents completed successfully. To run:
+1. Terminal 1: cd backend && python app.py
+2. Terminal 2: cd frontend && python -m http.server 3000
+3. Open http://localhost:3000
+
+Would you like me to test the integration?
+```
+
+**What happened behind the scenes:**
+Claude used the Agent tool twice in parallel with these prompts:
+
+```
+Agent 1 internal prompt:
+"You are a backend developer. Build a Flask API for flight search.
+ Endpoint: GET /flights?origin={code}&dest={code}&date={date}
+ Use SQLite with 10 mock flights. CORS enabled. Port 5001."
+
+Agent 2 internal prompt:
+"You are a frontend developer. Build a flight search interface.
+ Call API at http://localhost:5001/flights. Vanilla HTML/CSS/JS.
+ Port 3000."
 ```
 
 #### Example 2: Sequential Pipeline
 
 **Scenario:** Agent 2 needs Agent 1's output.
 
+**Your message in Claude Code CLI:**
 ```
-Main orchestrator spawns agents sequentially:
+Build a booking system in stages:
 
-Step 1 - Spawn Agent 1:
-{
-  "description": "Design database schema",
-  "prompt": "Design a database schema for a flight booking system.
+1. First agent: Design database schema with flights, bookings, payments tables
+2. Second agent: Build Flask API using that schema with CRUD endpoints
 
-             Tables needed:
-             - flights (id, origin, dest, departure, arrival, price, seats)
-             - bookings (id, flight_id, passenger_name, email, status, created)
-             - payments (id, booking_id, amount, payment_method, status)
+Run these sequentially so the second agent can use the first agent's schema.
+```
 
-             Output: SQL CREATE TABLE statements with appropriate types,
-             constraints, and indexes."
-}
+**Claude's response:**
+```
+I'll run these agents sequentially. Starting with the schema design...
 
-[Wait for Agent 1 to complete]
+[Agent 1: Design database schema]
+Designing database schema for flight booking system...
 
-Step 2 - Review Agent 1's schema, then spawn Agent 2:
-{
-  "description": "Implement booking API",
-  "prompt": "Build a Flask API for flight bookings using this database schema:
+---
 
-             [Paste Agent 1's schema here]
+Agent 1 (Schema Designer) completed:
 
-             Endpoints:
-             - POST /bookings (create booking)
-             - GET /bookings/{id} (get booking details)
-             - DELETE /bookings/{id} (cancel booking)
+Created schema with three tables:
+- flights (id, origin, destination, departure, arrival, price, seats_available)
+- bookings (id, flight_id, passenger_name, email, status, created_at)
+- payments (id, booking_id, amount, payment_method, status, processed_at)
 
-             Use the exact schema from above. Include validation and error handling."
-}
+Here's the schema:
+[Shows SQL CREATE TABLE statements]
+
+---
+
+Now spawning Agent 2 to build the API using this schema...
+
+[Agent 2: Build booking API]
+Building Flask API with the schema from Agent 1...
+
+---
+
+Agent 2 (API Developer) completed:
+
+✓ Created Flask API with endpoints:
+  - POST /bookings (create booking)
+  - GET /bookings/{id} (get booking details)
+  - DELETE /bookings/{id} (cancel booking)
+✓ Uses the exact schema from Agent 1
+✓ Includes validation and error handling
+✓ Running on port 5002
+
+Files created:
+- booking-api/app.py
+- booking-api/schema.sql
+
+---
+
+Sequential pipeline completed. The API is ready to use.
 ```
 
 #### Example 3: Background Agents for Long Tasks
 
 **Scenario:** Agent needs > 2 minutes, don't want to block.
 
+**Your message in Claude Code CLI:**
 ```
-Spawn long-running agent in background:
+Generate a realistic flight database with 1000 flights across 50 airports.
+This will take a while, so run it in the background.
 
-{
-  "description": "Generate test data",
-  "prompt": "Generate a realistic SQLite database with:
-             - 1000 flights across 50 US airports
-             - Random departure times over next 30 days
-             - Realistic prices ($50-$800)
-             - Varying seat availability
+While that runs, I'll work on building the frontend UI.
+```
 
-             Output: flights.db file",
-  "run_in_background": true
-}
+**Claude's response:**
+```
+I'll spawn an agent to generate the database in the background. You can
+continue working on other tasks and I'll notify you when it completes.
 
-[Agent runs in background, orchestrator continues with other work]
+[Agent: Generate test data - BACKGROUND]
+Generating 1000 flights across 50 US airports...
+(Running in background...)
 
-[Later, when background agent completes, orchestrator is notified]
+---
+
+The database generation is running in the background.
+What would you like me to work on now?
+```
+
+**You continue:**
+```
+Build the React frontend for flight search.
+```
+
+**Claude:**
+```
+[Agent: Build frontend]
+Building React flight search UI...
+
+---
+
+Agent (Frontend) completed:
+✓ Created React app with search form
+✓ Flight results display
+✓ Running on port 3000
+
+Files created:
+- frontend/src/App.js
+- frontend/src/components/SearchForm.js
+- frontend/src/components/FlightList.js
+
+---
+
+[Background agent notification]
+The database generation agent has completed!
+
+✓ Generated flights.db with 1000 flights
+✓ 50 US airports (SFO, LAX, JFK, ORD, etc.)
+✓ Departure times spread over next 30 days
+✓ Prices ranging from $50-$800
+✓ Varying seat availability
+
+File created: backend/flights.db
+
+All tasks completed!
 ```
 
 #### Example 4: Specialized Explore Agent
 
 **Scenario:** Need to understand existing codebase structure.
 
+**Your message in Claude Code CLI:**
 ```
-Use specialized Explore agent for codebase research:
-
-{
-  "description": "Find authentication code",
-  "prompt": "Find and analyze all authentication-related code in this codebase.
-
-             Look for:
-             - Login/logout endpoints
-             - Session management
-             - Authentication middleware
-             - Token generation/validation
-
-             Provide: File locations, key functions, and how auth flow works",
-  "subagent_type": "Explore"
-}
-
-[Explore agent is optimized for code searching and analysis]
+I need to understand how authentication works in this codebase.
+Use an Explore agent to find all auth-related code and explain the flow.
 ```
 
-### Common Mistakes with Agent Tool
+**Claude's response:**
+```
+I'll spawn an Explore agent to search the codebase for authentication code.
 
-❌ **Vague prompts**
-```
-{
-  "description": "Build backend",
-  "prompt": "Build the backend"
-}
-```
-→ Agent doesn't know tech stack, ports, endpoints, etc.
+[Agent: Explore - Find authentication code]
+Searching codebase for authentication patterns...
 
-✅ **Specific prompts**
+---
+
+Agent (Explore) completed:
+
+Found authentication implementation across 5 files:
+
+**1. backend/auth/middleware.py**
+- authenticate_request() - Validates JWT tokens
+- require_auth() - Decorator for protected endpoints
+
+**2. backend/auth/tokens.py**
+- generate_token() - Creates JWT tokens
+- verify_token() - Validates and decodes tokens
+
+**3. backend/routes/auth.py**
+- POST /login - Login endpoint (generates token)
+- POST /logout - Logout endpoint (invalidates token)
+
+**4. frontend/src/utils/auth.js**
+- storeToken() - Saves JWT to localStorage
+- getToken() - Retrieves token for API calls
+
+**5. backend/config.py**
+- JWT_SECRET - Secret key for signing tokens
+- TOKEN_EXPIRY - Set to 24 hours
+
+**Authentication Flow:**
+1. User posts credentials to POST /login
+2. Backend validates, generates JWT token
+3. Frontend stores token in localStorage
+4. All API requests include "Authorization: Bearer <token>" header
+5. authenticate_request() middleware validates token on each request
+
+**Security concerns found:**
+- JWT_SECRET is hardcoded (should use environment variable)
+- No token refresh mechanism
+- No rate limiting on login endpoint
 ```
-{
-  "description": "Build Flask booking API",
-  "prompt": "Build a Flask API on port 5002 with POST /bookings endpoint.
-             Body: {flight_id, passenger_name, email}.
-             Returns: {booking_id, status, confirmation_code}.
-             Use SQLite for storage."
-}
+
+### Key Insight: Natural Language, Not Code
+
+**You don't write JSON or code in Claude Code CLI.** You just describe what you want in natural language.
+
+**What you DON'T do:**
+```
+You: {
+       "description": "Build API",
+       "prompt": "Build a Flask API...",
+       "subagent_type": "general-purpose"
+     }
+```
+❌ This is wrong - you're not calling APIs directly
+
+**What you DO do:**
+```
+You: "Build a Flask API for flight search. Use an agent for this."
+```
+✓ This is right - just describe what you want
+
+**Claude handles all the tool calls internally.** Your job is to:
+- Describe the task clearly
+- Specify if you want parallel or sequential agents
+- Provide context for agents to use
+- Review outputs and give feedback
+
+**Think of it like delegating to a project manager:**
+- You don't tell the PM exactly what JSON to write
+- You describe what you need and let them figure out the details
+- You review results and provide direction
+
+---
+
+### Common Mistakes with Agent Spawning
+
+❌ **Vague requests**
+```
+You: "Build the backend"
+```
+→ Claude doesn't know tech stack, ports, endpoints, etc.
+
+✅ **Specific requests**
+```
+You: "Build a Flask API on port 5002 for flight bookings.
+      Include POST /bookings endpoint that accepts flight_id, passenger_name,
+      and email. Return booking_id, status, and confirmation_code.
+      Use SQLite for storage."
 ```
 
 ---
 
 ❌ **Too many parallel agents**
 ```
-[Spawns 7 agents simultaneously]
+You: "Spawn 7 agents to build all these features at once..."
 ```
 → Hard to review outputs, integration nightmare
 
 ✅ **2-3 parallel agents max**
 ```
-[Spawns 2-3 agents with clear boundaries]
+You: "Spawn 2 agents in parallel: one for backend API, one for frontend UI"
 ```
 
 ---
 
 ❌ **Not reviewing agent output before next step**
 ```
-Agent 1 builds API → immediately spawn Agent 2 without checking Agent 1's work
+You: "Build the API with Agent 1, then immediately have Agent 2 build the UI"
 ```
 → Bugs compound through pipeline
 
 ✅ **Review between steps**
 ```
-Agent 1 builds API → Review: Does it work? Fix bugs → Then spawn Agent 2
+You: "Build the API with Agent 1"
+[Claude builds API]
+You: [Reviews output, tests it]
+You: "Good. Now spawn Agent 2 to build UI that calls this API"
 ```
 
 ---
 
 ❌ **Forgetting to pass context**
 ```
-Agent 2: "Integrate with the API"
+You: "Now spawn an agent to integrate with the API"
 ```
-→ Agent 2 doesn't know what API, where it is, what endpoints exist
+→ Agent doesn't know what API, where it is, what endpoints exist
 
 ✅ **Explicit context handoff**
 ```
-Agent 2: "The API is running on localhost:5001 with endpoint GET /flights
-          that returns [{id, origin, dest, price}]. Build a UI that calls
-          this endpoint..."
+You: "Spawn an agent to build a frontend. The backend API is running on
+      localhost:5001 with GET /flights endpoint that returns an array of
+      flight objects with id, origin, dest, and price fields."
 ```
+
+### Complete End-to-End CLI Example
+
+Here's a realistic conversation showing the full multi-agent workflow in Claude Code CLI:
+
+**You:**
+```
+I'm building a flight booking system for Q1. I want to use a multi-agent
+approach with:
+1. One agent to build the search API
+2. One agent to build the search UI
+3. Run them in parallel to save time
+
+Use Flask for backend (port 5001) and React for frontend (port 3000).
+```
+
+**Claude:**
+```
+I'll spawn two agents to work on this in parallel - a backend developer
+for the search API and a frontend developer for the search UI.
+
+[Spawning Agent 1: Backend Search API]
+[Spawning Agent 2: Frontend Search UI]
+
+Both agents are now working...
+```
+
+**Claude (after ~5 minutes):**
+```
+Agent 1 (Backend) completed:
+✓ Flask API with GET /flights endpoint
+✓ Query params: origin, destination, date
+✓ Returns: Array of flight objects
+✓ SQLite database with 10 mock flights
+✓ CORS enabled for localhost:3000
+✓ Running on port 5001
+
+Files: backend/app.py, backend/flights.db
+
+Agent 2 (Frontend) completed:
+✓ React app with search form
+✓ Input fields: origin, destination, date
+✓ Displays results in a table
+✓ Calls http://localhost:5001/flights
+✓ Loading states and error handling
+✓ Running on port 3000
+
+Files: frontend/src/App.js, frontend/src/components/
+
+Both agents completed successfully. To run:
+  Terminal 1: cd backend && python app.py
+  Terminal 2: cd frontend && npm start
+
+Would you like me to test the integration?
+```
+
+**You:**
+```
+Yes, test the integration.
+```
+
+**Claude:**
+```
+[Spawning integration agent to test end-to-end flow]
+
+Testing integration between backend and frontend...
+
+✓ Backend API responding on port 5001
+✓ Frontend making requests to backend
+✓ CORS working correctly
+✓ Data flowing from backend to frontend
+✓ Search form submitting and showing results
+
+Integration test passed! The search flow works end-to-end.
+
+Demo ready. You can now present this to your table!
+```
+
+**You:**
+```
+Great! What should I demo?
+```
+
+**Claude:**
+```
+Here's your Q1 demo flow:
+
+1. Show the search form (frontend on localhost:3000)
+2. Enter a search: SFO → LAX, any date
+3. Click "Search"
+4. Results appear showing available flights
+5. Explain: "We have two microservices:
+   - Search API (Flask, port 5001)
+   - Search UI (React, port 3000)"
+
+Q1 deliverable achieved: Working flight search with multi-service architecture!
+
+For Q2, you could add:
+- Booking API (port 5002)
+- Booking UI integration
+- Payment processing
+
+Need help with Q2 planning?
+```
+
+---
 
 ### Agent Tool Summary
 
-**Key takeaway:** The Agent tool lets you programmatically spawn sub-agents within your main conversation. You remain the orchestrator, deciding when to spawn agents, what prompts to give them, and how to integrate their outputs.
+**Key takeaway:** In Claude Code CLI, you don't write code or JSON - you just **describe what you want** in natural language, and Claude coordinates the agents for you.
+
+**Your role:**
+- Describe tasks clearly ("Build a Flask API on port 5001...")
+- Specify parallel vs sequential ("Run these two agents in parallel...")
+- Review agent outputs ("Does this look right? Test it before continuing...")
+- Provide context for handoffs ("The API from Agent 1 is on localhost:5001...")
+
+**Claude's role:**
+- Spawn agents using the Agent tool internally
+- Formulate detailed prompts for each agent
+- Coordinate timing (parallel vs sequential)
+- Report results back to you
 
 **For this workshop:**
-- **Start with 2-3 sub-agents** via Agent tool (Option 2)
-- **Write clear, specific prompts** (see Prompt Engineering section)
+- **Just ask Claude naturally** - no code needed
+- **Start with 2-3 agents** in parallel or sequence
 - **Review each agent's output** before proceeding
 - **Pass explicit context** when agents need to work together
 
-**Next:** Now that you know HOW to spawn agents, let's explore the PATTERNS for coordinating them effectively.
+**Next:** Now that you know HOW to spawn agents in the CLI, let's explore the PATTERNS for coordinating them effectively.
 
 ---
 
@@ -2132,31 +2652,75 @@ Skills are documented at: https://code.claude.com/docs/en/skills
 
 ## QUICK REFERENCE
 
-### How to Spawn Agents (Quick Summary)
+### How to Spawn Agents in Claude Code CLI (Quick Summary)
 
-**Recommended: Use Agent Tool (Sub-Agents)**
+**You just ask Claude in natural language. Claude handles the Agent tool internally.**
+
+**Parallel agents:**
 ```
-Main conversation → Spawn sub-agents → Review outputs → Integrate
+You: "Build a flight booking app with Flask API and React UI.
+      Spawn two agents to work on this in parallel."
 
-Example:
-{
-  "description": "Build Flask API",
-  "prompt": "You are a backend developer. Build a Flask API with endpoint
-             GET /flights. Use SQLite. Run on port 5001."
-}
+Claude: [Spawns both agents simultaneously, reports when complete]
 ```
 
-**Alternative: Multiple Tabs**
-- Open 2-3 Claude Code tabs
-- Each tab = one agent conversation
-- Manually copy-paste between tabs
+**Sequential agents:**
+```
+You: "First agent: Design database schema.
+      Second agent: Build API using that schema.
+      Run sequentially."
 
-**Advanced: Agent Teams**
-- Persistent specialist agents
-- Multi-quarter projects
-- Agents communicate with each other
+Claude: [Runs Agent 1, shows result, then runs Agent 2 with context]
+```
 
-**Decision:** Start with Agent Tool (Sub-Agents) for most scenarios.
+**Background agent:**
+```
+You: "Generate test data with 1000 flights. Run this in background
+      while I work on the frontend."
+
+Claude: [Spawns background agent, notifies when complete]
+```
+
+**Agent Teams (advanced):**
+```
+You: "Create a team with Backend, Frontend, and QA specialists."
+Claude: [Creates persistent team]
+
+You: "Team: Build flight search feature."
+[Team members collaborate and build]
+```
+
+**Key insight:** No code needed - just describe what you want!
+
+---
+
+### Claude Code CLI Quick Commands
+
+**Ask Claude to spawn agents:**
+- "Spawn two agents in parallel for..."
+- "Use a sequential pipeline with three agents..."
+- "Run this agent in the background..."
+- "Create a team with [roles]..."
+
+**Review and iterate:**
+- "Show me what Agent 1 built"
+- "That looks good, now spawn Agent 2..."
+- "The integration isn't working, spawn a debug agent..."
+
+**Get help:**
+- "What's the best multi-agent strategy for this?"
+- "How should I divide this work between agents?"
+- "Should I use parallel or sequential agents here?"
+
+---
+
+### Alternative: Multiple Tabs (Manual)
+- Open 2-3 Claude Code CLI sessions in different terminals
+- Each session = one agent conversation
+- Manually copy-paste context between sessions
+- Use when you want full control over each agent's conversation
+
+**Decision:** For most scenarios, just ask Claude to spawn agents (much easier!).
 
 ---
 
@@ -2268,11 +2832,20 @@ When passing work from Agent 1 to Agent 2:
 
 ### During Building
 
-1. **Write all prompts first** (before starting any agent)
-2. **Start parallel agents together** (don't wait if independent)
+1. **Describe your agent strategy to Claude** (e.g., "Spawn two agents in parallel...")
+2. **Let Claude spawn agents** (you don't write code/JSON, just describe)
 3. **Review each agent output** (2-min sanity check)
-4. **Pass explicit context** (don't assume agents know things)
+4. **Provide context for next agents** ("The API from Agent 1 is on port 5001...")
 5. **Reserve integration time** (last 5-10 minutes)
+
+**Example conversation starter:**
+```
+You: "I need to build [feature] with a multi-agent approach.
+      Spawn [N] agents:
+      - Agent 1: [task]
+      - Agent 2: [task]
+      Run them [parallel/sequentially]."
+```
 
 ### When Stuck
 
@@ -2314,24 +2887,73 @@ When passing work from Agent 1 to Agent 2:
 - Fourth time: Try advanced techniques (Agent Teams, skills)
 
 **Key principles:**
-1. **Clear prompts** - Specific role, task, deliverable
-2. **Explicit context** - Pass information between agents
-3. **Reserve integration time** - Don't assume it "just works"
-4. **Review outputs** - Agents aren't perfect
-5. **Parallelize when possible** - Maximum speed
-6. **Don't overcomplicate** - 2-3 agents often optimal
+1. **Use natural language** - No code needed, just describe what you want
+2. **Clear descriptions** - Specific tasks, tech stack, deliverables
+3. **Explicit context** - Pass information between agents
+4. **Reserve integration time** - Don't assume it "just works"
+5. **Review outputs** - Agents aren't perfect
+6. **Parallelize when possible** - Maximum speed
+7. **Don't overcomplicate** - 2-3 agents often optimal
 
-**You're the orchestrator.** The agents are powerful tools, but you decide:
-- Which pattern to use
-- How to divide work
-- What context to pass
-- When to integrate
+**You're the orchestrator.** In Claude Code CLI, you decide:
+- Which pattern to use (parallel, sequential, specialist)
+- How to divide work between agents
+- What context to pass between agents
+- When to integrate outputs
 - What quality bar to hit
 
-**Trust yourself.** If a pattern isn't working, switch. If an agent produces poor output, revise your prompt. Adapt, experiment, learn.
+**You're just talking to Claude.** No code, no JSON, no API calls. Just:
+- Describe what you want to build
+- Ask Claude to spawn agents
+- Review outputs
+- Provide feedback and direction
+
+**Trust yourself.** If a pattern isn't working, switch. If an agent produces poor output, ask Claude to try again with more specific instructions. Adapt, experiment, learn.
 
 ---
 
 **Good luck building! 🚀**
 
 *Remember: The best way to learn multi-agent orchestration is to orchestrate multiple agents building something real.*
+
+---
+
+## FINAL NOTE: IT'S EASIER THAN YOU THINK
+
+If this tutorial seems long and complex, here's the good news:
+
+**In Claude Code CLI, multi-agent orchestration is just conversation.**
+
+You don't need to:
+- Write code or JSON
+- Learn API syntax
+- Memorize tool parameters
+- Configure complex systems
+
+You just need to:
+- Describe what you want to build
+- Ask Claude to spawn agents (parallel or sequential)
+- Review what agents build
+- Provide feedback
+
+**Example - the entire workflow:**
+```
+You: "Build a flight booking app. Spawn two agents in parallel:
+      one for Flask API (port 5001), one for React UI (port 3000)."
+
+Claude: [Spawns agents, they build in parallel]
+
+Claude: "Both agents completed. Here's what they built... [summary]"
+
+You: "Good! Now spawn an agent to integrate them."
+
+Claude: [Spawns integration agent]
+
+Claude: "Integration complete. Ready to demo!"
+```
+
+**That's it.** You just had a conversation with Claude, and got a multi-service application built by multiple agents working in parallel.
+
+**Start simple, build confidence, then try advanced techniques.**
+
+You've got this!
