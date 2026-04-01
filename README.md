@@ -172,7 +172,7 @@ You are directors of engineering at **SkywardAI**, a new airline startup racing 
 
 ## How Each Quarter Works
 
-### Q1 Turn Structure (Research & Vision)
+### Q1 Quarter Structure (Research & Vision)
 
 **1. Introduction (5 min)**
 - Gamerunner explains Q1 focus: research and planning, not coding
@@ -187,7 +187,7 @@ Use agents to research, plan, design, and create vision documents. See [players/
 
 ---
 
-### Q2-Q4 Turn Structure (Building)
+### Q2-Q4 Quarter Structure (Building)
 
 **1. Scenario Introduction (3-5 min)**
 The gamerunner announces the quarter's challenge and goals.

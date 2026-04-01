@@ -107,15 +107,15 @@ Think of yourself as a conductor, not a passive observer.
 
 ### The Key Insight
 
-**In Claude Code CLI, you don't write code or JSON. You just talk to Claude naturally, and Claude spawns agents for you.**
+**In Claude Code CLI, you don't write code or JSON. You just talk to Claude naturally, and Claude creates subagents for you.**
 
 **Example:**
 ```
-You: "I need to build a flight booking app. Spawn two agents in parallel:
+You: "I need to build a flight booking app. Create two subagents in parallel:
       one for the Flask API and one for the React UI."
 
-Claude: "I'll spawn two agents to work on this in parallel."
-        [Claude spawns agents internally using the Agent tool]
+Claude: "I'll create two subagents to work on this in parallel."
+        [Claude creates subagents internally using the Agent tool]
         [Agents work and complete]
         "Both agents have completed. Here's what they built..."
 ```
@@ -150,9 +150,9 @@ Terminal 3: "Integrate the API from terminal 1 with the UI from terminal 2"
 **Example:**
 ```
 You: "Build a flight booking app with Flask backend and React frontend.
-      Spawn two agents in parallel for this."
+      Create two subagents in parallel for this."
 
-Claude: "I'll spawn two agents to work on this in parallel:
+Claude: "I'll create two subagents to work on this in parallel:
          - Agent 1: Backend API developer
          - Agent 2: Frontend developer
 
@@ -202,7 +202,7 @@ You: "Team: Add payment processing"
 
 ---
 
-### How to Ask Claude to Spawn Agents
+### How to Ask Claude to Create Agents
 
 **For parallel work:**
 ```
@@ -244,10 +244,10 @@ You: "Create a team with Backend, Frontend, and QA specialists."
 **CLI Example:**
 ```
 You: "Build a flight search feature with Flask backend and React frontend.
-      Spawn two agents in parallel."
+      Create two subagents in parallel."
 
-Claude: [Spawns Agent 1: Backend]
-        [Spawns Agent 2: Frontend]
+Claude: [Creates Agent 1: Backend]
+        [Creates Agent 2: Frontend]
         [Both work simultaneously]
 
         "Both completed:
@@ -356,7 +356,7 @@ Testing Agent: [Extends tests for bookings]
 You: "Build a flight booking UI, then have another agent review and improve it."
 
 Claude: [Agent 1: Builds UI]
-        "Agent 1 built the UI. Now spawning Agent 2 to review..."
+        "Agent 1 built the UI. Now creating Agent 2 to review..."
 
         [Agent 2: Reviews]
         "Agent 2 found 3 UX improvements and 2 bugs:
@@ -396,7 +396,7 @@ Claude: [Agent 3: Implements improvements]
 ```
 You: "I have 30 minutes to build a flight search feature.
 
-      Spawn two agents in parallel:
+      Create two subagents in parallel:
 
       Agent 1: Build a Flask API with GET /flights endpoint
       - Query params: origin, destination, date
@@ -512,7 +512,7 @@ Claude: "I'll run these agents sequentially since Agent 2 needs Agent 1's endpoi
 
          ---
 
-         Now spawning Agent 2 to build the booking UI...
+         Now creating Agent 2 to build the booking UI...
 
          [Agent 2: Booking UI]
          Adding booking flow to existing React app...
@@ -605,14 +605,14 @@ Claude: [Agent 2: Implement improvements]
 **Your CLI conversation:**
 
 ```
-You: "I'm building a flight booking platform across 6 quarters.
+You: "I'm building a flight booking platform across 4 quarters.
 
       Create a team with three specialists:
       - Search Service Developer (owns search API)
       - Booking Service Developer (owns booking API)
       - Frontend Developer (owns web UI)
 
-      This team will work together all 6 quarters."
+      This team will work together all 4 quarters."
 
 Claude: "Team created with three specialists:
          - Search Agent (search API specialist)
@@ -707,7 +707,7 @@ You: "Build a booking system"
 ```
 You: "Build a flight booking system with:
 
-      Spawn two agents in parallel:
+      Create two subagents in parallel:
 
       Agent 1 (Backend):
       - Flask REST API
@@ -799,7 +799,7 @@ When Agent 2 needs to build on Agent 1's work, what information should you provi
 ```
 You: "Agent 1 built this API: [paste full code]
 
-      Spawn Agent 2 to add three more endpoints to this code."
+      Create Agent 2 to add three more endpoints to this code."
 ```
 
 **Pros:** Complete context, informed decisions
@@ -865,7 +865,7 @@ You: "Agent 1 built a Flask API with GET /flights endpoint on port 5001.
          ✅ Database schema
          ✅ Flight search endpoint
 
-         Spawn Agent 2 to:
+         Create Agent 2 to:
          ⬜ Add booking endpoint
          ⬜ Add payment processing"
    ```
@@ -873,7 +873,7 @@ You: "Agent 1 built a Flask API with GET /flights endpoint on port 5001.
 3. **Reference locations clearly**
    ```
    You: "Agent 1 created backend/app.py on port 5001
-         Spawn Agent 2 to create frontend/app.js on port 3000"
+         Create Agent 2 to create frontend/app.js on port 3000"
    ```
 
 4. **Use structured summaries for complex systems**
@@ -995,7 +995,7 @@ You: "Agent 1 built a Flask API with GET /flights endpoint on port 5001.
 
       Here's the database schema: [paste schema]
 
-      Spawn Agent 2 to build a frontend that calls this API..."
+      Create Agent 2 to build a frontend that calls this API..."
 ```
 
 ---

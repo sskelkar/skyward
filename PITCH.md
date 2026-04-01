@@ -18,7 +18,7 @@ Most engineers today use AI assistants like Claude as glorified autocomplete: as
 
 ## The Solution: Learn By Building Something Real
 
-**Skyward** is a half-day workshop where engineers learn multi-agent orchestration by doing it—not by watching slides or following tutorials, but by building an actual airline startup's engineering systems in 4 hours.
+**Skyward** is a half-day workshop where engineers learn multi-agent orchestration by doing it—not by watching slides or following tutorials, but by building an actual airline startup's engineering systems in 4-6 hours.
 
 ### Why Game-Based Learning Works
 
@@ -327,7 +327,7 @@ A: Primarily technical (multi-agent orchestration), but you'll naturally gain in
 
 Multi-agent orchestration isn't a nice-to-have skill for the future. It's a **competitive advantage today** and a **requirement tomorrow**.
 
-**Skyward** compresses months of trial-and-error learning into 4 hours of high-intensity, hands-on practice. You'll make mistakes, learn from peers, iterate rapidly, and walk away with patterns you can apply immediately at work.
+**Skyward** compresses months of trial-and-error learning into a half-day of high-intensity, hands-on practice. You'll make mistakes, learn from peers, iterate rapidly, and walk away with patterns you can apply immediately at work.
 
 **The question isn't whether you'll eventually learn multi-agent orchestration.**
 
