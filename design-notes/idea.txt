@@ -14,7 +14,7 @@ Claude Expert: Understands how Claude agents can be used and their limitations. 
 
 I need you to do the following:
 1. Tell me if the overall requirement makes sense. Will this be an effective way for software engineers to develop the right mindset to work with agents? Are Claude agents powerful enough for these 'Directors' to achieve their targets? Ask any clarifying questions.
-2. I want to design a detailed gameplay and iron out all the rules of the game and document it in a new file called "GAME.md".
+2. I want to design a detailed gameplay and iron out all the rules of the game and document it in a new file called "README.md".
 3. Suggest a title for this game.
 4. To design this game, perhaps the above roles can work together. Decide whether they should be spawned as subagents or a team of agents or we don't need any agents at all. Give me options.
 5. In general, give me feedback or suggestions on this whole proposal. For eg, instead of an airline startup, would any other setting be better?

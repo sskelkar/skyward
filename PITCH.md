@@ -308,15 +308,15 @@ A: Primarily technical (multi-agent orchestration), but you'll naturally gain in
 ## Getting Started
 
 **For Workshop Organizers:**
-1. Read [GAMERUNNER.md](GAMERUNNER.md) for facilitation guide
+1. Read [moderator/GAMERUNNER.md](moderator/GAMERUNNER.md) for facilitation guide
 2. Plan your schedule (half-day, 4-6 participants ideal)
 3. Ensure all participants have Claude access
 4. Review scoring rubrics and prepare investor demo questions
 
 **For Participants:**
-1. Read [GAME.md](GAME.md) for rules and structure
+1. Read [README.md](README.md) for rules and structure
 2. Choose your director role (8 options in `characters/` directory)
-3. Review [TUTORIAL.md](TUTORIAL.md) for multi-agent patterns
+3. Review [players/TUTORIAL.md](players/TUTORIAL.md) for multi-agent patterns
 4. Come ready to build!
 
 ---

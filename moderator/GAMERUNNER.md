@@ -66,14 +66,14 @@ Send your participants everything they need to survive startup life.
 
 **Email to participants:**
 - [ ] Character sheets - their department and role (characters/ directory)
-- [ ] GAME.md - the rules and structure
+- [ ] README.md - the rules and structure
 - [ ] Tech requirements - laptop, Claude access, dev environment
 - [ ] TUTORIAL.md - multi-agent orchestration guide
 
 **Your materials:**
 - [ ] Print character sheets (one per director - make them look like offer letters)
 - [ ] Scoring spreadsheet (track the leaderboard)
-- [ ] **Read [design-notes/UNIVERSAL_CHAOS_SCENARIOS.md](design-notes/UNIVERSAL_CHAOS_SCENARIOS.md)** - chaos event options
+- [ ] **Read [UNIVERSAL_CHAOS_SCENARIOS.md](UNIVERSAL_CHAOS_SCENARIOS.md)** - chaos event options
 - [ ] Visible countdown timer (nothing says "startup" like artificial urgency)
 - [ ] Whiteboard for company timeline
 - [ ] Screen sharing setup for demos
@@ -344,7 +344,7 @@ Step aside. Calculate scores using the rubric. Return with gravitas.
 
 > "Actually, Directors... something just came up. Welcome to startup reality."
 
-**See [design-notes/UNIVERSAL_CHAOS_SCENARIOS.md](design-notes/UNIVERSAL_CHAOS_SCENARIOS.md) for six comprehensive scenarios.** Roll a d6 or pick one that fits your group's learning goals.
+**See [UNIVERSAL_CHAOS_SCENARIOS.md](UNIVERSAL_CHAOS_SCENARIOS.md) for six comprehensive scenarios.** Roll a d6 or pick one that fits your group's learning goals.
 
 **The Scramble (if chaos introduced)**
 
@@ -393,7 +393,7 @@ The energy should shift from building to refining:
 
 > "Uh, Directors... we have a situation. Handle this AND still launch on time."
 
-**See [design-notes/UNIVERSAL_CHAOS_SCENARIOS.md](design-notes/UNIVERSAL_CHAOS_SCENARIOS.md)** - same six scenarios as Q3.
+**See [UNIVERSAL_CHAOS_SCENARIOS.md](UNIVERSAL_CHAOS_SCENARIOS.md)** - same six scenarios as Q3.
 
 **Final Push (Last 10-15 minutes)**
 
@@ -567,7 +567,7 @@ Maximum possible: 42 points
 
 ### Crisis Events (Optional for Q3 and/or Q4)
 
-**All chaos scenarios are in [design-notes/UNIVERSAL_CHAOS_SCENARIOS.md](design-notes/UNIVERSAL_CHAOS_SCENARIOS.md).**
+**All chaos scenarios are in [UNIVERSAL_CHAOS_SCENARIOS.md](UNIVERSAL_CHAOS_SCENARIOS.md).**
 
 **When to use:** Group is performing well and can handle pressure. **When to skip:** Group is struggling or behind schedule.
 
@@ -710,10 +710,10 @@ Solution: "Remember - all of you get promoted. Only the top score becomes VP. Yo
 - [ ] Name tents: "Director of [Department]"
 
 **Digital:**
-- [ ] GAME.md (shared beforehand)
+- [ ] README.md (shared beforehand)
 - [ ] Character sheets (characters/ directory)
 - [ ] TUTORIAL.md (reference material)
-- [ ] **design-notes/UNIVERSAL_CHAOS_SCENARIOS.md** (chaos event options - read before workshop!)
+- [ ] **UNIVERSAL_CHAOS_SCENARIOS.md** (chaos event options - read before workshop!)
 - [ ] Scoring spreadsheet
 
 **Optional but Recommended:**
@@ -755,7 +755,7 @@ Carol (Recs)  | 3  | 2  | 2  | 3  |    10    |    11     |  7   |   +1   |  29
 
 **Selection guide:** Competitive group → Scenario 1, Business-minded → Scenario 2, Junior → Scenario 3 or 4, Experienced → Scenario 5, Maximum drama → Scenario 4, Strategic → Scenario 6, Random → d6 roll
 
-See [design-notes/UNIVERSAL_CHAOS_SCENARIOS.md](design-notes/UNIVERSAL_CHAOS_SCENARIOS.md) for full details.
+See [UNIVERSAL_CHAOS_SCENARIOS.md](UNIVERSAL_CHAOS_SCENARIOS.md) for full details.
 
 ### If Running Behind
 

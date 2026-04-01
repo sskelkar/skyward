@@ -47,7 +47,7 @@ Yes, absolutely. Current Claude capabilities can handle:
 
 ---
 
-## 2. Should We Design GAME.md?
+## 2. Should We Design README.md?
 
 **Yes, and I've created GAME_DESIGN.md which serves this purpose.**
 

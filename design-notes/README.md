@@ -1,23 +1,40 @@
 # Design Notes
 
-This folder contains planning documents and design artifacts from the development of **Terminal Velocity** (formerly "Flight Path").
+This folder contains historical design documents and development materials from creating Skyward.
 
-## Contents
+## Files
 
-- **idea.txt** - Original brainstorming, requirements, and iterative design decisions
-- **FEEDBACK_AND_OPTIONS.md** - Early feedback on game concept, design options, and recommendations
-- **GAME_DESIGN.md** - Early D&D-narrative-heavy version (8 turns, hero's journey, character backstories) - superseded by current workshop-focused design
+### `idea.txt`
+Original brainstorming and evolution of the game concept. Contains:
+- Initial game premise (D&D + Total War + multi-agent AI)
+- Design questions and answers
+- Iterative refinements based on feedback
+- Format evolution (6 quarters → 4 quarters)
 
-## Purpose
+### `GAME_DESIGN.md`
+Early comprehensive game design document exploring:
+- Quarter structures and objectives
+- Character role definitions
+- Multi-agent patterns and examples
+- Integration approaches
 
-These documents capture the evolution of the game design but are **not needed for playing or running the game**.
+### `FEEDBACK_AND_OPTIONS.md`
+Consolidated feedback from multiple expert perspectives:
+- D&D Gamerunner feedback
+- D&D Player feedback
+- Total War Gamer feedback
+- Claude Expert feedback
 
-## Gameplay Documents (in root directory)
+### `GAME_DESIGNER_FEEDBACK.md`
+Detailed design critique analyzing:
+- Workshop vs game balance (70/30 split)
+- Critical gaps (player agency, role asymmetry, character depth)
+- Recommendations by priority (HIGH/MEDIUM/LOW)
+- Design tensions and open questions
 
-The actual game materials you need are:
-- `GAME.md` - Player-facing game overview
-- `GAMERUNNER.md` - Facilitator guide with scoring rubrics and scenarios
-- `TUTORIAL.md` - Multi-agent orchestration tutorial
-- `DIRECTOR-GUIDE.md` - How to think and operate as a director
-- `MULTI-SERVICE-GUIDE.md` - Multi-service architecture patterns
-- `characters/` - Character sheets for all 8 director roles
+## Note
+
+These are **historical documents** from the design process. For current game materials:
+- **Players**: See `../players/` directory
+- **Facilitators**: See `../moderator/` directory
+- **Overview**: See `../README.md`
