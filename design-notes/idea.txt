@@ -78,3 +78,18 @@ I need you to do the following:
     As a bonus it also gives them a glimpse into management - for constraint and pressure they operate under, how business decisions are made etc. Do you think my reasoning is correct?
 
   - the random scenarios that the gamerunner can introduce should be such that they impact all 8 characters, and gives them something to do. 
+
+
+
+  -----
+
+  I played the game as the Director of flight status & tracking. Here are some observations:
+
+  1. Players should specify Sonnet as the model for the agent teams as it is the most cost effective.
+  2. The agent team kept asking me permissions to edit files, or run bash commands like git, go, curl etc. How can I provide required permissions in advance, so that the whole agent team inherits them? And how to ensure safety, i.e. the agents should not make system changes or delete the file system etc.
+    use auto permission mode?
+    
+  3. At the end of the agent team session, the players should ask for feedback from claude on how they can utilize the agent teams better.
+  4. The tutorial should provide system requisites like install tmux and start tmux with tmux -CC
+  5. Some general tips or best practices for the players. Eg: use upto 3 agents, Agents should not modify the same files, set a deadline for the team, 
+  6. anyway to incorporate other claude skills like hooks, skills into this game?

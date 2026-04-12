@@ -44,7 +44,7 @@ Think of it as:
 - 15:00-16:00 | **Q4 - Launch Sprint** (45-60 min, optional chaos)
 - 16:00-16:30 | Performance Review & VP Promotion
 
-### The 8 Director Roles
+### The 10 Director Roles
 
 Each player chooses one department to lead:
 
@@ -56,6 +56,8 @@ Each player chooses one department to lead:
 6. **Director of Marketing & Growth** - Campaigns and growth analytics
 7. **Director of Check-in & Boarding** - Check-in flows and boarding passes
 8. **Director of Flight Status & Tracking** - Real-time flight tracking
+9. **Director of Payments & Billing** - Payment processing, refunds, invoicing
+10. **Director of Staffing** - Crew scheduling, certifications, compliance
 
 Each director builds **2-3 microservices** using **multiple Claude agent teams**.
 

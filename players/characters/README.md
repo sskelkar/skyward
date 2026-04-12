@@ -1,10 +1,10 @@
 # Character Sheets
 
-Choose one of the 8 director roles below. Each character sheet provides everything you need to build your department's systems.
+Choose one of the 10 director roles below. Each character sheet provides everything you need to build your department's systems.
 
 ---
 
-## The 8 Director Roles
+## The 10 Director Roles
 
 ### 1. **Director of Customer Booking Portal** (`booking-portal.md`)
 **Mission:** Build the customer-facing flight booking application
@@ -126,24 +126,57 @@ Choose one of the 8 director roles below. Each character sheet provides everythi
 
 ---
 
+### 9. **Director of Payments & Billing** (`payments-billing.md`)
+**Mission:** Build payment processing and billing systems
+
+**What you'll build:**
+- Payment gateway integration
+- Refund processing
+- Invoice generation
+- Transaction history
+
+**Complexity:** Medium-High - Security and error handling critical
+**Visual appeal:** Low - Backend systems, but essential
+**Best for:** Engineers who enjoy financial systems and reliability
+
+---
+
+### 10. **Director of Staffing** (`staffing.md`)
+**Mission:** Build crew scheduling and certification tracking
+
+**What you'll build:**
+- Crew assignment to flights
+- Certification and qualification tracking
+- Rest period compliance
+- Callout and replacement handling
+
+**Complexity:** High - Complex constraints and optimization
+**Visual appeal:** Medium - Scheduling dashboards and compliance tracking
+**Best for:** Engineers who enjoy constraint solving and operational systems
+
+---
+
 ## How to Choose
 
 ### By Interest
 - **Love frontend/UX?** → Booking Portal or Check-in & Boarding
-- **Love backend/algorithms?** → Pricing or Inventory
+- **Love backend/algorithms?** → Pricing, Inventory, or Staffing
 - **Love ML/AI?** → Recommendations or Customer Service
 - **Love analytics/data?** → Marketing or Pricing
 - **Love real-time systems?** → Flight Status
+- **Love financial systems?** → Payments & Billing
+- **Love constraint solving?** → Staffing
 
 ### By Complexity
 - **Easier:** Booking Portal, Check-in, Customer Service
-- **Medium:** Inventory, Marketing
-- **Harder:** Pricing, Recommendations, Flight Status
+- **Medium:** Inventory, Marketing, Payments & Billing
+- **Harder:** Pricing, Recommendations, Flight Status, Staffing
 
 ### By Visual Impact
 - **Most impressive demos:** Flight Status (maps!), Check-in (boarding passes!), Recommendations
-- **Great dashboards:** Pricing, Marketing, Inventory
+- **Great dashboards:** Pricing, Marketing, Inventory, Staffing
 - **User-facing polish:** Booking Portal, Customer Service
+- **Critical infrastructure:** Payments & Billing, Staffing
 
 ---
 
